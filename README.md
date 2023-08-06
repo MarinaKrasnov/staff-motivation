@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Getting Started
 
-hello
+- install dependencies ###`npm i`
+
+- to run the project ###`npm start`
+
+- If u have Vision Studio Code - Extensions --> install _Edit config_, WebStorm - skip this step.
+
+- Add new branch with name feat/_ fix/_ you copy-past from Kanban Board.
+
+- Before commit ###`npm run commit` and follow up with menu.
+
+- After u pushed your new branch you need to send Pull Request on GitHub, mark reviewers.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

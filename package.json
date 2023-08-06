@@ -1,5 +1,5 @@
 {
-	"name": "storybook-example",
+	"name": "staff-motivation",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
@@ -26,7 +26,8 @@
 		"lint:fix": "npm run lint -- --fix",
 		"format": "prettier . --write",
 		"prepare": "husky install",
-		"commit": "cz"
+		"commit": "cz",
+		"deploy": "gh-pages -d storybook-static"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -92,6 +93,7 @@
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.8.0",
+		"gh-pages": "^5.0.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^13.2.1",
 		"prettier": "^2.8.8",
