@@ -10,7 +10,7 @@ function App() {
 	const [isRememberMePressed, setIsRememberMePressed] = useState(false);
 
 	const handleIsRememberMePressed = () => {
-		setIsRememberMePressed(true);
+		setIsRememberMePressed(!isRememberMePressed);
 	};
 
 	return (
@@ -20,8 +20,8 @@ function App() {
 					path="/signin"
 					element={
 						<Login
-							isRemembered={isRememberMePressed}
-							handleIsRemembered={handleIsRememberMePressed}
+							isRememberMePressed={isRememberMePressed}
+							handleIsRememberMePressed={handleIsRememberMePressed}
 						/>
 					}
 				/>
