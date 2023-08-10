@@ -65,9 +65,9 @@
 	padding: 0 0 0 12px;
 	width: 426px;
 	height: 40px;
-	font-weight: 500;
+	font-weight: 700;
 	font-size: 14px;
-	line-height: 22.4px;
+	line-height: 23px;
 	color: #3a4662;
 	border: 1px solid #e2e4e8;
 	border-radius: 3px;
@@ -156,9 +156,9 @@
 
 .login__link_type_recovery {
 	margin: 0 0 0 183px;
-	font-weight: 400;
+	font-weight: 500;
 	font-size: 14px;
-	line-height: 19px;
+	line-height: 22px;
 }
 
 .login__button {
