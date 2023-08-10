@@ -42,8 +42,13 @@ export default function Login({
 		handleSubmit,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
+		mode: 'onBlur',
 		resolver: yupResolver(LoginSchema),
 	});
+
+	const handleRememberButton = () => {
+		handleIsRememberMePressed();
+	};
 
 	const onSubmit = (values) => {
 		onSignIn(values.email, values.password);
@@ -54,10 +59,11 @@ export default function Login({
 	};
 
 	const passwordInput = document.querySelector('.login__input_type_password');
-
 	const clearInput = () => {
 		passwordInput.value = '';
 	};
+
+	const emptyText = '';
 
 	return (
 		<section className="login">
@@ -129,15 +135,19 @@ export default function Login({
 						<p className="login__error-message">{errors.password?.message}</p>
 					</div>
 
-					<div className="login__checkbox-container">
+					<label
+						className="login__checkbox-container"
+						htmlFor="remember-checkbox"
+					>
 						<input
 							className="login__checkbox"
 							checked={isRememberMePressed}
-							onChange={handleIsRememberMePressed}
+							onChange={handleRememberButton}
 							id="remember-checkbox"
 							type="checkbox"
 							name="remember-checkbox"
 						/>
+						<span>{emptyText}</span>
 						<p className="login__checkbox-message">Запомнить меня</p>
 						<NavLink
 							className="login__link login__link_type_recovery"
@@ -145,7 +155,7 @@ export default function Login({
 						>
 							Забыли пароль?
 						</NavLink>
-					</div>
+					</label>
 
 					<button
 						className="login__button"
@@ -155,10 +165,7 @@ export default function Login({
 						Войти
 					</button>
 				</form>
-				<NavLink
-					className="login__link login__link_type_register"
-					to="/password-recovery"
-				>
+				<NavLink className="login__link login__link_type_register" to="/signup">
 					У меня нет аккаунта, зарегистрироваться
 				</NavLink>
 			</div>

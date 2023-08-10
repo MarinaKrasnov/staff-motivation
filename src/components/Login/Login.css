@@ -121,6 +121,10 @@
 	background-color: #fff;
 }
 
+.login__clear-input-button:hover {
+	opacity: 0.5;
+}
+
 .login__hide-password-button {
 	position: absolute;
 	top: 339px;
@@ -144,11 +148,23 @@
 	margin: 32px 0 0 0;
 }
 
-.login__checkbox {
+.login__checkbox[type='checkbox'] {
+	display: none;
+}
+
+.login__checkbox[type='checkbox'] + span {
 	width: 17px;
 	height: 17px;
 	margin: 0;
 	border: 3px solid #b2b7c2;
+	border-radius: 3px;
+}
+
+.login__checkbox[type='checkbox']:checked + span {
+	background-image: url(../../images/checkmark-square.svg);
+	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 .login__checkbox-message {
