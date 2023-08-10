@@ -109,7 +109,19 @@
 	color: #ff3236;
 }
 
-.login__hidden-password-button {
+.login__clear-input-button {
+	position: absolute;
+	top: 339px;
+	right: 120px;
+	margin: 0;
+	padding: 0;
+	width: 20px;
+	height: 20px;
+	border: none;
+	background-color: #fff;
+}
+
+.login__hide-password-button {
 	position: absolute;
 	top: 339px;
 	right: 92px;
@@ -121,7 +133,7 @@
 	background-color: #fff;
 }
 
-.login__hidden-password-button:hover {
+.login__hide-password-button:hover {
 	opacity: 0.5;
 }
 

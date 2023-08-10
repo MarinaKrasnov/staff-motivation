@@ -8,6 +8,7 @@ import emailRegex from '../../utils/RegExps';
 import greyCircleLogo from '../../images/grey-circle-logo.svg';
 import alarmLogo from '../../images/alarm-logo.svg';
 import hiddenEyeLogo from '../../images/hidden-eye-logo.svg';
+import deletePasswordLogo from '../../images/delete-password.svg';
 
 const LoginSchema = yup.object().shape({
 	email: yup
@@ -52,6 +53,12 @@ export default function Login({
 		onHidePasswordClick();
 	};
 
+	const passwordInput = document.querySelector('.login__input_type_password');
+
+	const clearInput = () => {
+		passwordInput.value = '';
+	};
+
 	return (
 		<section className="login">
 			<div className="login__container">
@@ -93,9 +100,17 @@ export default function Login({
 						placeholder="Пароль"
 						{...register('password', { required: true })}
 						type={isPasswordHidden ? 'password' : 'text'}
+						autoComplete="new-password"
 					/>
 					<button
-						className="login__hidden-password-button"
+						className="login__clear-input-button"
+						type="button"
+						onClick={clearInput}
+					>
+						<img src={deletePasswordLogo} alt="удалить пароль" />
+					</button>
+					<button
+						className="login__hide-password-button"
 						type="button"
 						onClick={handlePasswordHidden}
 					>
