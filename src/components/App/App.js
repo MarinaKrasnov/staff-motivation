@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { useState } from 'react';
-import Login from './components/Login/Login';
-import * as MainApi from './utils/MainApi';
+import Login from '../Login/Login';
+import * as MainApi from '../../utils/MainApi';
 
 function App() {
 	// @TODO: автор Андрей, компонент Login
