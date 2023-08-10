@@ -40,6 +40,7 @@ export default function Login({
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onBlur',
@@ -56,11 +57,6 @@ export default function Login({
 
 	const handlePasswordHidden = () => {
 		onHidePasswordClick();
-	};
-
-	const passwordInput = document.querySelector('.login__input_type_password');
-	const clearInput = () => {
-		passwordInput.value = '';
 	};
 
 	const emptyText = '';
@@ -111,7 +107,7 @@ export default function Login({
 					<button
 						className="login__clear-input-button"
 						type="button"
-						onClick={clearInput}
+						onClick={() => setValue('password', '')}
 					>
 						<img src={deletePasswordLogo} alt="удалить пароль" />
 					</button>
