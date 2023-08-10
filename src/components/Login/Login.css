@@ -12,7 +12,7 @@
 	align-items: center;
 	position: relative;
 	margin: 0 auto;
-	width: 574px;
+	width: 586px;
 	height: 668px;
 	background-color: #fff;
 	border-radius: 4px;
@@ -24,7 +24,7 @@
 	width: 260px;
 }
 
-.login__lamp-logo {
+.login__circle-logo {
 	margin: 0 16px 0 0;
 	width: 40px;
 	height: 40px;

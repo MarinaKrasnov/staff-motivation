@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import emailRegex from '../../utils/RegExps';
 // логотипы должны быть в самом низу
-import lampLogo from '../../images/lamp-logo.svg';
+import greyCircleLogo from '../../images/grey-circle-logo.svg';
 import alarmLogo from '../../images/alarm-logo.svg';
 import hiddenEyeLogo from '../../images/hidden-eye-logo.svg';
 
@@ -56,7 +56,11 @@ export default function Login({
 		<section className="login">
 			<div className="login__container">
 				<div className="login__title-container">
-					<img className="login__lamp-logo" src={lampLogo} alt="лампочка" />
+					<img
+						className="login__circle-logo"
+						src={greyCircleLogo}
+						alt="лампочка"
+					/>
 					<h2 className="login__title">Motivation System</h2>
 				</div>
 				<p className="login__message">
