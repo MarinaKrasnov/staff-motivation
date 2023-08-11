@@ -2,33 +2,12 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import emailRegex from '../../utils/RegExps';
+import { LoginSchema } from '../../utils/ValidationSchemes';
 // логотипы должны быть в самом низу
 import greyCircleLogo from '../../images/grey-circle-logo.svg';
 import alarmLogo from '../../images/alarm-logo.svg';
 import hiddenEyeLogo from '../../images/hidden-eye-logo.svg';
 import deletePasswordLogo from '../../images/delete-password.svg';
-
-const LoginSchema = yup.object().shape({
-	email: yup
-		.string()
-		.email('Некорректный формат электронной почты.')
-		.required('Электронная почта не указана.')
-		.test(
-			'Validate Email',
-			'Некорректный формат электронной почты.',
-			(value) => {
-				const RegEx = emailRegex;
-				return RegEx.test(String(value).toLowerCase());
-			}
-		),
-	password: yup
-		.string()
-		.min(4, 'Пароль должен содержать не менее 4 символов.')
-		.max(20, 'Пароль должен содержать не более 20 символов.')
-		.required('Пароль не указан.'),
-});
 
 export default function Login({
 	isRememberMePressed,
@@ -41,25 +20,26 @@ export default function Login({
 		register,
 		handleSubmit,
 		setValue,
+		watch, // для отслеживания input value
 		formState: { errors, isValid, isDirty },
 	} = useForm({
-		mode: 'onBlur',
+		mode: 'onTouched',
 		resolver: yupResolver(LoginSchema),
 	});
-
+	// toggle для кнопки "запонить меня"
 	const handleRememberButton = () => {
 		handleIsRememberMePressed();
 	};
-
-	const onSubmit = (values) => {
-		onSignIn(values.email, values.password);
+	// фунция, при нажатии на кнопку "Войти"
+	const onSubmit = (data) => {
+		onSignIn(data.email, data.password);
 	};
-
+	// toggle для отображения скрытых символов или отображения вводимого
 	const handlePasswordHidden = () => {
 		onHidePasswordClick();
 	};
 
-	const emptyText = '';
+	const emptyText = ''; // эслинт не дает поставить пустую строку в jsx, пришлось делать через пустую константу
 
 	return (
 		<section className="login">
@@ -81,7 +61,9 @@ export default function Login({
 					noValidate
 				>
 					<input
-						className="login__input login__input_type_email"
+						className={`login__input login__input_type_email ${
+							errors.email && !isValid && isDirty ? 'login__input_no-valid' : ''
+						}`}
 						placeholder="E-mail"
 						{...register('email', { required: true })}
 					/>
@@ -98,11 +80,12 @@ export default function Login({
 						<p className="login__error-message">{errors.email?.message}</p>
 					</div>
 					<input
-						className="login__input login__input_type_password"
+						className={`login__input login__input_type_password ${
+							errors.password && !isValid ? 'login__input_no-valid' : ''
+						}`}
 						placeholder="Пароль"
 						{...register('password', { required: true })}
-						type={isPasswordHidden ? 'password' : 'text'}
-						autoComplete="new-password"
+						type={isPasswordHidden && watch('password') ? 'password' : 'text'}
 					/>
 					<button
 						className="login__clear-input-button"
