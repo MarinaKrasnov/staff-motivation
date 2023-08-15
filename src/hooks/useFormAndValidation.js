@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import validator from 'validator';
 
 export function useFormAndValidation() {
-	const nameRegex = /^[a-zA-Zа-яА-Я\s-]+$/;
+	const nameRegex = /^[\s\-a-zA-Zа-яА-Я]+$/;
 	const [values, setValues] = useState({});
 	const [errors, setErrors] = useState({});
 	const [isValid, setIsValid] = useState(true);
@@ -11,7 +11,7 @@ export function useFormAndValidation() {
 		const { name, value } = e.target;
 		setValues({ ...values, [name]: value });
 		setIsValid(false);
-		if (name === 'firstName') {
+		if (name === 'firstName' || name === 'lastName' || name === 'middleName') {
 			if (!nameRegex.test(value)) {
 				setErrors({ ...errors, [name]: 'Введите правильное имя' });
 			} else if (!value) {

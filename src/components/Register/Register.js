@@ -146,8 +146,8 @@ function Register() {
 							id="confirmPassword"
 							name="confirmPassword"
 							placeholder="Повторите пароль"
-							minLength={6}
-							maxLength={6}
+							minLength={4}
+							maxLength={30}
 							value={values.confirmPassword || ''}
 							onChange={handleChange}
 							autoComplete="current-password"
