@@ -3,6 +3,7 @@ import './App.css';
 import { useState } from 'react';
 import Login from '../Login/Login';
 import * as MainApi from '../../utils/MainApi';
+import ResetPassword from '../ResetPassword/ResetPassord';
 
 function App() {
 	// @TODO: автор Андрей, компонент Login
@@ -49,6 +50,11 @@ function App() {
 			});
 	};
 
+	// @TODO: автор Андрей, компонент ResetPassword 1.3
+	const handleResetPassword = (email) => {
+		MainApi.login(email); // когда заработает api, то тут будет реальная функция. Пока затычка
+	};
+
 	return (
 		<div className="App">
 			<Routes>
@@ -63,6 +69,10 @@ function App() {
 							onHidePasswordClick={handleisPasswordHidden}
 						/>
 					}
+				/>
+				<Route
+					path="/reset-password"
+					element={<ResetPassword onResetPassword={handleResetPassword} />}
 				/>
 			</Routes>
 		</div>
