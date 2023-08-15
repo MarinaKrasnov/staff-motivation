@@ -1,16 +1,26 @@
 import './Register.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../images/logo.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 import { register } from '../../utils/MainApi';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
 function Register() {
-	const { values, handleChange, errors, isValid } = useFormAndValidation();
+	const { values, handleChange, errors, isValid, setIsValid } =
+		useFormAndValidation();
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [isError, setIsError] = useState(false);
 	const [isPasswordHidden, setPasswordHidden] = useState(false);
 	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
+
+	useEffect(() => {
+		if (values.confirmPassword !== values.password) {
+			setErrorMessage('Пароль должен совпадать');
+			setIsValid(false);
+		} else if (!values) {
+			setIsValid(true);
+		}
+	}, [values, setIsValid]);
 
 	function onRegister(name, email, password) {
 		register(name, email, password)
@@ -27,6 +37,7 @@ function Register() {
 					setErrorMessage('На сервере произошла ошибка');
 					// должна быть ошибка что такого пользователя нет в БД
 				} else {
+					setIsValid(false);
 					setIsError(true);
 					setErrorMessage(
 						'Такого пользователя нет в системе. Проверьте правильность ввода данных'
@@ -124,8 +135,8 @@ function Register() {
 							id="password"
 							name="password"
 							placeholder="Пароль"
-							minLength={6}
-							maxLength={6}
+							minLength={4}
+							maxLength={30}
 							value={values.password || ''}
 							onChange={handleChange}
 							autoComplete="current-password"

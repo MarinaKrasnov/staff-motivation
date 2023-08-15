@@ -5,7 +5,7 @@ export function useFormAndValidation() {
 	const nameRegex = /^[\s\-a-zA-Zа-яА-Я]+$/;
 	const [values, setValues] = useState({});
 	const [errors, setErrors] = useState({});
-	const [isValid, setIsValid] = useState(true);
+	const [isValid, setIsValid] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
