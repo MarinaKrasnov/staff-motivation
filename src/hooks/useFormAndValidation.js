@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-// import validator from 'validator';
+import validator from 'validator';
 
 export function useFormAndValidation() {
 	const nameRegex = /^[a-zA-Zа-яА-Я\s-]+$/;
@@ -11,7 +11,7 @@ export function useFormAndValidation() {
 		const { name, value } = e.target;
 		setValues({ ...values, [name]: value });
 		setIsValid(false);
-		if (name === 'name') {
+		if (name === 'firstName') {
 			if (!nameRegex.test(value)) {
 				setErrors({ ...errors, [name]: 'Введите правильное имя' });
 			} else if (!value) {
@@ -20,15 +20,18 @@ export function useFormAndValidation() {
 				setErrors({ ...errors, [name]: '' });
 			}
 		}
-		/* if (name === "email") {
-      if (!validator.isEmail(value)) {
-        setErrors({ ...errors, [name]: "Введите правильный адрес электронной почты" });
-      } else if (!value) {
-        setErrors({ ...errors, [name]: 'Введите адрес электронной почты' });
-      } else {
-        setErrors({ ...errors, [name]: "" });
-      }
-    } */
+		if (name === 'email') {
+			if (!validator.isEmail(value)) {
+				setErrors({
+					...errors,
+					[name]: 'Введите правильный адрес электронной почты',
+				});
+			} else if (!value) {
+				setErrors({ ...errors, [name]: 'Введите адрес электронной почты' });
+			} else {
+				setErrors({ ...errors, [name]: '' });
+			}
+		}
 		setIsValid(e.target.closest('form').checkValidity());
 	};
 
