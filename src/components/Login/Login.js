@@ -20,6 +20,7 @@ export default function Login({
 		register,
 		handleSubmit,
 		setValue,
+		getValues,
 		watch, // для отслеживания input value
 		formState: { errors, isValid, isDirty },
 	} = useForm({
@@ -40,6 +41,13 @@ export default function Login({
 	};
 
 	const emptyText = ''; // эслинт не дает поставить пустую строку в jsx, пришлось делать через пустую константу
+	// проверка на пустую строку для скрытия кнопок
+	const isIputPasswordButtonsVisible = () => {
+		if (getValues('password') === undefined || getValues('password') === '') {
+			return 'login__input-button_hidden';
+		}
+		return '';
+	};
 
 	return (
 		<section className="login">
@@ -88,14 +96,16 @@ export default function Login({
 						type={isPasswordHidden && watch('password') ? 'password' : 'text'}
 					/>
 					<button
-						className="login__clear-input-button"
+						className={`login__input-button login__input-button_type_clear-password
+							${isIputPasswordButtonsVisible()}`}
 						type="button"
 						onClick={() => setValue('password', '')}
 					>
 						<img src={deletePasswordLogo} alt="удалить пароль" />
 					</button>
 					<button
-						className="login__hide-password-button"
+						className={`login__input-button login__input-button_type_hide-password
+						  ${isIputPasswordButtonsVisible()}`}
 						type="button"
 						onClick={handlePasswordHidden}
 					>

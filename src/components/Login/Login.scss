@@ -113,33 +113,29 @@ $accentLightGrey400: #e2e4e8;
 	line-height: 19px;
 	color: $accentRedError500;
 }
-.login__clear-input-button {
+
+.login__input-button {
 	position: absolute;
 	top: 339px;
-	right: 120px;
 	margin: 0;
 	padding: 0;
 	width: 20px;
 	height: 20px;
 	border: none;
 	background-color: $mainWhite;
+
 	&:hover {
 		opacity: 0.5;
 	}
 }
-.login__hide-password-button {
-	position: absolute;
-	top: 339px;
+.login__input-button_hidden {
+	visibility: hidden;
+}
+.login__input-button_type_clear-password {
+	right: 120px;
+}
+.login__input-button_type_hide-password {
 	right: 92px;
-	margin: 0;
-	padding: 0;
-	width: 20px;
-	height: 20px;
-	border: none;
-	background-color: $mainWhite;
-	&:hover {
-		opacity: 0.5;
-	}
 }
 .login__checkbox-container {
 	display: flex;
