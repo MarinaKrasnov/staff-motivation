@@ -1,29 +1,33 @@
 import './Register.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { RegisterSchema } from '../../utils/ValidationSchemes';
+import { signup } from '../../utils/MainApi';
+
 import logo from '../../images/logo.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
-import { register } from '../../utils/MainApi';
-import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
 function Register() {
-	const { values, handleChange, errors, isValid, setIsValid } =
-		useFormAndValidation();
+	const {
+		register,
+		// handleSubmit,
+		// setValue,
+		// getValues,
+		watch,
+		formState: { errors, isValid, isDirty },
+	} = useForm({
+		mode: 'onTouched',
+		resolver: yupResolver(RegisterSchema),
+	});
+
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [isError, setIsError] = useState(false);
 	const [isPasswordHidden, setPasswordHidden] = useState(false);
 	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
 
-	useEffect(() => {
-		if (values.confirmPassword !== values.password) {
-			setErrorMessage('Пароль должен совпадать');
-			setIsValid(false);
-		} else if (!values) {
-			setIsValid(true);
-		}
-	}, [values, setIsValid]);
-
-	function onRegister(name, email, password) {
-		register(name, email, password)
+	function onRegister(data) {
+		signup(data)
 			.then(() => {
 				console.log('Пользователь зарегистрирован');
 				// здесь будет открываться попап(или не попап, или не будет) об успешной регистрации
@@ -37,7 +41,6 @@ function Register() {
 					setErrorMessage('На сервере произошла ошибка');
 					// должна быть ошибка что такого пользователя нет в БД
 				} else {
-					setIsValid(false);
 					setIsError(true);
 					setErrorMessage(
 						'Такого пользователя нет в системе. Проверьте правильность ввода данных'
@@ -45,13 +48,12 @@ function Register() {
 				}
 			});
 	}
-	function handleSubmitRegister(evt) {
+
+	function onSubmit(evt) {
 		evt.preventDefault();
-		const { name, email, password } = values;
-		if (isValid) {
-			onRegister(name, email, password);
-		}
+		onRegister();
 	}
+
 	function handlePasswordHidden() {
 		if (isPasswordHidden) {
 			setPasswordHidden(false);
@@ -59,6 +61,7 @@ function Register() {
 			setPasswordHidden(true);
 		}
 	}
+
 	function handleConfirmPasswordHidden() {
 		if (isConfirmPasswordHidden) {
 			setConfirmPasswordHidden(false);
@@ -84,65 +87,34 @@ function Register() {
 							Создайте учётную запись в приложении
 						</h2>
 					)}
-					<form
-						className="register__form"
-						onSubmit={handleSubmitRegister}
-						noValidate
-					>
+					<form className="register__form" onSubmit={onSubmit} noValidate>
 						<input
 							className="register__input"
-							type="email"
-							id="email"
-							name="email"
 							placeholder="E-mail"
-							value={values.email || ''}
-							onChange={handleChange}
-							autoComplete="email"
-							required
+							{...register('email', { required: true })}
 						/>
 						<input
 							className="register__input"
-							type="text"
-							id="lastName"
-							name="lastName"
 							placeholder="Фамилия*"
-							value={values.lastName || ''}
-							onChange={handleChange}
-							required
+							{...register('lastName', { required: true })}
 						/>
 						<input
 							className="register__input"
-							type="text"
-							id="firstName"
-							name="firstName"
 							placeholder="Имя*"
-							value={values.firstName || ''}
-							onChange={handleChange}
-							required
+							{...register('firstName', { required: true })}
 						/>
 						<input
 							className="register__input"
-							type="text"
-							id="middleName"
-							name="middleName"
 							placeholder="Отчество"
-							value={values.middleName || ''}
-							onChange={handleChange}
+							{...register('middleName')}
 						/>
 						<input
 							className="register__input"
-							type={isPasswordHidden ? 'password' : 'text'}
-							id="password"
-							name="password"
 							placeholder="Пароль"
-							minLength={4}
-							maxLength={30}
-							value={values.password || ''}
-							onChange={handleChange}
-							autoComplete="current-password"
-							required
+							{...register('password', { required: true })}
+							type={isPasswordHidden ? 'password' : 'text'}
 						/>
-						{values.password ? (
+						{watch('password') ? (
 							<button
 								className="register__eye-button password"
 								type="button"
@@ -154,18 +126,12 @@ function Register() {
 						<input
 							className="register__input"
 							type={isConfirmPasswordHidden ? 'password' : 'text'}
-							id="confirmPassword"
 							name="confirmPassword"
 							placeholder="Повторите пароль"
-							minLength={4}
-							maxLength={30}
-							value={values.confirmPassword || ''}
-							onChange={handleChange}
-							autoComplete="current-password"
-							required
+							{...register('confirmPassword', { required: true })}
 						/>
 
-						{values.confirmPassword ? (
+						{watch('confirmPassword') ? (
 							<button
 								className="register__eye-button confirmPassword"
 								type="button"
@@ -182,7 +148,7 @@ function Register() {
 									: 'register__submit-button_disabled'
 							}
 							type="submit"
-							disabled={!isValid}
+							disabled={!isValid || !isDirty}
 						>
 							Зарегистрироваться
 						</button>
@@ -193,4 +159,5 @@ function Register() {
 		</div>
 	);
 }
+
 export default Register;

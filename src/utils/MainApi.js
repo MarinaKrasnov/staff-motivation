@@ -9,12 +9,12 @@ const checkResponse = (res) => {
 
 /* user */
 
-export const register = (name, email, password) =>
+export const signup = (data) =>
 	fetch(`${BASE_URL}/signup`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ name, password, email }),
+		body: JSON.stringify({ data }),
 	}).then(checkResponse);
