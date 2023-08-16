@@ -14,6 +14,7 @@ export const RegisterSchema = yup.object().shape({
 	middleName: yup
 		.string()
 		.nullable()
+		.notRequired()
 		.matches(nameRegex, ERROR_MESSAGES.NAME.INCORRECT),
 	email: yup
 		.string()

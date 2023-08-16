@@ -17,7 +17,7 @@ function Register() {
 		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
-		mode: 'onTouched',
+		mode: 'onChange',
 		resolver: yupResolver(RegisterSchema),
 	});
 
@@ -80,7 +80,7 @@ function Register() {
 				<main className="register__main">
 					{isError ? (
 						<span className="register__error">
-							{errorMessage || errors.lastName || errors.email}
+							{errorMessage || errors.message}
 						</span>
 					) : (
 						<h2 className="register__subtitle">
