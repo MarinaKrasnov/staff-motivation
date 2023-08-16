@@ -1,4 +1,4 @@
-# Getting Started hello
+# Getting Started
 
 - install dependencies ###`npm i`
 
