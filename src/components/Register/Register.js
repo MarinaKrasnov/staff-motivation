@@ -11,7 +11,7 @@ import eyeButton from '../../images/Icon-hidden-pass.svg';
 function Register() {
 	const {
 		register,
-		// handleSubmit,
+		handleSubmit,
 		// setValue,
 		// getValues,
 		watch,
@@ -25,6 +25,7 @@ function Register() {
 	const [isError, setIsError] = useState(false);
 	const [isPasswordHidden, setPasswordHidden] = useState(false);
 	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
+	// const [isMiddNameInputActive, setMiddNameInputActive] = useState(false)
 
 	function onRegister(data) {
 		signup(data)
@@ -49,9 +50,9 @@ function Register() {
 			});
 	}
 
-	function onSubmit(evt) {
+	function onSubmit(data, evt) {
 		evt.preventDefault();
-		onRegister();
+		onRegister(data);
 	}
 
 	function handlePasswordHidden() {
@@ -70,6 +71,14 @@ function Register() {
 		}
 	}
 
+	/* function handleMiddNameInputFocus() {  
+		setMiddNameInputActive(true);
+	};
+
+	function handleMiddNameInputBlur() {
+		setMiddNameInputActive(false);
+	}; */
+
 	return (
 		<div className="register">
 			<div className="register__container">
@@ -83,11 +92,13 @@ function Register() {
 							{errorMessage || errors.message}
 						</span>
 					) : (
-						<h2 className="register__subtitle">
-							Создайте учётную запись в приложении
-						</h2>
+						<h2 className="register__subtitle">Создайте учётную запись</h2>
 					)}
-					<form className="register__form" onSubmit={onSubmit} noValidate>
+					<form
+						className="register__form"
+						onSubmit={handleSubmit(onSubmit)}
+						noValidate
+					>
 						<input
 							className="register__input"
 							placeholder="E-mail"
@@ -95,65 +106,76 @@ function Register() {
 						/>
 						<input
 							className="register__input"
-							placeholder="Фамилия*"
+							placeholder="Фамилия"
 							{...register('lastName', { required: true })}
 						/>
 						<input
 							className="register__input"
-							placeholder="Имя*"
+							placeholder="Имя"
 							{...register('firstName', { required: true })}
 						/>
+						{/* {watch('middleName') || isMiddNameInputActive ? <span className='register__middleName-span'>Отчество (при наличии)</span> : null} */}
 						<input
 							className="register__input"
 							placeholder="Отчество"
 							{...register('middleName')}
+							// onFocus={handleMiddNameInputFocus}
+							// onBlur={handleMiddNameInputBlur}
 						/>
-						<input
-							className="register__input"
-							placeholder="Пароль"
-							{...register('password', { required: true })}
-							type={isPasswordHidden ? 'password' : 'text'}
-						/>
-						{watch('password') ? (
-							<button
-								className="register__eye-button password"
-								type="button"
-								onClick={handlePasswordHidden}
-							>
-								<img src={eyeButton} alt="скрыть пароль" />
-							</button>
-						) : null}
-						<input
-							className="register__input"
-							type={isConfirmPasswordHidden ? 'password' : 'text'}
-							name="confirmPassword"
-							placeholder="Повторите пароль"
-							{...register('confirmPassword', { required: true })}
-						/>
+						<div className="register__pass-input">
+							<input
+								className="register__input"
+								placeholder="Пароль"
+								{...register('password', { required: true })}
+								type={isPasswordHidden ? 'password' : 'text'}
+							/>
+							{watch('password') ? (
+								<button
+									className="register__eye-button"
+									type="button"
+									onClick={handlePasswordHidden}
+								>
+									<img src={eyeButton} alt="скрыть пароль" />
+								</button>
+							) : null}
+						</div>
+						<div className="register__pass-input">
+							<input
+								className="register__input"
+								type={isConfirmPasswordHidden ? 'password' : 'text'}
+								name="confirmPassword"
+								placeholder="Повторите пароль"
+								{...register('confirmPassword', { required: true })}
+							/>
 
-						{watch('confirmPassword') ? (
-							<button
-								className="register__eye-button confirmPassword"
-								type="button"
-								onClick={handleConfirmPasswordHidden}
-							>
-								<img src={eyeButton} alt="скрыть пароль" />
-							</button>
-						) : null}
+							{watch('confirmPassword') ? (
+								<button
+									className="register__eye-button"
+									type="button"
+									onClick={handleConfirmPasswordHidden}
+								>
+									<img src={eyeButton} alt="скрыть пароль" />
+								</button>
+							) : null}
+						</div>
+
+						{/* <span className='register__caption-input'>Поля, отмеченные *, обязательны для заполнения</span> */}
 
 						<button
 							className={
-								isValid
+								isValid && !isError
 									? 'register__submit-button'
 									: 'register__submit-button_disabled'
 							}
 							type="submit"
-							disabled={!isValid || !isDirty}
+							disabled={!isValid || !isDirty || isError}
 						>
 							Зарегистрироваться
 						</button>
 					</form>
-					{/* <div className="register__caption-link">У меня есть аккаунт.&#8194;Войти</div> */}
+					<div className="register__caption-link">
+						У меня есть аккаунт.&#8194;Войти
+					</div>
 				</main>
 			</div>
 		</div>

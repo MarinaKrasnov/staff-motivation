@@ -45,21 +45,21 @@
 
 	&__subtitle {
 		width: 70%;
-		font-size: 20px;
-		font-weight: 500;
+		font-size: 18px;
+		font-weight: 400;
 		line-height: 160%;
 		color: #525c76;
 		text-align: center;
 		margin: 0 auto;
-		padding-bottom: 54px;
+		padding-bottom: 48px;
 	}
 
 	&__error {
 		display: block;
-		margin: 0 auto 54px;
-		width: 100%;
-		font-size: 20px;
-		font-weight: 500;
+		margin: 0 auto 48px;
+		width: 80%;
+		font-size: 18px;
+		font-weight: 400;
 		line-height: 160%;
 		color: #ff3236;
 		text-align: center;
@@ -69,7 +69,6 @@
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
-		position: relative;
 	}
 
 	&__input {
@@ -82,11 +81,14 @@
 		padding-left: 12px;
 		font-size: 14px;
 		font-style: normal;
-		font-weight: 500;
+		font-weight: 700;
 		line-height: 160%;
 		color: #525c76;
+		position: relative;
+
 
 		&::placeholder {
+			font-family: PT Root UI;
 			color: #525c76;
 			font-size: 14px;
 			font-style: normal;
@@ -102,16 +104,28 @@
 		}
 	}
 
-	/* &__caption-input {
+	&
+
+	&__caption-input {
         color: #525C76;
         font-size: 14px;
         font-style: normal;
         font-weight: 500;
         line-height: 160%;
         margin-left: 26px;
-        padding-bottom: 57px;
+        padding-bottom: 30px;
 
-    } */
+    } 
+
+	&__middleName-span {
+		margin-left: 27px;
+		padding-bottom: 2px;
+		color: #8C93A3;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 160%;
+	}
 
 	&__submit-button {
 		margin: 24px auto;
@@ -137,7 +151,7 @@
 		font-weight: 500;
 		line-height: 160%;
 		border: none;
-		color: #ffffff;
+		color: #B2B7C2;
 		background-color: #e2e4e8;
 	}
 
@@ -146,7 +160,6 @@
 		margin: 0 auto 30px;
 		color: #8247e5;
 		text-align: center;
-		padding-top: 21px;
 		font-size: 18px;
 		font-weight: 500;
 		line-height: 160%;
@@ -159,18 +172,16 @@
 		height: 20px;
 		display: inline-block;
 		position: absolute;
-		right: 11%;
+		right: 7%;
+		top: 15%;
 	}
 
 	&__span {
 		min-height: 120px;
 	}
-}
 
-.password {
-	top: 55%;
-}
-
-.confirmPassword {
-	top: 68%;
+	&__pass-input {
+		margin: 0 auto;
+		position: relative;
+	}
 }
