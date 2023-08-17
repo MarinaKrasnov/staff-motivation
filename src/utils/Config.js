@@ -1,3 +1,4 @@
+// Аня - ошибки валидации инупутов на странице регистрации
 export const ERROR_MESSAGES = {
 	EMAIL: {
 		INCORRECT: 'Некорректный формат электронной почты.',
@@ -15,3 +16,4 @@ export const ERROR_MESSAGES = {
 		EMPTY_FIRSTNAME: 'Укажите имя',
 	},
 };
+

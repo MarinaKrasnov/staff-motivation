@@ -1,3 +1,4 @@
+// Аня - страница регистрации, отправка данных (начало кода)
 import { BASE_URL } from './constants';
 
 const checkResponse = (res) => {
@@ -6,8 +7,6 @@ const checkResponse = (res) => {
 	}
 	return Promise.reject(res.status);
 };
-
-/* user */
 
 export const signup = (data) => {
 	const requestData = [
@@ -31,3 +30,5 @@ export const signup = (data) => {
 		body: JSON.stringify(data),
 	}).then(checkResponse);
 };
+
+// Аня - страница регистрации(конец кода)

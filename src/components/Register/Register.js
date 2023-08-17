@@ -1,11 +1,13 @@
 import './Register.scss';
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../utils/ValidationSchemes';
 import { signup } from '../../utils/MainApi';
 
 import logo from '../../images/logo.svg';
+import alarmLogo from '../../images/alarm-logo.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 
 function Register() {
@@ -17,7 +19,7 @@ function Register() {
 		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
-		mode: 'onChange',
+		mode: 'onTouched',
 		resolver: yupResolver(RegisterSchema),
 	});
 
@@ -25,7 +27,7 @@ function Register() {
 	const [isError, setIsError] = useState(false);
 	const [isPasswordHidden, setPasswordHidden] = useState(false);
 	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
-	// const [isMiddNameInputActive, setMiddNameInputActive] = useState(false)
+	const [isMiddNameInputActive, setMiddNameInputActive] = useState(false);
 
 	function onRegister(data) {
 		signup(data)
@@ -71,13 +73,13 @@ function Register() {
 		}
 	}
 
-	/* function handleMiddNameInputFocus() {  
+	function handleMiddNameInputFocus() {
 		setMiddNameInputActive(true);
-	};
+	}
 
 	function handleMiddNameInputBlur() {
 		setMiddNameInputActive(false);
-	}; */
+	}
 
 	return (
 		<div className="register">
@@ -100,32 +102,122 @@ function Register() {
 						noValidate
 					>
 						<input
-							className="register__input"
-							placeholder="E-mail"
+							className={`register__input ${
+								errors.email && !isValid && isDirty
+									? 'register__input_no-valid'
+									: ''
+							}`}
+							placeholder="E-mail*"
 							{...register('email', { required: true })}
 						/>
+
+						{errors.email ? (
+							<div className="register__error-area">
+								<img
+									className="register__alarm-logo"
+									src={alarmLogo}
+									alt="уведомление"
+								/>
+								<p className="register__error-message">
+									{errors.email.message}
+								</p>
+							</div>
+						) : (
+							<div className="register__input-space"> </div>
+						)}
+
 						<input
-							className="register__input"
-							placeholder="Фамилия"
+							className={`register__input ${
+								errors.lastName && !isValid && isDirty
+									? 'register__input_no-valid'
+									: ''
+							}`}
+							placeholder="Фамилия*"
 							{...register('lastName', { required: true })}
 						/>
+
+						{errors.lastName ? (
+							<div className="register__error-area">
+								<img
+									className="register__alarm-logo"
+									src={alarmLogo}
+									alt="уведомление"
+								/>
+								<p className="register__error-message">
+									{errors.lastName.message}
+								</p>
+							</div>
+						) : (
+							<div className="register__input-space"> </div>
+						)}
+
 						<input
-							className="register__input"
-							placeholder="Имя"
+							className={`register__input ${
+								errors.firstName && !isValid && isDirty
+									? 'register__input_no-valid'
+									: ''
+							}`}
+							placeholder="Имя*"
 							{...register('firstName', { required: true })}
 						/>
-						{/* {watch('middleName') || isMiddNameInputActive ? <span className='register__middleName-span'>Отчество (при наличии)</span> : null} */}
+						{errors.firstName ? (
+							<div className="register__error-area">
+								<img
+									className="register__alarm-logo"
+									src={alarmLogo}
+									alt="уведомление"
+								/>
+								<p className="register__error-message">
+									{errors.firstName.message}
+								</p>
+							</div>
+						) : (
+							<div className="register__input-space"> </div>
+						)}
+
+						{watch('middleName') || isMiddNameInputActive ? (
+							<span className="register__middleName-span">
+								Отчество (при наличии)
+							</span>
+						) : null}
+
 						<input
-							className="register__input"
-							placeholder="Отчество"
+							className={`register__input ${
+								errors.middleName && !isValid && isDirty
+									? 'register__input_no-valid'
+									: ''
+							}`}
+							placeholder={
+								isMiddNameInputActive ? '' : 'Отчество (при наличии)'
+							}
 							{...register('middleName')}
-							// onFocus={handleMiddNameInputFocus}
-							// onBlur={handleMiddNameInputBlur}
+							onFocus={handleMiddNameInputFocus}
+							onBlur={handleMiddNameInputBlur}
 						/>
+
+						{errors.middleName ? (
+							<div className="register__error-area">
+								<img
+									className="register__alarm-logo"
+									src={alarmLogo}
+									alt="уведомление"
+								/>
+								<p className="register__error-message">
+									{errors.middleName.message}
+								</p>
+							</div>
+						) : (
+							<div className="register__input-space"> </div>
+						)}
+
 						<div className="register__pass-input">
 							<input
-								className="register__input"
-								placeholder="Пароль"
+								className={`register__input ${
+									errors.password && !isValid && isDirty
+										? 'register__input_no-valid'
+										: ''
+								}`}
+								placeholder="Пароль*"
 								{...register('password', { required: true })}
 								type={isPasswordHidden ? 'password' : 'text'}
 							/>
@@ -139,15 +231,33 @@ function Register() {
 								</button>
 							) : null}
 						</div>
+
+						{errors.password ? (
+							<div className="register__error-area">
+								<img
+									className="register__alarm-logo"
+									src={alarmLogo}
+									alt="уведомление"
+								/>
+								<p className="register__error-message">
+									{errors.password.message}
+								</p>
+							</div>
+						) : (
+							<div className="register__input-space"> </div>
+						)}
 						<div className="register__pass-input">
 							<input
-								className="register__input"
+								className={`register__input ${
+									errors.confirmPassword && !isValid && isDirty
+										? 'register__input_no-valid'
+										: ''
+								}`}
 								type={isConfirmPasswordHidden ? 'password' : 'text'}
 								name="confirmPassword"
-								placeholder="Повторите пароль"
+								placeholder="Повторите пароль*"
 								{...register('confirmPassword', { required: true })}
 							/>
-
 							{watch('confirmPassword') ? (
 								<button
 									className="register__eye-button"
@@ -159,7 +269,23 @@ function Register() {
 							) : null}
 						</div>
 
-						{/* <span className='register__caption-input'>Поля, отмеченные *, обязательны для заполнения</span> */}
+						{errors.confirmPassword ? (
+							<div className="register__error-area">
+								<img
+									className="register__alarm-logo"
+									src={alarmLogo}
+									alt="уведомление"
+								/>
+								<p className="register__error-message">
+									{errors.confirmPassword.message}
+								</p>
+							</div>
+						) : (
+							<div className="register__input-space"> </div>
+						)}
+						<span className="register__caption-input">
+							Поля, отмеченные *, обязательны для заполнения
+						</span>
 
 						<button
 							className={
@@ -173,9 +299,9 @@ function Register() {
 							Зарегистрироваться
 						</button>
 					</form>
-					<div className="register__caption-link">
+					<NavLink to="/signin" className="register__caption-link">
 						У меня есть аккаунт.&#8194;Войти
-					</div>
+					</NavLink>
 				</main>
 			</div>
 		</div>

@@ -77,7 +77,6 @@
 		border: 1px solid #e2e4e8;
 		width: 360px;
 		min-height: 36px;
-		margin-bottom: 24px;
 		padding-left: 12px;
 		font-size: 14px;
 		font-style: normal;
@@ -94,16 +93,29 @@
 			font-weight: 500;
 			line-height: 160%;
 		}
+
 		&:focus {
 			outline: none;
 		}
+
 		&[type='password'] {
-			font-size: 21px;
-			letter-spacing: 1px;
+			font-size: 35px;
+			letter-spacing: -2px;
+			padding-bottom: 6px;
 		}
 	}
 
-	& &__caption-input {
+	&__input_no-valid {
+		outline: 1px solid #ff3236;
+		box-shadow: 0 0 0.5px 3px rgba(255, 50, 54, 0.3);
+	}
+
+	&__input_no-valid:focus {
+		outline: 1px solid #ff3236;
+		box-shadow: 0 0 0.5px 3px rgba(255, 50, 54, 0.3);
+	}
+
+	&__caption-input {
 		color: #525c76;
 		font-size: 14px;
 		font-style: normal;
@@ -152,6 +164,7 @@
 	}
 
 	&__caption-link {
+		display: block;
 		width: 70%;
 		margin: 0 auto 30px;
 		color: #8247e5;
@@ -159,6 +172,7 @@
 		font-size: 18px;
 		font-weight: 500;
 		line-height: 160%;
+		text-decoration: none;
 	}
 
 	&__eye-button {
@@ -168,8 +182,8 @@
 		height: 20px;
 		display: inline-block;
 		position: absolute;
-		right: 7%;
-		top: 15%;
+		right: 5%;
+		top: 19%;
 	}
 
 	&__span {
@@ -179,5 +193,32 @@
 	&__pass-input {
 		margin: 0 auto;
 		position: relative;
+	}
+
+	&__error-area {
+		display: flex;
+		margin: 2px 0 2px 24px;
+		align-self: flex-start;
+	}
+
+	&__alarm-logo {
+		margin: 0;
+		align-self: center;
+		width: 16px;
+		height: 16px;
+	}
+
+	&__error-message {
+		margin: 0 0 2px 8px;
+		padding: 0;
+		align-self: center;
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 19px;
+		color: #ff3236;
+	}
+
+	&__input-space {
+		min-height: 24px;
 	}
 }

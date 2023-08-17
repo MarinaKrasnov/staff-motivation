@@ -1,5 +1,6 @@
-import './App.scss';
+import './App.css';
 import React from 'react';
+// Аня - страница регистрации (начало кода)
 import { Route, Routes } from 'react-router-dom';
 import Register from '../Register/Register';
 
@@ -12,5 +13,6 @@ function App() {
 		</div>
 	);
 }
+// Аня - страница регистрации (конец кода)
 
 export default App;
