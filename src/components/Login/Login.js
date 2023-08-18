@@ -52,13 +52,9 @@ export default function Login({
 	return (
 		<section className="login">
 			<div className="login__container">
-				<div className="login__title-container">
-					<img
-						className="login__circle-logo"
-						src={greyCircleLogo}
-						alt="лампочка"
-					/>
-					<h2 className="login__title">Motivation System</h2>
+				<div className="title-container">
+					<img className="title-logo" src={greyCircleLogo} alt="лампочка" />
+					<h2 className="title">Motivation System</h2>
 				</div>
 				<p className="login__message">
 					Войдите в аккаунт, чтобы получить доступ к приложению
