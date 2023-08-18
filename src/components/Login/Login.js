@@ -52,13 +52,9 @@ export default function Login({
 	return (
 		<section className="login">
 			<div className="login__container">
-				<div className="login__title-container">
-					<img
-						className="login__circle-logo"
-						src={greyCircleLogo}
-						alt="лампочка"
-					/>
-					<h2 className="login__title">Motivation System</h2>
+				<div className="title-container">
+					<img className="title-logo" src={greyCircleLogo} alt="лампочка" />
+					<h2 className="title">Motivation System</h2>
 				</div>
 				<p className="login__message">
 					Войдите в аккаунт, чтобы получить доступ к приложению
@@ -69,8 +65,8 @@ export default function Login({
 					noValidate
 				>
 					<input
-						className={`login__input login__input_type_email ${
-							errors.email && !isValid && isDirty ? 'login__input_no-valid' : ''
+						className={`input login__input ${
+							errors.email && !isValid ? 'input_no-valid' : ''
 						}`}
 						placeholder="E-mail"
 						{...register('email', { required: true })}
@@ -88,8 +84,8 @@ export default function Login({
 						<p className="login__error-message">{errors.email?.message}</p>
 					</div>
 					<input
-						className={`login__input login__input_type_password ${
-							errors.password && !isValid ? 'login__input_no-valid' : ''
+						className={`input login__input ${
+							errors.password && !isValid ? 'input_no-valid' : ''
 						}`}
 						placeholder="Пароль"
 						{...register('password', { required: true })}
@@ -137,7 +133,13 @@ export default function Login({
 							name="remember-checkbox"
 						/>
 						<span>{emptyText}</span>
-						<p className="login__checkbox-message">Запомнить меня</p>
+						<p
+							className={`login__checkbox-message ${
+								isRememberMePressed ? 'login__checkbox-message_active' : ''
+							}`}
+						>
+							Запомнить меня
+						</p>
 						<NavLink
 							className="login__link login__link_type_recovery"
 							to="/password-recovery"
@@ -147,7 +149,7 @@ export default function Login({
 					</label>
 
 					<button
-						className="login__button"
+						className="submit-button"
 						type="submit"
 						disabled={!isDirty || !isValid}
 					>

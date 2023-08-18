@@ -1,11 +1,4 @@
-$accentDarkGrey400: #525c76;
-$accentDarkGrey900: #0f1d40;
-$accentRedError500: #ff3236;
-$accentLightGrey400: #e2e4e8;
-$accentLightGrey600: #b2b7c2;
-$primary500: #8247e5;
-$mainWhite: #ffffff;
-$mainSmokyWhite: #f4f4f4;
+@import '../../styles/colors.scss';
 
 .login {
 	display: flex;
@@ -24,24 +17,6 @@ $mainSmokyWhite: #f4f4f4;
 	height: 668px;
 	background-color: $mainWhite;
 	border-radius: 4px;
-}
-.login__title-container {
-	margin: 80px 0 0 0;
-	display: flex;
-	width: 260px;
-}
-.login__circle-logo {
-	margin: 0 16px 0 0;
-	width: 40px;
-	height: 40px;
-}
-.login__title {
-	margin: 0;
-	padding: 0;
-	font-weight: 500;
-	font-size: 24px;
-	line-height: 36px;
-	color: $accentDarkGrey900;
 }
 .login__message {
 	margin: 16px 0 0 0;
@@ -64,30 +39,13 @@ $mainSmokyWhite: #f4f4f4;
 }
 .login__input {
 	margin: 24px 0 0 0;
-	padding: 0 70px 0 12px;
 	width: 426px;
-	height: 40px;
-	font-weight: 700;
-	font-size: 14px;
-	line-height: 23px;
-	color: $accentDarkGrey400;
-	border: 1px solid $accentLightGrey400;
-	border-radius: 3px;
-	&:hover {
-		outline: 1px solid $accentLightGrey400;
-	}
-	&:focus {
-		outline: 1px solid $accentLightGrey400;
-	}
+	font-weight: 500;
 }
 .login__input[type='password'] {
 	font-size: 35px;
 	letter-spacing: -2px;
 	padding-bottom: 6px;
-}
-.login__input_no-valid:focus {
-	outline: 1px solid $accentRedError500;
-	box-shadow: 0 0 0.5px 3px rgba(255, 50, 54, 0.3);
 }
 .login__error-area {
 	display: flex;
@@ -113,7 +71,6 @@ $mainSmokyWhite: #f4f4f4;
 	line-height: 19px;
 	color: $accentRedError500;
 }
-
 .login__input-button {
 	position: absolute;
 	top: 339px;
@@ -123,7 +80,6 @@ $mainSmokyWhite: #f4f4f4;
 	height: 20px;
 	border: none;
 	background-color: $mainWhite;
-
 	&:hover {
 		opacity: 0.5;
 	}
@@ -141,7 +97,7 @@ $mainSmokyWhite: #f4f4f4;
 	display: flex;
 	align-items: center;
 	max-width: 426px;
-	margin: 32px 0 0 0;
+	margin: 32px 0 56px 0;
 }
 .login__checkbox[type='checkbox'] {
 	display: none;
@@ -173,6 +129,9 @@ $mainSmokyWhite: #f4f4f4;
 	line-height: 22px;
 	color: $accentLightGrey600;
 }
+.login__checkbox-message_active {
+	color: $accentDarkGrey900;
+}
 .login__link {
 	margin: 0;
 	padding: 0;
@@ -184,23 +143,6 @@ $mainSmokyWhite: #f4f4f4;
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 22px;
-}
-.login__button {
-	margin: 56px 0 0 0;
-	width: 344px;
-	height: 52px;
-	justify-self: center;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 32px;
-	color: $mainWhite;
-	background-color: $primary500;
-	border-radius: 3px;
-	border: none;
-	&:disabled {
-		color: $accentLightGrey600;
-		background-color: $accentLightGrey400;
-	}
 }
 .login__link_type_register {
 	margin: 24px 0 0 0;

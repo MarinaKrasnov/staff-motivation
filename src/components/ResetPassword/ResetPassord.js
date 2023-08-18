@@ -23,13 +23,9 @@ export default function ResetPassword({ onResetPassword }) {
 	return (
 		<section className="reset-password">
 			<div className="reset-password__container">
-				<div className="reset-password__title-container">
-					<img
-						className="reset-password__circle-logo"
-						src={greyCircleLogo}
-						alt="лампочка"
-					/>
-					<h2 className="reset-password__title">Motivation System</h2>
+				<div className="title-container">
+					<img className="title-logo" src={greyCircleLogo} alt="лампочка" />
+					<h2 className="title">Motivation System</h2>
 				</div>
 				<p className="reset-password__message">
 					Укажите email, который вы использовали для регистрации
@@ -41,10 +37,8 @@ export default function ResetPassword({ onResetPassword }) {
 					noValidate
 				>
 					<input
-						className={`reset-password__input ${
-							errors.email && !isValid && isDirty
-								? 'reset-password__input_no-valid'
-								: ''
+						className={`input reset-password__input ${
+							errors.email && !isValid ? 'input_no-valid' : ''
 						}`}
 						placeholder="E-mail"
 						{...register('email', { required: true })}
@@ -65,7 +59,7 @@ export default function ResetPassword({ onResetPassword }) {
 					</div>
 
 					<button
-						className="reset-password__button"
+						className="submit-button"
 						type="submit"
 						disabled={!isDirty || !isValid}
 					>
