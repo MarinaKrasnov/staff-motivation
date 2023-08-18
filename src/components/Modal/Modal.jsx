@@ -39,31 +39,3 @@ function Modal() {
 
 export default Modal;
 
-
-
-
-// import { useNavigate } from 'react-router-dom';
-// import logo from '../images/CircleWavyCheck.png';
-// import styles from './Modal.module.scss';
-
-// function Modal() {
-//   const navigate = useNavigate();
-
-//   const handleLogin = () => {
-//     navigate('/main');
-//   };
-
-//   return (
-//     <section className={styles.back}>
-//       <div className={styles.Module}>
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <h2 className={styles.Message}>Ваш пароль успешно изменен!</h2>
-//         <button className={styles.button} onClick={handleLogin}>
-//           Войти
-//         </button>
-//       </div>
-//     </section>
-//   );
-// }
-
-// export default Modal;
