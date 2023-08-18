@@ -5,7 +5,7 @@ import Register from '../Register/Register';
 
 function App() {
 	return (
-		//
+		// Аня - добавлен модуль регистрации
 		<div className="page">
 			<Routes>
 				<Route path="/signup" element={<Register />} />
@@ -13,6 +13,5 @@ function App() {
 		</div>
 	);
 }
-// Аня - страница регистрации (конец кода)
 
 export default App;

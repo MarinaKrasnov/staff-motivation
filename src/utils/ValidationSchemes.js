@@ -27,15 +27,21 @@ export const RegisterSchema = yup.object().shape({
 		}),
 	password: yup
 		.string()
+		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
 		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
 		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
-		.required(ERROR_MESSAGES.PASSWORD.EMPTY),
+		.oneOf(
+			[yup.ref('confirmPassword'), null],
+			ERROR_MESSAGES.PASSWORD.MUST_MATCH
+		),
+
 	confirmPassword: yup
 		.string()
-		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
-		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
-		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
-		.oneOf([yup.ref('password'), null], ERROR_MESSAGES.PASSWORD.MUST_MATCH),
+		.required(ERROR_MESSAGES.CONFIRM_PASSWORD.EMPTY)
+		.oneOf(
+			[yup.ref('password'), null],
+			ERROR_MESSAGES.CONFIRM_PASSWORD.MUST_MATCH
+		),
 });
 
 // Аня - валидация на странице регистрации (конец кода)
