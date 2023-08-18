@@ -1,8 +1,17 @@
 $color_1: white;
 $color_2: #525C76;
 $background-color_1: #FFFFFF;
+$mainSmokyWhite: #f4f4f4;
 
-/* Оставил красные границы, чтобы был виден попап*/
+.back {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	background-color: $mainSmokyWhite;
+}
+
+
 .Module {
 	display: flex;
 	position: relative;
@@ -12,7 +21,6 @@ $background-color_1: #FFFFFF;
 	align-items: center;
 }
 .ModulePort {
-	border: 1px solid red;
 	width: 530px;
 	height: 419px;
 	display: flex;
@@ -23,7 +31,7 @@ $background-color_1: #FFFFFF;
 	right: 0;
 	justify-content: center;
 	align-items: center;
-	background-color: $background-color_1;
+    background-color: $background-color_1;	
 	margin: auto;
 }
 .button {
@@ -43,5 +51,9 @@ $background-color_1: #FFFFFF;
 	text-align: center;
 	color: $color_2;
 	font-weight: 400;
-	margin-top: 30px;
+	margin-top: 24px;
+}
+
+.openButton {
+	margin: auto;
 }

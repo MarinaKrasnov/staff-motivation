@@ -1,12 +1,25 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Modal from '../Modal/Modal';
 
+
+function Main() {
+  return (
+    <div>
+      <h1>Cтраница входа</h1>
+    </div>
+  );
+}
+
 function App() {
-	// @TODO: автор Виталий, компонент Modal - модальное окно, которое сообщае об успешном изменении пароля. Еще будет доробатываться.
-	return (
-		<div className='App'>
-			<Modal/>
-		</div>
-	);
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Modal />} />
+        <Route path="/main" element={<Main />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
+
