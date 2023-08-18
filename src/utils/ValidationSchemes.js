@@ -13,7 +13,7 @@ export const LoginSchema = yup.object().shape({
 		}),
 	password: yup
 		.string()
-		.min(6, ERROR_MESSAGES.PASSWORD.TO_SHORT)
+		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
 		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY),
 });
