@@ -37,10 +37,8 @@ export default function ResetPassword({ onResetPassword }) {
 					noValidate
 				>
 					<input
-						className={`reset-password__input ${
-							errors.email && !isValid && isDirty
-								? 'reset-password__input_no-valid'
-								: ''
+						className={`input reset-password__input ${
+							errors.email && !isValid ? 'input_no-valid' : ''
 						}`}
 						placeholder="E-mail"
 						{...register('email', { required: true })}
