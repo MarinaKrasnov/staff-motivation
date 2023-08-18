@@ -149,7 +149,7 @@ export default function Login({
 					</label>
 
 					<button
-						className="login__button"
+						className="submit-button"
 						type="submit"
 						disabled={!isDirty || !isValid}
 					>

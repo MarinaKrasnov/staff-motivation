@@ -2,15 +2,7 @@
 @import url(./vendor/ptrootui/ptrootui.scss);
 @import url(./components/Login/Login.scss);
 @import url(./components/ResetPassword/ResetPassword.scss);
-
-$accentDarkGrey400: #525c76;
-$accentDarkGrey900: #0f1d40;
-$accentRedError500: #ff3236;
-$accentLightGrey400: #e2e4e8;
-$accentLightGrey600: #b2b7c2;
-$primary500: #8247e5;
-$mainWhite: #ffffff;
-$mainSmokyWhite: #f4f4f4;
+@import './styles/colors.scss';
 
 body {
 	margin: 0;
@@ -73,5 +65,22 @@ $box-shadowError: 0 0 0.5px 3px rgba(255, 50, 54, 0.3);
 	&:hover {
 		border-color: $accentRedError500;
 		box-shadow: $box-shadowError;
+	}
+}
+.submit-button {
+	padding: 0;
+	width: 344px;
+	height: 52px;
+	justify-self: center;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 32px;
+	color: $mainWhite;
+	background-color: $primary500;
+	border-radius: 3px;
+	border: none;
+	&:disabled {
+		color: $accentLightGrey600;
+		background-color: $accentLightGrey400;
 	}
 }

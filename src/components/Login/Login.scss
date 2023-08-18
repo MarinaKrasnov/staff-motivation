@@ -1,11 +1,4 @@
-$accentDarkGrey400: #525c76;
-$accentDarkGrey900: #0f1d40;
-$accentRedError500: #ff3236;
-$accentLightGrey400: #e2e4e8;
-$accentLightGrey600: #b2b7c2;
-$primary500: #8247e5;
-$mainWhite: #ffffff;
-$mainSmokyWhite: #f4f4f4;
+@import '../../styles/colors.scss';
 
 .login {
 	display: flex;
@@ -104,7 +97,7 @@ $mainSmokyWhite: #f4f4f4;
 	display: flex;
 	align-items: center;
 	max-width: 426px;
-	margin: 32px 0 0 0;
+	margin: 32px 0 56px 0;
 }
 .login__checkbox[type='checkbox'] {
 	display: none;
@@ -150,23 +143,6 @@ $mainSmokyWhite: #f4f4f4;
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 22px;
-}
-.login__button {
-	margin: 56px 0 0 0;
-	width: 344px;
-	height: 52px;
-	justify-self: center;
-	font-weight: 500;
-	font-size: 20px;
-	line-height: 32px;
-	color: $mainWhite;
-	background-color: $primary500;
-	border-radius: 3px;
-	border: none;
-	&:disabled {
-		color: $accentLightGrey600;
-		background-color: $accentLightGrey400;
-	}
 }
 .login__link_type_register {
 	margin: 24px 0 0 0;

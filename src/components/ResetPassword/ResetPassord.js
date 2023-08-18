@@ -59,7 +59,7 @@ export default function ResetPassword({ onResetPassword }) {
 					</div>
 
 					<button
-						className="reset-password__button"
+						className="submit-button"
 						type="submit"
 						disabled={!isDirty || !isValid}
 					>
