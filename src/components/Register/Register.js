@@ -1,6 +1,6 @@
 import './Register.scss';
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../utils/ValidationSchemes';
@@ -11,6 +11,7 @@ import alarmLogo from '../../images/alarm-logo.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 
 function Register() {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -32,8 +33,8 @@ function Register() {
 	function onRegister(data) {
 		signup(data)
 			.then(() => {
-				console.log('Пользователь зарегистрирован');
-				// здесь будет открываться попап(или не попап, или не будет) об успешной регистрации
+				navigate('/main');
+				console.log('Пользователь зарегистрирован'); // проверяю успешна ли регистрация
 			})
 			.catch((err) => {
 				if (err === 409) {
@@ -42,7 +43,6 @@ function Register() {
 				} else if (err === 500) {
 					setIsError(true);
 					setErrorMessage('На сервере произошла ошибка');
-					// должна быть ошибка что такого пользователя нет в БД
 				} else {
 					setIsError(true);
 					setErrorMessage(
