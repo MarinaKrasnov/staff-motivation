@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import logo from '../../images/CircleWavyCheck.png';
+import logo from '../../images/CircleWavyCheck.svg';
 import styles from './Modal.module.scss';
 
 // Компонент ModalMessage
