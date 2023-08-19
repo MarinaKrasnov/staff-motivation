@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../images/CircleWavyCheck.png';
+import logo from '../../images/CircleWavyCheck.svg';
 import styles from './Modal.module.scss';
 
 function Modal() {

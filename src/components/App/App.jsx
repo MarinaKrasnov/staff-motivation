@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Modal />} />
-        <Route path="/main" element={<Main />} />
+        <Route path="/signin" element={<Main />} />
       </Routes>
     </Router>
   );
