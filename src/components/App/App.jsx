@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Modal from '../Modal/Modal';
+import ModalMessage from '../Modal/Modal';
 
-
+// Виталий - добавил компонент ModalMessage (уведомление о ссылке)
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Modal />} />
+        <Route path="/" element={<ModalMessage />} />
       </Routes>
     </Router>
   );

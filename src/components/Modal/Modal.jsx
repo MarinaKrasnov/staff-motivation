@@ -1,11 +1,39 @@
-import { useState } from 'react';
-
+import { useState, useEffect, useRef } from 'react';
 import logo from '../../images/CircleWavyCheck.png';
 import styles from './Modal.module.scss';
 
-function Modal() {
-  const [isOpen, setIsOpen] = useState(false);
+// Компонент ModalMessage
+// Реализовано окрытие попапа через handleOpenModal
+// Реализовано закрытия попапа нажатием на escape 
+// Реализовано закрытие попапа если пользователь нажмет мимо попапа
 
+function ModalMessage() {
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    const handleMouseDown = (event) => {
+      if (!modalRef.current || modalRef.current.contains(event.target)) {
+        return;
+      }
+      
+      setIsOpen(false);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleMouseDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleMouseDown);
+    };
+  }, []);
   const handleOpenModal = () => {
     setIsOpen(true);
   };
@@ -13,10 +41,12 @@ function Modal() {
   return (
     <section className={styles.back}>
       {isOpen && (
-        <section className={styles.ModulePort}>
+        <section className={styles.ModulePort} ref={modalRef}>
           <div className={styles.Module}>
             <img src={logo} className="App-logo" alt="logo" />
-            <h2 className={styles.Message}>Мы отправили ссылку для создания нового пароля на вашу электронную почту</h2>
+            <h2 className={styles.Message}>
+              Мы отправили ссылку для создания нового пароля на вашу электронную почту
+            </h2>
           </div>
         </section>
       )}
@@ -29,4 +59,6 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default ModalMessage;
+
+
