@@ -4,20 +4,23 @@ import logo from '../../images/CircleWavyCheck.svg';
 import styles from './Modal.module.scss';
 
 function Modal() {
+  // Добавляем состояние isOpen
   const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
 
+// Устанавливаем значение isOpen в true
   const handleOpenModal = () => {
     setIsOpen(true);
   };
-
+// Используем navigate для перенаправления на страницу Signin
   const handleLogin = () => {
-    navigate('/main');
+    navigate('/Signin');
   };
 
   return (
     <section className={styles.back}>
-      {isOpen && (
+      {isOpen && ( // Проверяем значение isOpen для отображения модального окна
         <section className={styles.ModulePort}>
           <div className={styles.Module}>
             <img src={logo} className="App-logo" alt="logo" />
@@ -28,7 +31,7 @@ function Modal() {
           </div>
         </section>
       )}
-      {!isOpen && (
+      {!isOpen && ( // Проверяем значение isOpen для отображения кнопки открытия модального окна
         <button className={styles.openButton} onClick={handleOpenModal}>
           Открыть модальное окно
         </button>
