@@ -1,10 +1,12 @@
 .App {
 	text-align: center;
+	/* Аня - страница регистрации(начало кода) */
 	max-width: 100%;
 	min-width: 320px;
 	min-height: 100vh;
 	margin: 0 auto;
 	background-color: #f4f4f4;
+	/* Аня - страница регистрации(конец кода) */
 }
 
 .App-logo {
