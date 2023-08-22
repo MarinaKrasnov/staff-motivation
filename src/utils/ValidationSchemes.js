@@ -2,6 +2,7 @@ import * as yup from 'yup';
 import emailRegex, { nameRegex } from './RegExps'; // Аня - страница регистрации
 import { ERROR_MESSAGES } from './Config';
 
+// Андрей, схема логина, начало
 export const LoginSchema = yup.object().shape({
 	email: yup
 		.string()
@@ -28,6 +29,7 @@ export const ResetPassordSchema = yup.object().shape({
 			return RegEx.test(String(value).toLowerCase());
 		}),
 });
+// Андрей, схема логина, конец
 
 // Аня - валидация на странице регистрации(начало кода)
 export const RegisterSchema = yup.object().shape({
@@ -70,5 +72,4 @@ export const RegisterSchema = yup.object().shape({
 			ERROR_MESSAGES.CONFIRM_PASSWORD.MUST_MATCH
 		),
 });
-
 // Аня - валидация на странице регистрации (конец кода)

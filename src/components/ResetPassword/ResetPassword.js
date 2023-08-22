@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPassordSchema } from '../../utils/ValidationSchemes';
@@ -7,7 +7,7 @@ import { ResetPassordSchema } from '../../utils/ValidationSchemes';
 import greyCircleLogo from '../../images/grey-circle-logo.svg';
 import alarmLogo from '../../images/alarm-logo.svg';
 
-export default function ResetPassword({ onResetPassword }) {
+export default function ResetPassword() {
 	const {
 		register,
 		handleSubmit,
@@ -17,8 +17,8 @@ export default function ResetPassword({ onResetPassword }) {
 		resolver: yupResolver(ResetPassordSchema),
 	});
 	// функция на сабмит
-	const onSubmit = (data) => {
-		onResetPassword(data.email);
+	const onSubmit = () => {
+		// нужен api
 	};
 	return (
 		<section className="reset-password">
@@ -81,6 +81,8 @@ export default function ResetPassword({ onResetPassword }) {
 	);
 }
 
+/*
 ResetPassword.propTypes = {
 	onResetPassword: PropTypes.func.isRequired,
 };
+*/
