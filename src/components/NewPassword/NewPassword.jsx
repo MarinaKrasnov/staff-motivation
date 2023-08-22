@@ -1,11 +1,24 @@
 import './NewPassword.scss';
 import { useState } from 'react';
+// import { useForm } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import { NewPasswordSchema } from '../../utils/ValidationShemes';
 
 function NewPassword() {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
 	const [password, setPassword] = useState('');
 	const [repeatPassword, setRepeatPassword] = useState('');
+
+	// const {
+	// 	register,
+	// 	handleSubmit,
+	// 	setValue,
+	// 	formState: { errors, isValid, isDirty },
+	// } = useForm({
+	// 	mode: 'onChange',
+	// 	resolver: yupResolver(NewPasswordSchema),
+	// });
 
 	const togglePasswordVisibility = () => {
 		setPasswordVisible(!passwordVisible);
