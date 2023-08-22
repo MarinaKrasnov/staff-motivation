@@ -107,7 +107,7 @@ function Register() {
 									? 'register__input_no-valid'
 									: ''
 							}`}
-							placeholder="E-mail*"
+							placeholder="E-mail"
 							{...register('email', { required: true })}
 						/>
 
@@ -132,7 +132,7 @@ function Register() {
 									? 'register__input_no-valid'
 									: ''
 							}`}
-							placeholder="Фамилия*"
+							placeholder="Фамилия"
 							{...register('lastName', { required: true })}
 						/>
 
@@ -157,7 +157,7 @@ function Register() {
 									? 'register__input_no-valid'
 									: ''
 							}`}
-							placeholder="Имя*"
+							placeholder="Имя"
 							{...register('firstName', { required: true })}
 						/>
 						{errors.firstName ? (
@@ -217,7 +217,7 @@ function Register() {
 										? 'register__input_no-valid'
 										: ''
 								}`}
-								placeholder="Пароль*"
+								placeholder="Пароль"
 								{...register('password', { required: true })}
 								type={isPasswordHidden ? 'password' : 'text'}
 							/>
@@ -255,7 +255,7 @@ function Register() {
 								}`}
 								type={isConfirmPasswordHidden ? 'password' : 'text'}
 								name="confirmPassword"
-								placeholder="Повторите пароль*"
+								placeholder="Повторите пароль"
 								{...register('confirmPassword', { required: true })}
 							/>
 							{watch('confirmPassword') ? (
@@ -283,9 +283,9 @@ function Register() {
 						) : (
 							<div className="register__input-space"> </div>
 						)}
-						<span className="register__caption-input">
+						{/* <span className="register__caption-input">
 							Поля, отмеченные *, обязательны для заполнения
-						</span>
+						</span> */}
 
 						<button
 							className={
