@@ -9,15 +9,29 @@ import errorIcon from '../../images/error-icon.svg';
 function NewPassword() {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
+	const [passwordDirty, setPasswordDirty] = useState(false);
+	const [repeatPasswordDirty, setRepeatPasswordDirty] = useState(false);
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isValid, isDirty },
+		setValue,
+		formState: { errors, isValid },
 	} = useForm({
-		mode: 'onChange',
+		// mode: 'onChange',
+		mode: 'onTouched',
 		resolver: yupResolver(NewPasswordSchema),
 	});
+
+	const handleChange = (e) => {
+		setValue('password', e.target.value);
+		setPasswordDirty(true);
+	};
+
+	const handleChangeRepeat = (e) => {
+		setValue('repeatPassword', e.target.value);
+		setRepeatPasswordDirty(true);
+	};
 
 	const togglePasswordVisibility = () => {
 		setPasswordVisible(!passwordVisible);
@@ -32,7 +46,7 @@ function NewPassword() {
 		MainApi.changePassword(data.oldPassword, data.password)
 			.then(() => {
 				console.log('Пароль успешно изменен');
-				// что-то будет происходит, после успешной смены пароля
+				// здесь будет открываться Виталин компонент (попап с кнопкой)
 			})
 			.catch((error) => {
 				console.log('Ошибка при смене пароля:', error);
@@ -59,6 +73,7 @@ function NewPassword() {
 							type={passwordVisible ? 'text' : 'password'}
 							placeholder="Пароль"
 							{...register('password')}
+							onChange={handleChange}
 						/>
 						<div className="new-password__error-container">
 							{errors.password && (
@@ -72,7 +87,7 @@ function NewPassword() {
 								</div>
 							)}
 						</div>
-						{isDirty && (
+						{passwordDirty && (
 							<div className="new-password__btn-container">
 								<button
 									className={`new-password__hide-btn ${
@@ -94,6 +109,7 @@ function NewPassword() {
 							type={repeatPasswordVisible ? 'text' : 'password'}
 							placeholder="Повторите пароль"
 							{...register('repeatPassword')}
+							onChange={handleChangeRepeat}
 						/>
 						<div className="new-password__error-container">
 							{errors.repeatPassword && (
@@ -107,7 +123,7 @@ function NewPassword() {
 								</div>
 							)}
 						</div>
-						{isDirty && (
+						{repeatPasswordDirty && (
 							<div className="new-password__btn-container">
 								<button
 									className={`new-password__hide-btn ${
@@ -126,7 +142,7 @@ function NewPassword() {
 					<button
 						className="new-password__submit-btn"
 						type="submit"
-						disabled={!isValid || !isDirty}
+						disabled={!isValid}
 					>
 						Изменить пароль
 					</button>
