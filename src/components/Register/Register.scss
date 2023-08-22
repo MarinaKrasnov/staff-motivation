@@ -99,9 +99,7 @@
 		}
 
 		&[type='password'] {
-			font-size: 35px;
-			letter-spacing: -2px;
-			padding-bottom: 6px;
+			font-size: 20px;
 		}
 	}
 
@@ -126,13 +124,14 @@
 	}
 
 	&__middleName-span {
-		margin-left: 27px;
+		margin-left: 32px;
 		padding-bottom: 2px;
 		color: #8c93a3;
 		font-size: 12px;
 		font-style: normal;
 		font-weight: 500;
 		line-height: 160%;
+		text-align: left;
 	}
 
 	&__submit-button {
@@ -178,8 +177,6 @@
 	&__eye-button {
 		border: none;
 		background-color: inherit;
-		width: 20px;
-		height: 20px;
 		display: inline-block;
 		position: absolute;
 		right: 5%;
