@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NewPasswordSchema } from '../../utils/ValidationShemes';
+import * as MainApi from '../../utils/MainApi';
 import './NewPassword.scss';
 import errorIcon from '../../images/error-icon.svg';
 
@@ -11,8 +12,7 @@ function NewPassword() {
 
 	const {
 		register,
-		// handleSubmit,
-		// setValue,
+		handleSubmit,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onChange',
@@ -27,6 +27,19 @@ function NewPassword() {
 		setRepeatPasswordVisible(!repeatPasswordVisible);
 	};
 
+	// запрос на смену пароля
+	const onSubmit = (data) => {
+		MainApi.changePassword(data.oldPassword, data.password)
+			.then(() => {
+				console.log('Пароль успешно изменен');
+				// что-то будет происходит, после успешной смены пароля
+			})
+			.catch((error) => {
+				console.log('Ошибка при смене пароля:', error);
+				// что-то будет происходит, если возникнут ошибки при смене пароля
+			});
+	};
+
 	return (
 		<section className="new-password">
 			<div className="new-password__container">
@@ -37,10 +50,7 @@ function NewPassword() {
 				<p className="new-password__subtitle">
 					Войдите в аккаунт, чтобы получить доступ к приложению
 				</p>
-				<form
-					className="new-password__form"
-					onSubmit={(data) => console.log(data)}
-				>
+				<form className="new-password__form" onSubmit={handleSubmit(onSubmit)}>
 					<div className="new-password__input-container">
 						<input
 							className={`new-password__input ${
@@ -90,7 +100,7 @@ function NewPassword() {
 								<div className="new-password__error-message">
 									<img
 										src={errorIcon}
-										alt="Error Icon"
+										alt="Предупреждение"
 										className="new-password__error-icon"
 									/>
 									{errors.repeatPassword.message}
