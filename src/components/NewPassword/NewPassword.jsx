@@ -1,24 +1,23 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { NewPasswordSchema } from '../../utils/ValidationShemes';
 import './NewPassword.scss';
-import { useState } from 'react';
-// import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { NewPasswordSchema } from '../../utils/ValidationShemes';
+import errorIcon from '../../images/error-icon.svg';
 
 function NewPassword() {
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
-	const [password, setPassword] = useState('');
-	const [repeatPassword, setRepeatPassword] = useState('');
 
-	// const {
-	// 	register,
-	// 	handleSubmit,
-	// 	setValue,
-	// 	formState: { errors, isValid, isDirty },
-	// } = useForm({
-	// 	mode: 'onChange',
-	// 	resolver: yupResolver(NewPasswordSchema),
-	// });
+	const {
+		register,
+		// handleSubmit,
+		// setValue,
+		formState: { errors, isValid, isDirty },
+	} = useForm({
+		mode: 'onChange',
+		resolver: yupResolver(NewPasswordSchema),
+	});
 
 	const togglePasswordVisibility = () => {
 		setPasswordVisible(!passwordVisible);
@@ -27,22 +26,6 @@ function NewPassword() {
 	const toggleRepeatPasswordVisibility = () => {
 		setRepeatPasswordVisible(!repeatPasswordVisible);
 	};
-
-	const handleChange = (e) => {
-		setPassword(e.target.value);
-	};
-
-	const handleChangeRepeat = (e) => {
-		setRepeatPassword(e.target.value);
-	};
-
-	// const handleResetPassword = () => {
-	// 	setPassword('');
-	// };
-
-	// const handleResetRepeatPassword = () => {
-	// 	setRepeatPassword('');
-	// };
 
 	return (
 		<section className="new-password">
@@ -54,65 +37,90 @@ function NewPassword() {
 				<p className="new-password__subtitle">
 					Войдите в аккаунт, чтобы получить доступ к приложению
 				</p>
-				<form className="new-password__form">
+				<form
+					className="new-password__form"
+					onSubmit={(data) => console.log(data)}
+				>
 					<div className="new-password__input-container">
 						<input
-							className="new-password__input"
+							className={`new-password__input ${
+								errors.password ? 'new-password__input_no-valid' : ''
+							}`}
 							type={passwordVisible ? 'text' : 'password'}
 							placeholder="Пароль"
-							value={password}
-							onChange={handleChange}
-							autoComplete="new-password"
+							{...register('password')}
 						/>
-						{password && (
+						<div className="new-password__error-container">
+							{errors.password && (
+								<div className="new-password__error-message">
+									<img
+										src={errorIcon}
+										alt="Error Icon"
+										className="new-password__error-icon"
+									/>
+									{errors.password.message}
+								</div>
+							)}
+						</div>
+						{isDirty && (
 							<div className="new-password__btn-container">
-								{/* <button
-									className="new-password__delete-btn"
-									onClick={handleResetPassword}
-									type="button"
-								>
-									delete
-								</button> */}
 								<button
-									className="new-password__hide-btn"
+									className={`new-password__hide-btn ${
+										passwordVisible ? 'new-password__hide-btn_visible' : ''
+									}`}
 									onClick={togglePasswordVisibility}
 									type="button"
 								>
-									hide
+									Hide
 								</button>
 							</div>
 						)}
 					</div>
 					<div className="new-password__input-container">
 						<input
+							className={`new-password__input ${
+								errors.repeatPassword ? 'new-password__input_no-valid' : ''
+							}`}
 							type={repeatPasswordVisible ? 'text' : 'password'}
 							placeholder="Повторите пароль"
-							className="new-password__input"
-							value={repeatPassword}
-							onChange={handleChangeRepeat}
-							autoComplete="new-password"
+							{...register('repeatPassword')}
 						/>
-						{repeatPassword && (
+						<div className="new-password__error-container">
+							{errors.repeatPassword && (
+								<div className="new-password__error-message">
+									<img
+										src={errorIcon}
+										alt="Error Icon"
+										className="new-password__error-icon"
+									/>
+									{errors.repeatPassword.message}
+								</div>
+							)}
+						</div>
+						{isDirty && (
 							<div className="new-password__btn-container">
-								{/* <button
-									className="new-password__delete-btn"
-									onClick={handleResetRepeatPassword}
-									type="button"
-								>
-									reset
-								</button> */}
 								<button
-									className="new-password__hide-btn"
+									className={`new-password__hide-btn ${
+										repeatPasswordVisible
+											? 'new-password__hide-btn_visible'
+											: ''
+									}`}
 									onClick={toggleRepeatPasswordVisibility}
 									type="button"
 								>
-									hide
+									Hide
 								</button>
 							</div>
 						)}
 					</div>
+					<button
+						className="new-password__submit-btn"
+						type="submit"
+						disabled={!isValid || !isDirty}
+					>
+						Изменить пароль
+					</button>
 				</form>
-				<button className="new-password__submit-btn">Изменить пароль</button>
 			</div>
 		</section>
 	);
