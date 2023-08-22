@@ -36,13 +36,13 @@ function NewPassword() {
 		setRepeatPassword(e.target.value);
 	};
 
-	const handleResetPassword = () => {
-		setPassword('');
-	};
+	// const handleResetPassword = () => {
+	// 	setPassword('');
+	// };
 
-	const handleResetRepeatPassword = () => {
-		setRepeatPassword('');
-	};
+	// const handleResetRepeatPassword = () => {
+	// 	setRepeatPassword('');
+	// };
 
 	return (
 		<section className="new-password">
@@ -66,13 +66,13 @@ function NewPassword() {
 						/>
 						{password && (
 							<div className="new-password__btn-container">
-								<button
+								{/* <button
 									className="new-password__delete-btn"
 									onClick={handleResetPassword}
 									type="button"
 								>
 									delete
-								</button>
+								</button> */}
 								<button
 									className="new-password__hide-btn"
 									onClick={togglePasswordVisibility}
@@ -94,13 +94,13 @@ function NewPassword() {
 						/>
 						{repeatPassword && (
 							<div className="new-password__btn-container">
-								<button
+								{/* <button
 									className="new-password__delete-btn"
 									onClick={handleResetRepeatPassword}
 									type="button"
 								>
 									reset
-								</button>
+								</button> */}
 								<button
 									className="new-password__hide-btn"
 									onClick={toggleRepeatPasswordVisibility}
