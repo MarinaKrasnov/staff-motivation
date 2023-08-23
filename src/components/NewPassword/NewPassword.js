@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { NewPasswordSchema } from '../../utils/ValidationShemes';
+import { NewPasswordSchema } from '../../utils/ValidationSchemes';
 import * as MainApi from '../../utils/MainApi';
 import './NewPassword.scss';
 import errorIcon from '../../images/error-icon.svg';
