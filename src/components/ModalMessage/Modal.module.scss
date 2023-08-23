@@ -19,11 +19,18 @@ $mainSmokyWhite: #f4f4f4;
 	border-radius: 40px;
 	flex-direction: column;
 	align-items: center;
+<<<<<<< HEAD
  
 }
 .ModulePort {
 	width: 530px;
 	height: 340px;
+=======
+}
+.ModulePort {
+	width: 530px;
+	height: 419px;
+>>>>>>> ab413abdf12a20acd00f551bdaea9691a29fcb75
 	display: flex;
 	position: fixed;
 	top: 0;
@@ -35,9 +42,27 @@ $mainSmokyWhite: #f4f4f4;
     background-color: $background-color_1;	
 	margin: auto;
 }
+<<<<<<< HEAD
 
 .Message {
 	width: 370px;
+=======
+.button {
+	border: none;
+	border-radius: 3px;
+	font-weight: 500;
+	width: 344px;
+	height: 52px;
+	background: #8247E5;
+	color: $color_1;
+	font-size: 18px;
+	padding: 10px 16px 10px 16px;
+	margin-top: 40px;
+}
+.Message {
+	width: 370px;
+	height: 29px;
+>>>>>>> ab413abdf12a20acd00f551bdaea9691a29fcb75
 	font-size: 18px;
 	line-height: 28.8px;
 	text-align: center;
