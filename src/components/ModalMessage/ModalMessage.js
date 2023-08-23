@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect, useRef } from 'react';
 import logo from '../../images/CircleWavyCheck.svg';
 import styles from './Modal.module.scss';
@@ -52,42 +51,6 @@ function ModalMessage() {
         </section>
       )}
       {!isOpen && (
-=======
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import logo from '../../images/CircleWavyCheck.svg';
-import styles from './Modal.module.scss';
-
-function Modal() {
-  // Добавляем состояние isOpen
-  const [isOpen, setIsOpen] = useState(false);
-
-  const navigate = useNavigate();
-
-// Устанавливаем значение isOpen в true
-  const handleOpenModal = () => {
-    setIsOpen(true);
-  };
-// Используем navigate для перенаправления на страницу Signin
-  const handleLogin = () => {
-    navigate('/Signin');
-  };
-
-  return (
-    <section className={styles.back}>
-      {isOpen && ( // Проверяем значение isOpen для отображения модального окна
-        <section className={styles.ModulePort}>
-          <div className={styles.Module}>
-            <img src={logo} className="App-logo" alt="logo" />
-            <h2 className={styles.Message}>Ваш пароль успешно изменен!</h2>
-            <button className={styles.button} onClick={handleLogin}>
-              Войти
-            </button>
-          </div>
-        </section>
-      )}
-      {!isOpen && ( // Проверяем значение isOpen для отображения кнопки открытия модального окна
->>>>>>> ab413abdf12a20acd00f551bdaea9691a29fcb75
         <button className={styles.openButton} onClick={handleOpenModal}>
           Открыть модальное окно
         </button>
@@ -96,10 +59,5 @@ function Modal() {
   );
 }
 
-<<<<<<< HEAD
 export default ModalMessage;
-
-=======
-export default Modal;
->>>>>>> ab413abdf12a20acd00f551bdaea9691a29fcb75
 

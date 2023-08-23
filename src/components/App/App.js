@@ -5,6 +5,7 @@ import Register from '../Register/Register'; // Аня - страница рег
 import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Modal from '../Modal/Modal';
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 
 				{/* Андрей - логин, ресет - начало */}
 				<Route path="/signin" element={<Login />} />
+				<Route path="/" element={<ModalMessage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				{/* Андрей - логин, ресет - конец */}
 			</Routes>

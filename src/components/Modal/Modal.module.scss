@@ -1,3 +1,17 @@
+$color_1: white;
+$color_2: #525C76;
+$background-color_1: #FFFFFF;
+$mainSmokyWhite: #f4f4f4;
+
+.back {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	background-color: $mainSmokyWhite;
+}
+
+
 .Module {
 	display: flex;
 	position: relative;
@@ -5,11 +19,10 @@
 	border-radius: 40px;
 	flex-direction: column;
 	align-items: center;
- 
 }
 .ModulePort {
 	width: 530px;
-	height: 340px;
+	height: 419px;
 	display: flex;
 	position: fixed;
 	top: 0;
@@ -21,9 +34,21 @@
     background-color: $background-color_1;	
 	margin: auto;
 }
-
+.button {
+	border: none;
+	border-radius: 3px;
+	font-weight: 500;
+	width: 344px;
+	height: 52px;
+	background: #8247E5;
+	color: $color_1;
+	font-size: 18px;
+	padding: 10px 16px 10px 16px;
+	margin-top: 40px;
+}
 .Message {
 	width: 370px;
+	height: 29px;
 	font-size: 18px;
 	line-height: 28.8px;
 	text-align: center;
