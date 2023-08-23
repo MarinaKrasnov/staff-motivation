@@ -6,9 +6,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../utils/ValidationSchemes';
 import * as MainApi from '../../utils/MainApi';
 // логотипы должны быть в самом низу
-import greyCircleLogo from '../../images/grey-circle-logo.svg';
+import greyCircleLogo from '../../images/logo.svg';
 import alarmLogo from '../../images/alarm-logo.svg';
 import hiddenEyeLogo from '../../images/hidden-eye-logo.svg';
+
 
 export default function Login() {
 	// чекбокс для "Запомнить меня"

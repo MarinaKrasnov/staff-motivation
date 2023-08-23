@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPassordSchema } from '../../utils/ValidationSchemes';
 // svg's
-import greyCircleLogo from '../../images/grey-circle-logo.svg';
+import greyCircleLogo from '../../images/logo.svg';
 import alarmLogo from '../../images/alarm-logo.svg';
 
 export default function ResetPassword() {
