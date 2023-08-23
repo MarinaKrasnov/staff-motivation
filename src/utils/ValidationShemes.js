@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-
+// Егор - новый пароль (начало)
 export const NewPasswordSchema = yup.object().shape({
 	password: yup
 		.string()
@@ -11,3 +11,4 @@ export const NewPasswordSchema = yup.object().shape({
 		.required('Повторение пароля обязательно для заполнения')
 		.oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
 });
+// Егор - новый пароль (конец)
