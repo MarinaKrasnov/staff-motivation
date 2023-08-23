@@ -1,6 +1,6 @@
 $color_1: white;
-$color_2: #525C76;
-$background-color_1: #FFFFFF;
+$color_2: #525c76;
+$background-color_1: #ffffff;
 
 .Module {
 	display: flex;
@@ -9,7 +9,6 @@ $background-color_1: #FFFFFF;
 	border-radius: 40px;
 	flex-direction: column;
 	align-items: center;
- 
 }
 .ModulePort {
 	width: 530px;
@@ -22,7 +21,7 @@ $background-color_1: #FFFFFF;
 	right: 0;
 	justify-content: center;
 	align-items: center;
-    background-color: $background-color_1;	
+	background-color: $background-color_1;
 	margin: auto;
 }
 

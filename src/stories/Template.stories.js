@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved, import/extensions
 import { Button } from '../components/button/Button';
 
 export default {
