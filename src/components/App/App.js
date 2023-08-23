@@ -6,13 +6,14 @@ import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 function App() {
 	return (
 		<div className="App">
 			<Routes>
 				{/* Виталий - модальное окно открывается при успешном изменении пароля */}
-				<Route path="/" element={<Modal />} />
+				<Route path="/modal" element={<Modal />} />
 				{/* Аня - добавлен модуль регистрации (начало кода) */}
 				<Route path="/signup" element={<Register />} />
 				{/* Аня - добавлен модуль регистрации (конец кода) */}
@@ -21,6 +22,8 @@ function App() {
 				{/* Егор - новый пароль (конец кода) */}
 				{/* Андрей - логин, ресет - начало */}
 				<Route path="/signin" element={<Login />} />
+				{/* Виталий - уведомление о отправки ссылки на почту */}
+				<Route path="/message" element={<ModalMessage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				{/* Андрей - логин, ресет - конец */}
 			</Routes>
