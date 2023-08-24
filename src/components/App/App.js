@@ -7,10 +7,12 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
+import SideNavbar from '../SideNavbar/SideNavbar'; // Егор - левое боковое меню
 
 function App() {
 	return (
 		<div className="App">
+			<SideNavbar />
 			<Routes>
 				{/* Виталий - модальное окно открывается при успешном изменении пароля */}
 				<Route path="/modal" element={<Modal />} />
