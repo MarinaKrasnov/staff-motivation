@@ -7,6 +7,7 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
+import MyTasks from '../MyTasks/MyTasks';
 
 function App() {
 	return (
@@ -26,6 +27,7 @@ function App() {
 				<Route path="/message" element={<ModalMessage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				{/* Андрей - логин, ресет - конец */}
+				<Route path="/mytasks" element={<MyTasks />} />
 			</Routes>
 		</div>
 	);
