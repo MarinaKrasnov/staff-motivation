@@ -37,7 +37,7 @@
 		gap: 12px;
 		list-style: none;
 		margin-left: 44px;
-        margin-right: 0;
+		margin-right: 0;
 		padding: 0;
 		flex-grow: 1;
 
@@ -45,60 +45,59 @@
 			width: 28px;
 			height: 28px;
 
-            &-house {
-                background-image: url('../../images/House.svg');
-                background-repeat: no-repeat;
-                background-position: center;
-            }
+			&-house {
+				background-image: url('../../images/House.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
 
-            &-newspaper {
-                background-image: url('../../images/Newspaper.svg');
-                background-repeat: no-repeat;
-                background-position: center;
-            }
+			&-newspaper {
+				background-image: url('../../images/Newspaper.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
 
-            &-database {
-                background-image: url('../../images/Users.svg');
-                background-repeat: no-repeat;
-                background-position: center;
-            }
+			&-database {
+				background-image: url('../../images/Users.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
 
-            &-gear {
-                background-image: url('../../images/GearSix.svg');
-                background-repeat: no-repeat;
-                background-position: center;
-            }
+			&-gear {
+				background-image: url('../../images/GearSix.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
 		}
 
 		&-item {
 			display: flex;
 			flex-direction: row;
 			gap: 8px;
-            width: 100%;
+			width: 100%;
 			font-size: 20px;
 			font-weight: 500;
 			line-height: 32px;
 			text-align: left;
-            align-items: center;
-            height: 48px;
-            color: #525C76;
-            box-sizing: border-box;
-            padding: 10px 12px;
-            border-radius: 8px 0 0 8px;
+			align-items: center;
+			height: 48px;
+			color: #525c76;
+			box-sizing: border-box;
+			padding: 10px 12px;
+			border-radius: 8px 0 0 8px;
 
-            &:hover {
-                background-color: #EEEFF2;
-            }
+			&:hover {
+				background-color: #eeeff2;
+			}
 		}
 
-        &-link {
-            text-decoration: none;
-            color: #525C76;
+		&-link {
+			text-decoration: none;
+			color: #525c76;
 
-            &:hover {
-                color: inherit;
-            }
-        }
-
+			&:hover {
+				color: inherit;
+			}
+		}
 	}
 }
