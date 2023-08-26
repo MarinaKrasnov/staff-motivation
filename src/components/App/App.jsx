@@ -7,10 +7,14 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
+import Header from '../Header/Header';
 
 function App() {
 	return (
 		<div className="App">
+			{/* Егор - верхнее меню (начало кода) */}
+			<Header />
+			{/* Егор - верхнее меню (конец кода) */}
 			<Routes>
 				{/* Виталий - модальное окно открывается при успешном изменении пароля */}
 				<Route path="/modal" element={<Modal />} />
