@@ -5,35 +5,59 @@ import { tasksList } from '../../utils/constants';
 import iconFilter from '../../images/filter-Funnel.svg';
 
 function MyTasks() {
-	const [tasksArray, setTasksArray] = useState(tasksList);
 	const todayDate = new Date().toLocaleDateString();
 	const tomorrowDate = new Date(
 		new Date().getTime() + 24 * 60 * 60 * 1000
 	).toLocaleDateString();
 
-	const todaySortButton = document.getElementById('today-sort-button');
-	const tomorrowSortButton = document.getElementById('tomorrow-sort-button');
-	const sprintSortButton = document.getElementById('sprint-sort-button');
+	const [tasksArray, setTasksArray] = useState(tasksList);
+	const [showPopup, setShowPopup] = useState(false);
+	const [todaySortButton, setTodaySortButton] = useState(false);
+	const [tomorrowSortButton, setTomorrowSortButton] = useState(false);
+	const [sprintSortButton, setSprintSortButton] = useState(false);
+	const [statusFilters, setStatusFilters] = useState({
+		'новая задача': false,
+		'на выполнении': false,
+		'истёк срок задачи': false,
+		'на подтверждении': false,
+	});
+
+	const handleStatusFilterChange = (event) => {
+		const { name, checked } = event.target;
+		setStatusFilters((prevFilters) => ({
+			...prevFilters,
+			[name]: checked,
+		}));
+	};
+
+	const sortedTasks = tasksList.filter((task) => statusFilters[task.status]);
+
+	function handleSortSubmit() {
+		if (Object.values(statusFilters).every((filter) => filter === false)) {
+			setTasksArray(tasksList);
+			setShowPopup(false);
+		} else {
+			setTasksArray(sortedTasks);
+			setShowPopup(false);
+		}
+	}
 
 	function showSortPopup() {
-		document
-			.querySelector('.tasks__sort-popup')
-			.classList.add('tasks__show-popup');
+		setShowPopup(true);
 	}
 	function hideSortPopup() {
-		document
-			.querySelector('.tasks__sort-popup')
-			.classList.remove('tasks__show-popup');
+		setShowPopup(false);
+		setTasksArray(tasksList);
 	}
 
 	function handleTodaySort() {
-		if (todaySortButton.classList.contains('tasks__sort-button-active')) {
-			todaySortButton.classList.remove('tasks__sort-button-active');
+		if (todaySortButton) {
+			setTodaySortButton(false);
 			setTasksArray(tasksList);
 		} else {
-			sprintSortButton.classList.remove('tasks__sort-button-active');
-			tomorrowSortButton.classList.remove('tasks__sort-button-active');
-			todaySortButton.classList.add('tasks__sort-button-active');
+			setTodaySortButton(true);
+			setTomorrowSortButton(false);
+			setSprintSortButton(false);
 			const filteredTasks = tasksList.filter(
 				(task) => task.sortData === todayDate
 			);
@@ -42,13 +66,13 @@ function MyTasks() {
 	}
 
 	function handleTomorrowSort() {
-		if (tomorrowSortButton.classList.contains('tasks__sort-button-active')) {
-			tomorrowSortButton.classList.remove('tasks__sort-button-active');
+		if (tomorrowSortButton) {
+			setTomorrowSortButton(false);
 			setTasksArray(tasksList);
 		} else {
-			sprintSortButton.classList.remove('tasks__sort-button-active');
-			todaySortButton.classList.remove('tasks__sort-button-active');
-			tomorrowSortButton.classList.add('tasks__sort-button-active');
+			setTomorrowSortButton(true);
+			setTodaySortButton(false);
+			setSprintSortButton(false);
 			const filteredTasks = tasksList.filter(
 				(task) => task.sortData === tomorrowDate
 			);
@@ -57,12 +81,12 @@ function MyTasks() {
 	}
 
 	function handleSprintSort() {
-		if (sprintSortButton.classList.contains('tasks__sort-button-active')) {
-			sprintSortButton.classList.remove('tasks__sort-button-active');
+		if (sprintSortButton) {
+			setSprintSortButton(false);
 		} else {
-			tomorrowSortButton.classList.remove('tasks__sort-button-active');
-			todaySortButton.classList.remove('tasks__sort-button-active');
-			sprintSortButton.classList.add('tasks__sort-button-active');
+			setSprintSortButton(true);
+			setTodaySortButton(false);
+			setTomorrowSortButton(false);
 			setTasksArray(tasksList);
 		}
 	}
@@ -72,22 +96,31 @@ function MyTasks() {
 			<h2 className="tasks__title">Мои задачи</h2>
 			<nav className="tasks__nav">
 				<button
-					id="today-sort-button"
-					className="tasks__sort-button"
+					className={
+						todaySortButton
+							? 'tasks__sort-button tasks__sort-button-active'
+							: 'tasks__sort-button'
+					}
 					onClick={handleTodaySort}
 				>
 					Сегодня
 				</button>
 				<button
-					id="tomorrow-sort-button"
-					className="tasks__sort-button"
+					className={
+						tomorrowSortButton
+							? 'tasks__sort-button tasks__sort-button-active'
+							: 'tasks__sort-button'
+					}
 					onClick={handleTomorrowSort}
 				>
 					Завтра
 				</button>
 				<button
-					id="sprint-sort-button"
-					className="tasks__sort-button"
+					className={
+						sprintSortButton
+							? 'tasks__sort-button tasks__sort-button-active'
+							: 'tasks__sort-button'
+					}
 					onClick={handleSprintSort}
 				>
 					Текущий спринт
@@ -101,57 +134,73 @@ function MyTasks() {
 					/>
 				</button>
 			</nav>
-			<div className="tasks__sort-popup">
-				<div className="tasks__popup-header">
-					<h3 className="tasks__popup-title">Фильтр</h3>
-					<button className="tasks__close-popup" onClick={hideSortPopup}>
-						{}
+			{showPopup ? (
+				<div className="tasks__sort-popup">
+					<div className="tasks__popup-header">
+						<h3 className="tasks__popup-title">Фильтр</h3>
+						<button className="tasks__close-popup" onClick={hideSortPopup}>
+							{}{' '}
+						</button>
+					</div>
+					<ul className="tasks__popup-list">
+						<li className="tasks__checkbox-item">
+							<label className="tasks__checkbox" htmlFor="checkbox">
+								<input
+									type="checkbox"
+									id="checkbox"
+									className="tasks__checkbox-input"
+									name="новая задача"
+									checked={statusFilters['новая задача']}
+									onChange={handleStatusFilterChange}
+								/>
+								<span className="tasks__checkbox-title">Новые</span>
+							</label>
+						</li>
+						<li className="tasks__checkbox-item">
+							<label className="tasks__checkbox" htmlFor="checkbox">
+								<input
+									type="checkbox"
+									id="checkbox"
+									className="tasks__checkbox-input"
+									name="на выполнении"
+									checked={statusFilters['на выполнении']}
+									onChange={handleStatusFilterChange}
+								/>
+								<span className="tasks__checkbox-title">В работе</span>
+							</label>
+						</li>
+						<li className="tasks__checkbox-item">
+							<label className="tasks__checkbox" htmlFor="checkbox">
+								<input
+									type="checkbox"
+									id="checkbox"
+									className="tasks__checkbox-input"
+									name="на подтверждении"
+									checked={statusFilters['на подтверждении']}
+									onChange={handleStatusFilterChange}
+								/>
+								<span className="tasks__checkbox-title">На подтверждении</span>
+							</label>
+						</li>
+						<li className="tasks__checkbox-item">
+							<label className="tasks__checkbox" htmlFor="checkbox">
+								<input
+									type="checkbox"
+									id="checkbox"
+									className="tasks__checkbox-input"
+									name="истёк срок задачи"
+									checked={statusFilters['истёк срок задачи']}
+									onChange={handleStatusFilterChange}
+								/>
+								<span className="tasks__checkbox-title">Просроченные</span>
+							</label>
+						</li>
+					</ul>
+					<button className="tasks__popup-button" onClick={handleSortSubmit}>
+						Применить
 					</button>
 				</div>
-				<ul className="tasks__popup-list">
-					<li className="tasks__checkbox-item">
-						<label className="tasks__checkbox" htmlFor="checkbox">
-							<input
-								type="checkbox"
-								id="checkbox"
-								className="tasks__checkbox-input"
-							/>
-							<span className="tasks__checkbox-title">Новые задачи</span>
-						</label>
-					</li>
-					<li className="tasks__checkbox-item">
-						<label className="tasks__checkbox" htmlFor="checkbox">
-							<input
-								type="checkbox"
-								id="checkbox"
-								className="tasks__checkbox-input"
-							/>
-							<span className="tasks__checkbox-title">В работе</span>
-						</label>
-					</li>
-					<li className="tasks__checkbox-item">
-						<label className="tasks__checkbox" htmlFor="checkbox">
-							<input
-								type="checkbox"
-								id="checkbox"
-								className="tasks__checkbox-input"
-							/>
-							<span className="tasks__checkbox-title">На подтверждении</span>
-						</label>
-					</li>
-					<li className="tasks__checkbox-item">
-						<label className="tasks__checkbox" htmlFor="checkbox">
-							<input
-								type="checkbox"
-								id="checkbox"
-								className="tasks__checkbox-input"
-							/>
-							<span className="tasks__checkbox-title">Просроченные</span>
-						</label>
-					</li>
-				</ul>
-				<button className="tasks__popup-button">Применить</button>
-			</div>
+			) : null}
 			<div className="tasks__list">
 				{tasksArray.map((task) => (
 					<MyTask task={task} key={task.id} />
