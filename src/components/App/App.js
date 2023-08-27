@@ -7,7 +7,7 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
-import Header from '../Header/Header';
+import Header from '../Header/Header'; // Егор - вернхнее меню
 
 function App() {
 	return (

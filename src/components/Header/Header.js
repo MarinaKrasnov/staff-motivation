@@ -11,7 +11,7 @@ function Header() {
 					alt="Фотография сотрудника"
 				/>
 				<div className="header__details">
-					<div className="header__name">Иванов Иван Иванович</div>
+					<div className="header__name">Иванов Иван</div>
 					<div className="header__position">Маркетолог</div>
 				</div>
 			</div>
