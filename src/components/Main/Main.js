@@ -1,3 +1,4 @@
+import './Main.scss';
 import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
 import MyTasks from '../MyTasks/MyTasks';

@@ -135,70 +135,74 @@ function MyTasks() {
 				</button>
 			</nav>
 			{showPopup ? (
-				<div className="tasks__sort-popup">
-					<div className="tasks__popup-header">
-						<h3 className="tasks__popup-title">Фильтр</h3>
-						<button className="tasks__close-popup" onClick={hideSortPopup}>
-							{}{' '}
+				<div className="tasks__popup">
+					<div className="tasks__sort-popup">
+						<div className="tasks__popup-header">
+							<h3 className="tasks__popup-title">Фильтр</h3>
+							<button className="tasks__close-popup" onClick={hideSortPopup}>
+								{}{' '}
+							</button>
+						</div>
+						<ul className="tasks__popup-list">
+							<li className="tasks__checkbox-item">
+								<label className="tasks__checkbox" htmlFor="checkbox">
+									<input
+										type="checkbox"
+										id="checkbox"
+										className="tasks__checkbox-input"
+										name="новая задача"
+										checked={statusFilters['новая задача']}
+										onChange={handleStatusFilterChange}
+									/>
+									<span className="tasks__checkbox-title">Новые</span>
+								</label>
+							</li>
+							<li className="tasks__checkbox-item">
+								<label className="tasks__checkbox" htmlFor="checkbox">
+									<input
+										type="checkbox"
+										id="checkbox"
+										className="tasks__checkbox-input"
+										name="на выполнении"
+										checked={statusFilters['на выполнении']}
+										onChange={handleStatusFilterChange}
+									/>
+									<span className="tasks__checkbox-title">В работе</span>
+								</label>
+							</li>
+							<li className="tasks__checkbox-item">
+								<label className="tasks__checkbox" htmlFor="checkbox">
+									<input
+										type="checkbox"
+										id="checkbox"
+										className="tasks__checkbox-input"
+										name="на подтверждении"
+										checked={statusFilters['на подтверждении']}
+										onChange={handleStatusFilterChange}
+									/>
+									<span className="tasks__checkbox-title">
+										На подтверждении
+									</span>
+								</label>
+							</li>
+							<li className="tasks__checkbox-item">
+								<label className="tasks__checkbox" htmlFor="checkbox">
+									<input
+										type="checkbox"
+										id="checkbox"
+										className="tasks__checkbox-input"
+										name="истёк срок задачи"
+										checked={statusFilters['истёк срок задачи']}
+										onChange={handleStatusFilterChange}
+									/>
+									<span className="tasks__checkbox-title">Просроченные</span>
+								</label>
+							</li>
+						</ul>
+						<button className="tasks__popup-button" onClick={handleSortSubmit}>
+							Применить
 						</button>
 					</div>
-					<ul className="tasks__popup-list">
-						<li className="tasks__checkbox-item">
-							<label className="tasks__checkbox" htmlFor="checkbox">
-								<input
-									type="checkbox"
-									id="checkbox"
-									className="tasks__checkbox-input"
-									name="новая задача"
-									checked={statusFilters['новая задача']}
-									onChange={handleStatusFilterChange}
-								/>
-								<span className="tasks__checkbox-title">Новые</span>
-							</label>
-						</li>
-						<li className="tasks__checkbox-item">
-							<label className="tasks__checkbox" htmlFor="checkbox">
-								<input
-									type="checkbox"
-									id="checkbox"
-									className="tasks__checkbox-input"
-									name="на выполнении"
-									checked={statusFilters['на выполнении']}
-									onChange={handleStatusFilterChange}
-								/>
-								<span className="tasks__checkbox-title">В работе</span>
-							</label>
-						</li>
-						<li className="tasks__checkbox-item">
-							<label className="tasks__checkbox" htmlFor="checkbox">
-								<input
-									type="checkbox"
-									id="checkbox"
-									className="tasks__checkbox-input"
-									name="на подтверждении"
-									checked={statusFilters['на подтверждении']}
-									onChange={handleStatusFilterChange}
-								/>
-								<span className="tasks__checkbox-title">На подтверждении</span>
-							</label>
-						</li>
-						<li className="tasks__checkbox-item">
-							<label className="tasks__checkbox" htmlFor="checkbox">
-								<input
-									type="checkbox"
-									id="checkbox"
-									className="tasks__checkbox-input"
-									name="истёк срок задачи"
-									checked={statusFilters['истёк срок задачи']}
-									onChange={handleStatusFilterChange}
-								/>
-								<span className="tasks__checkbox-title">Просроченные</span>
-							</label>
-						</li>
-					</ul>
-					<button className="tasks__popup-button" onClick={handleSortSubmit}>
-						Применить
-					</button>
 				</div>
 			) : null}
 			<div className="tasks__list">
