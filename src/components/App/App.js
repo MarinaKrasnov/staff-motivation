@@ -6,6 +6,7 @@ import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
+import DinamicWork from '../DinamicWork/DinamicWork';
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path="/message" element={<ModalMessage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				{/* Андрей - логин, ресет - конец */}
+				<Route path="/dinamic-work" element={<DinamicWork />} />
 			</Routes>
 		</div>
 	);
