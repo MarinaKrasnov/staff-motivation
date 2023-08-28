@@ -1,0 +1,103 @@
+// SideNavbar.scss
+
+.side-navbar {
+	width: 253px;
+	background-color: #ffffff;
+	padding: 44px 0 44px;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+
+	&__title-container {
+		display: flex;
+		flex-direction: row;
+		gap: 8px;
+		align-items: center;
+		margin: 0 27px 68px auto;
+	}
+
+	&__logo {
+		font-size: 0;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: #d9d9d9;
+	}
+
+	&__title {
+		font-size: 16px;
+		line-height: 25.6px;
+		font-weight: 500;
+		color: #220d6d;
+	}
+
+	&__navigation {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		list-style: none;
+		margin-left: 44px;
+		margin-right: 0;
+		padding: 0;
+		flex-grow: 1;
+
+		&-icon {
+			width: 28px;
+			height: 28px;
+
+			&-house {
+				background-image: url('../../images/House.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+			&-newspaper {
+				background-image: url('../../images/Newspaper.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+			&-database {
+				background-image: url('../../images/Users.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+			&-gear {
+				background-image: url('../../images/GearSix.svg');
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+		}
+
+		&-item {
+			display: flex;
+			flex-direction: row;
+			gap: 8px;
+			width: 100%;
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 32px;
+			text-align: left;
+			align-items: center;
+			height: 48px;
+			color: #525c76;
+			box-sizing: border-box;
+			padding: 10px 12px;
+			border-radius: 8px 0 0 8px;
+
+			&:hover {
+				background-color: #eeeff2;
+			}
+		}
+
+		&-link {
+			text-decoration: none;
+			color: #525c76;
+
+			&:hover {
+				color: inherit;
+			}
+		}
+	}
+}
