@@ -20,7 +20,7 @@
 		}
 
 		&-missed {
-			color: #FF3236;
+			color: #ff3236;
 		}
 	}
 
@@ -34,14 +34,13 @@
 		color: #b2b7c2;
 
 		&-prove {
-			color: #44AC21;
+			color: #44ac21;
 		}
 
 		&-missed {
-			color: #FF3236;
+			color: #ff3236;
 		}
 	}
-
 
 	&__data {
 		align-self: center;
@@ -68,9 +67,9 @@
 		cursor: pointer;
 
 		&:disabled {
-			background-color: #E2E4E8;
-			color: #B2B7C2;
-			border: 1px solid #E2E4E8;
+			background-color: #e2e4e8;
+			color: #b2b7c2;
+			border: 1px solid #e2e4e8;
 			cursor: auto;
 		}
 	}
@@ -91,7 +90,7 @@
 	}
 
 	&__score {
-		color: #525C76;
+		color: #525c76;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;
@@ -100,7 +99,7 @@
 			color: #b2b7c2;
 		}
 		&-done {
-			color:  #44AC21;
+			color: #44ac21;
 		}
 	}
 }
