@@ -7,17 +7,15 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
-import Header from '../Header/Header'; // Егор - вернхнее меню
-import SideNavbar from '../SideNavbar/SideNavbar'; // Егор - левое боковое меню
+// import Header from '../Header/Header'; // Егор - вернхнее меню
+// import SideNavbar from '../SideNavbar/SideNavbar'; // Егор - левое боковое меню
+import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
 
 function App() {
 	return (
 		<div className="App">
-			{/* Егор - верхнее меню (начало кода) */}
-			<Header />
-			{/* Егор - верхнее меню (конец кода) */}
-			<SideNavbar />
 			<Routes>
+				<Route path="/main" element={<Main />} />
 				{/* Виталий - модальное окно открывается при успешном изменении пароля */}
 				<Route path="/modal" element={<Modal />} />
 				{/* Аня - добавлен модуль регистрации (начало кода) */}

@@ -12,7 +12,7 @@ function SideNavbar() {
 			<ul className="side-navbar__navigation">
 				<li className="side-navbar__navigation-item">
 					<div className="side-navbar__navigation-icon side-navbar__navigation-icon-house" />
-					<NavLink className="side-navbar__navigation-link" to="/">
+					<NavLink className="side-navbar__navigation-link" to="/main">
 						Главная
 					</NavLink>
 				</li>

@@ -125,21 +125,21 @@
 		}
 
 		&::after {
-		    content: '3';
-		    width: 21px;
-		    height: 21px;
-		    background-color: #DB2438;
-		    border-radius: 50%;
-		    position: absolute;
-		    top: -2px;
-		    right: 0;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    font-size: 12px;
-		    font-weight: 500;
-		    line-height: 19.2px;
-		    color: white;
+			content: '3';
+			width: 21px;
+			height: 21px;
+			background-color: #db2438;
+			border-radius: 50%;
+			position: absolute;
+			top: -2px;
+			right: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 12px;
+			font-weight: 500;
+			line-height: 19.2px;
+			color: white;
 		}
 	}
 

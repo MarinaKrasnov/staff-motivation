@@ -1,12 +1,14 @@
 // SideNavbar.scss
 
 .side-navbar {
-	width: 253px;
+	min-width: 253px;
+	width: 17.56%;
 	background-color: #ffffff;
 	padding: 44px 0 44px;
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	position: fixed;
 
 	&__title-container {
 		display: flex;
