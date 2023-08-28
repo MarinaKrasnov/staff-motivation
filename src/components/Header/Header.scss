@@ -13,13 +13,14 @@
 	background-color: #ffffff;
 	border-radius: 24px;
 	gap: 36px;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08);
 
 	&__user-info {
 		display: flex;
 		flex-direction: row;
 		gap: 16px;
 		align-items: center;
-		width: 369px;
+		width: 335px;
 	}
 
 	&__photo {
@@ -49,13 +50,13 @@
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 400;
-		line-height: 160%; /* 22.4px */
+		line-height: 22.4px;
 	}
 
 	&__user-points {
 		display: flex;
 		flex-direction: row;
-		gap: 36px;
+		gap: 68px;
 	}
 
 	&__points {
@@ -63,15 +64,41 @@
 		font-style: normal;
 		font-weight: 500;
 		line-height: 42px;
+
+		&_rating {
+			color: #6433C4;
+		}
+
+		&_place {
+			color: #6433C4;
+			text-align: left;
+		}
 	}
 
-	&__points-for {
+	&__points-text {
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 22.4px;
 		color: #525c76;
+
+		&_rating {
+			text-align: right;
+		}
+
+		&_place {
+			text-align: left;
+		}
 	}
+
+	&__vertical-line {
+		background-image: url('../../images/vetrical-line.svg');
+		background-repeat: no-repeat;
+		background-position: center;
+		width: 0.5px;
+		height: 64px;
+	  }
+
 
 	&__user-buttons {
 		display: flex;

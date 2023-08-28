@@ -17,12 +17,21 @@ function Header() {
 			</div>
 			<div className="header__user-points">
 				<div className="header__points-container">
-					<div className="header__points">485 Б</div>
-					<div className="header__points-for">за все время</div>
+					<div className="header__points">35 Б</div>
+					<div className="header__points-text">за спринт</div>
 				</div>
 				<div className="header__points-container">
-					<div className="header__points">35 Б</div>
-					<div className="header__points-for">за спринт</div>
+					<div className="header__points header__points_rating">485 Б</div>
+					<div className="header__points-text header__points-text_rating">
+						рейтинг
+					</div>
+				</div>
+			</div>
+			<div className="header__vertical-line" />
+			<div className="header__points-container">
+				<div className="header__points header__points_place">2</div>
+				<div className="header__points-text header__points-text_place">
+					место в рейтинге
 				</div>
 			</div>
 			<div className="header__user-buttons">
