@@ -1,5 +1,7 @@
+import './Main.scss';
 import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
+import MyTasks from '../MyTasks/MyTasks';
 
 function Main() {
 	return (
@@ -8,6 +10,9 @@ function Main() {
 			<Header />
 			<SideNavbar />
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
+			<section className="main-page__section">
+				<MyTasks />
+			</section>
 		</main>
 	);
 }

@@ -41,11 +41,6 @@ export const RegisterSchema = yup.object().shape({
 		.string()
 		.required(ERROR_MESSAGES.NAME.EMPTY_LASTNAME)
 		.matches(nameRegex, ERROR_MESSAGES.NAME.INCORRECT),
-	middleName: yup
-		.string()
-		.nullable()
-		.notRequired()
-		.matches(nameRegex, ERROR_MESSAGES.NAME.INCORRECT),
 	email: yup
 		.string()
 		.email(ERROR_MESSAGES.EMAIL.INCORRECT)
@@ -77,12 +72,12 @@ export const RegisterSchema = yup.object().shape({
 export const NewPasswordSchema = yup.object().shape({
 	password: yup
 		.string()
-		.required('Пароль обязателен для заполнения')
-		.min(6, 'Пароль должен содержать минимум 6 символов')
-		.max(30, 'Пароль должен содержать не более 30 символов'),
+		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
+		.min(6, ERROR_MESSAGES.PASSWORD.TO_SHORT)
+		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
 	repeatPassword: yup
 		.string()
-		.required('Повторение пароля обязательно для заполнения')
-		.oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
+		.required(ERROR_MESSAGES.CONFIRM_PASSWORD.EMPTY)
+		.oneOf([yup.ref('password'), null], ERROR_MESSAGES.PASSWORD.MUST_MATCH),
 });
 // Егор - новый пароль (конец)
