@@ -7,12 +7,15 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
-import MyTasks from '../MyTasks/MyTasks';
+// import Header from '../Header/Header'; // Егор - вернхнее меню
+// import SideNavbar from '../SideNavbar/SideNavbar'; // Егор - левое боковое меню
+import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
 
 function App() {
 	return (
 		<div className="App">
 			<Routes>
+				<Route path="/main" element={<Main />} />
 				{/* Виталий - модальное окно открывается при успешном изменении пароля */}
 				<Route path="/modal" element={<Modal />} />
 				{/* Аня - добавлен модуль регистрации (начало кода) */}
@@ -27,7 +30,6 @@ function App() {
 				<Route path="/message" element={<ModalMessage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				{/* Андрей - логин, ресет - конец */}
-				<Route path="/mytasks" element={<MyTasks />} />
 			</Routes>
 		</div>
 	);
