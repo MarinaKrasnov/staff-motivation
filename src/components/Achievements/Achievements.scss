@@ -1,0 +1,78 @@
+$accentDarkGrey900: #0f1d40;
+$accentDarkGrey400: #525c76;
+$accentLightGrey900: #8c93a3;
+
+.achievements {
+	position: fixed;
+	top: 216px;
+	right: 46.4%;
+	margin: 0;
+	width: 33.34%;
+	height: 334px;
+	background-color: #fff;
+	border-radius: 24px;
+
+	column-gap: 16px;
+
+	&__title {
+		margin: 24px 0 0 32px;
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 36px;
+		text-align: start;
+		color: $accentDarkGrey900;
+	}
+
+	&__stats-container {
+		margin: 24px 32px 0;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(10px, 200px));
+		grid-template-rows: repeat(2, 1fr);
+		gap: 16px;
+		list-style: none;
+	}
+
+	&__achieve {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__name {
+		margin: 4px 0 0 4px;
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 28px;
+		text-align: start;
+		color: $accentDarkGrey900;
+	}
+
+	&__score-container {
+		display: flex;
+		margin: 8px 0 0 0;
+		height: 32px;
+	}
+
+	&__logo {
+		margin: 5.5px;
+		width: 24px;
+		height: 24px;
+	}
+
+	&__score {
+		margin: 0 0 0 4px;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 32px;
+		text-align: start;
+		color: $accentDarkGrey400;
+	}
+
+	&__completion {
+		margin: 0 0 0 4px;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 22px;
+		text-align: start;
+		color: $accentLightGrey900;
+	}
+}
