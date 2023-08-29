@@ -1,16 +1,19 @@
 /* Header.scss */
 
 .header {
-	width: 75.5%;
+	width: 1087px;
+	// width: 75.5%;
 	height: 172px;
 	top: 0;
 	left: 20.5%;
 	position: fixed;
-	background-color: #F5F6F7;
+	background-color: #f5f6f7;
 	box-sizing: border-box;
 	padding-top: 44px;
 	border-radius: 0 0 24px 24px;
 	z-index: 2;
+	display: flex;
+	align-items: end;
 
 	&__container {
 		display: flex;
