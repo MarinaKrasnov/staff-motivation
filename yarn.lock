@@ -3655,7 +3655,7 @@
 
 "ansi-escapes@^3.2.0":
   "integrity" "sha512-cBhpre4ma+U0T1oM5fXg7Dy1Jw7zzwv7lt/GoCpr+hDQJoYnKVPLL4dCvSEFMmQurOQvSrwT7SL/DAlhBI97RQ=="
-  "resolved" "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-3.2.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/ansi-escapes/-/ansi-escapes-3.2.0.tgz"
   "version" "3.2.0"
 
 "ansi-escapes@^4.2.1", "ansi-escapes@^4.3.0", "ansi-escapes@^4.3.1":
@@ -3672,12 +3672,12 @@
 
 "ansi-regex@^3.0.0":
   "integrity" "sha512-+O9Jct8wf++lXxxFc4hc8LsjaSq0HFzzL7cVsw8pRDIPdjKD2mT4ytDZlLuSBZ4cLKZFXIrMGO7DbQCtMJJMKw=="
-  "resolved" "https://registry.npmjs.org/ansi-regex/-/ansi-regex-3.0.1.tgz"
+  "resolved" "http://npm.prakticum-team.ru/ansi-regex/-/ansi-regex-3.0.1.tgz"
   "version" "3.0.1"
 
 "ansi-regex@^4.1.0":
   "integrity" "sha512-ILlv4k/3f6vfQ4OoP2AGvirOktlQ98ZEL1k9FaQjxa3L1abBgbuTDAdPOpvbGncC0BTVQrl+OM8xZGK6tWXt7g=="
-  "resolved" "https://registry.npmjs.org/ansi-regex/-/ansi-regex-4.1.1.tgz"
+  "resolved" "http://npm.prakticum-team.ru/ansi-regex/-/ansi-regex-4.1.1.tgz"
   "version" "4.1.1"
 
 "ansi-regex@^5.0.1":
@@ -4433,7 +4433,7 @@
 
 "chalk@^2.4.2":
   "integrity" "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ=="
-  "resolved" "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"
+  "resolved" "http://npm.prakticum-team.ru/chalk/-/chalk-2.4.2.tgz"
   "version" "2.4.2"
   dependencies:
     "ansi-styles" "^3.2.1"
@@ -4540,7 +4540,7 @@
 
 "cli-cursor@^2.1.0":
   "integrity" "sha512-8lgKz8LmCRYZZQDpRyT2m5rKJ08TnU4tR9FFFW2rxpxR1FzWi4PQ/NfyODchAatHaUgnSPVcx/R5w6NuTBzFiw=="
-  "resolved" "https://registry.npmjs.org/cli-cursor/-/cli-cursor-2.1.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/cli-cursor/-/cli-cursor-2.1.0.tgz"
   "version" "2.1.0"
   dependencies:
     "restore-cursor" "^2.0.0"
@@ -4584,7 +4584,7 @@
 
 "cli-width@^2.0.0":
   "integrity" "sha512-GRMWDxpOB6Dgk2E5Uo+3eEBvtOOlimMmpbFiKuLFnQzYDavtLFY3K5ona41jgN/WdRZtG7utuVSVTL4HbZHGkw=="
-  "resolved" "https://registry.npmjs.org/cli-width/-/cli-width-2.2.1.tgz"
+  "resolved" "http://npm.prakticum-team.ru/cli-width/-/cli-width-2.2.1.tgz"
   "version" "2.2.1"
 
 "cli-width@^3.0.0":
@@ -5126,7 +5126,7 @@
 
 "cz-customizable@^7.0.0":
   "integrity" "sha512-pQKkGSm+8SY9VY/yeJqDOla1MjrGaG7WG4EYLLEV4VNctGO7WdzdGtWEr2ydKSkrpmTs7f8fmBksg/FaTrUAyw=="
-  "resolved" "https://registry.npmjs.org/cz-customizable/-/cz-customizable-7.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/cz-customizable/-/cz-customizable-7.0.0.tgz"
   "version" "7.0.0"
   dependencies:
     "editor" "1.0.0"
@@ -5533,7 +5533,7 @@
 
 "editor@1.0.0":
   "integrity" "sha512-SoRmbGStwNYHgKfjOrX2L0mUvp9bUVv0uPppZSOMAntEbcFtoC3MKF5b3T6HQPXKIV+QGY3xPO3JK5it5lVkuw=="
-  "resolved" "https://registry.npmjs.org/editor/-/editor-1.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/editor/-/editor-1.0.0.tgz"
   "version" "1.0.0"
 
 "ee-first@1.1.1":
@@ -6304,7 +6304,7 @@
 
 "figures@^2.0.0":
   "integrity" "sha512-Oa2M9atig69ZkfwiApY8F2Yy+tzMbazyvqv21R0NsSC8floSOC09BbT1ITWAdoMGQvJ/aZnR1KMwdx9tvHnTNA=="
-  "resolved" "https://registry.npmjs.org/figures/-/figures-2.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/figures/-/figures-2.0.0.tgz"
   "version" "2.0.0"
   dependencies:
     "escape-string-regexp" "^1.0.5"
@@ -6405,7 +6405,7 @@
 
 "find-config@^1.0.0":
   "integrity" "sha512-Z+suHH+7LSE40WfUeZPIxSxypCWvrzdVc60xAjUShZeT5eMWM0/FQUduq3HjluyfAHWvC/aOBkT1pTZktyF/jg=="
-  "resolved" "https://registry.npmjs.org/find-config/-/find-config-1.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/find-config/-/find-config-1.0.0.tgz"
   "version" "1.0.0"
   dependencies:
     "user-home" "^2.0.0"
@@ -7296,7 +7296,7 @@
 
 "inquirer@^6.3.1":
   "integrity" "sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ=="
-  "resolved" "https://registry.npmjs.org/inquirer/-/inquirer-6.5.2.tgz"
+  "resolved" "http://npm.prakticum-team.ru/inquirer/-/inquirer-6.5.2.tgz"
   "version" "6.5.2"
   dependencies:
     "ansi-escapes" "^3.2.0"
@@ -7448,7 +7448,7 @@
 
 "is-fullwidth-code-point@^2.0.0":
   "integrity" "sha512-VHskAKYM8RfSFXwee5t5cbN5PZeq1Wrh6qd5bkyiXIf6UQcN6w/A0eXM9r6t8d+GYOh+o6ZhiEnb88LN/Y8m2w=="
-  "resolved" "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz"
   "version" "2.0.0"
 
 "is-fullwidth-code-point@^3.0.0":
@@ -8878,7 +8878,7 @@
 
 "mimic-fn@^1.0.0":
   "integrity" "sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ=="
-  "resolved" "https://registry.npmjs.org/mimic-fn/-/mimic-fn-1.2.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/mimic-fn/-/mimic-fn-1.2.0.tgz"
   "version" "1.2.0"
 
 "mimic-fn@^2.1.0":
@@ -8969,6 +8969,11 @@
   "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   "version" "1.0.4"
 
+"moment@^2.29.4":
+  "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
+  "resolved" "http://npm.prakticum-team.ru/moment/-/moment-2.29.4.tgz"
+  "version" "2.29.4"
+
 "mri@^1.2.0":
   "integrity" "sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA=="
   "resolved" "https://registry.npmjs.org/mri/-/mri-1.2.0.tgz"
@@ -9004,7 +9009,7 @@
 
 "mute-stream@0.0.7":
   "integrity" "sha512-r65nCZhrbXXb6dXOACihYApHw2Q6pV0M3V0PSxd74N0+D8nzAdEAITq2oAjA1jVnKI+tGvEBUpqiMh0+rW6zDQ=="
-  "resolved" "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.7.tgz"
+  "resolved" "http://npm.prakticum-team.ru/mute-stream/-/mute-stream-0.0.7.tgz"
   "version" "0.0.7"
 
 "mute-stream@0.0.8":
@@ -9276,7 +9281,7 @@
 
 "onetime@^2.0.0":
   "integrity" "sha512-oyyPpiMaKARvvcgip+JV+7zci5L8D1W9RZIz2l1o08AM3pfspitVWnPt3mzHcBPp12oYMTy0pqrFs/C+m3EwsQ=="
-  "resolved" "https://registry.npmjs.org/onetime/-/onetime-2.0.1.tgz"
+  "resolved" "http://npm.prakticum-team.ru/onetime/-/onetime-2.0.1.tgz"
   "version" "2.0.1"
   dependencies:
     "mimic-fn" "^1.0.0"
@@ -9353,7 +9358,7 @@
 
 "os-homedir@^1.0.0":
   "integrity" "sha512-B5JU3cabzk8c67mRRd3ECmROafjYMXbuzlwtqdM8IbS8ktlTix8aFGb2bAGKrSRIlnfKwovGUUr72JUPyOb6kQ=="
-  "resolved" "https://registry.npmjs.org/os-homedir/-/os-homedir-1.0.2.tgz"
+  "resolved" "http://npm.prakticum-team.ru/os-homedir/-/os-homedir-1.0.2.tgz"
   "version" "1.0.2"
 
 "os-tmpdir@~1.0.2":
@@ -10914,7 +10919,7 @@
 
 "restore-cursor@^2.0.0":
   "integrity" "sha512-6IzJLuGi4+R14vwagDHX+JrXmPVtPpn4mffDJ1UdR7/Edm87fl6yi8mMBIVvFtJaNTUvjughmW4hwLhRG7gC1Q=="
-  "resolved" "https://registry.npmjs.org/restore-cursor/-/restore-cursor-2.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/restore-cursor/-/restore-cursor-2.0.0.tgz"
   "version" "2.0.0"
   dependencies:
     "onetime" "^2.0.0"
@@ -10995,7 +11000,7 @@
 
 "rxjs@^6.4.0":
   "integrity" "sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ=="
-  "resolved" "https://registry.npmjs.org/rxjs/-/rxjs-6.6.7.tgz"
+  "resolved" "http://npm.prakticum-team.ru/rxjs/-/rxjs-6.6.7.tgz"
   "version" "6.6.7"
   dependencies:
     "tslib" "^1.9.0"
@@ -11602,7 +11607,7 @@
 
 "string-width@^2.1.0":
   "integrity" "sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw=="
-  "resolved" "https://registry.npmjs.org/string-width/-/string-width-2.1.1.tgz"
+  "resolved" "http://npm.prakticum-team.ru/string-width/-/string-width-2.1.1.tgz"
   "version" "2.1.1"
   dependencies:
     "is-fullwidth-code-point" "^2.0.0"
@@ -11669,14 +11674,14 @@
 
 "strip-ansi@^4.0.0":
   "integrity" "sha512-4XaJ2zQdCzROZDivEVIDPkcQn8LMFSa8kj8Gxb/Lnwzv9A8VctNZ+lfivC/sV3ivW8ElJTERXZoPBRrZKkNKow=="
-  "resolved" "https://registry.npmjs.org/strip-ansi/-/strip-ansi-4.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/strip-ansi/-/strip-ansi-4.0.0.tgz"
   "version" "4.0.0"
   dependencies:
     "ansi-regex" "^3.0.0"
 
 "strip-ansi@^5.1.0":
   "integrity" "sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA=="
-  "resolved" "https://registry.npmjs.org/strip-ansi/-/strip-ansi-5.2.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/strip-ansi/-/strip-ansi-5.2.0.tgz"
   "version" "5.2.0"
   dependencies:
     "ansi-regex" "^4.1.0"
@@ -11939,7 +11944,7 @@
 
 "temp@^0.9.0":
   "integrity" "sha512-yYrrsWnrXMcdsnu/7YMYAofM1ktpL5By7vZhf15CrXijWWrEYZks5AXBudalfSWJLlnen/QUJUB5aoB0kqZUGA=="
-  "resolved" "https://registry.npmjs.org/temp/-/temp-0.9.4.tgz"
+  "resolved" "http://npm.prakticum-team.ru/temp/-/temp-0.9.4.tgz"
   "version" "0.9.4"
   dependencies:
     "mkdirp" "^0.5.1"
@@ -12177,7 +12182,7 @@
 
 "tslib@^1.9.0":
   "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
-  "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
+  "resolved" "http://npm.prakticum-team.ru/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
 "tslib@^2.0.0", "tslib@^2.0.1", "tslib@^2.0.3", "tslib@^2.1.0", "tslib@^2.4.0":
@@ -12431,7 +12436,7 @@
 
 "user-home@^2.0.0":
   "integrity" "sha512-KMWqdlOcjCYdtIJpicDSFBQ8nFwS2i9sslAd6f4+CBGcU4gist2REnr2fxj2YocvJFxSF3ZOHLYLVZnUxv4BZQ=="
-  "resolved" "https://registry.npmjs.org/user-home/-/user-home-2.0.0.tgz"
+  "resolved" "http://npm.prakticum-team.ru/user-home/-/user-home-2.0.0.tgz"
   "version" "2.0.0"
   dependencies:
     "os-homedir" "^1.0.0"

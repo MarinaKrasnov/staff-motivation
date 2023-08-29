@@ -1,5 +1,7 @@
+import './Main.scss';
 import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
+import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
 
 function Main() {
@@ -9,9 +11,10 @@ function Main() {
 			<Header />
 			<SideNavbar />
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
-			{/* Андрей, достижения, начало */}
-			<Achievements />
-			{/* Андрей, достижения, конец */}
+			<section className="main-page__section">
+				<Achievements />
+				<MyTasks />
+			</section>
 		</main>
 	);
 }

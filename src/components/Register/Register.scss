@@ -1,14 +1,14 @@
 .register {
 	width: 100%;
-	min-height: 100%;
+	min-height: 100vh;
 	margin: 0 auto;
 	background-color: #f4f4f4;
 	display: flex;
-	flex-grow: 1;
+	align-items: center;
 
 	&__container {
 		width: 535px;
-		min-height: 790px;
+		min-height: 830px;
 		border-radius: 4px;
 		background-color: #ffffff;
 		margin: 15px auto 15px;
@@ -18,7 +18,7 @@
 		width: 65%;
 		margin: 0 auto;
 		padding-top: 80px;
-		padding-bottom: 18px;
+		padding-bottom: 15px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -44,14 +44,14 @@
 	}
 
 	&__subtitle {
-		width: 70%;
+		width: 90%;
 		font-size: 18px;
 		font-weight: 400;
 		line-height: 160%;
 		color: #525c76;
 		text-align: center;
 		margin: 0 auto;
-		padding-bottom: 48px;
+		padding-bottom: 29px;
 	}
 
 	&__error {
@@ -75,19 +75,19 @@
 		margin: 0 auto;
 		border-radius: 3px;
 		border: 1px solid #e2e4e8;
-		width: 360px;
-		min-height: 36px;
+		width: 372px;
+		min-height: 41px;
 		padding-left: 12px;
 		font-size: 14px;
 		font-style: normal;
-		font-weight: 700;
+		font-weight: 400;
 		line-height: 160%;
 		color: #525c76;
 		position: relative;
 
 		&::placeholder {
 			font-family: PT Root UI;
-			color: #525c76;
+			color: #b2b7c2;
 			font-size: 14px;
 			font-style: normal;
 			font-weight: 500;
@@ -95,10 +95,13 @@
 		}
 
 		&:focus {
-			outline: none;
+			outline: 1px solid #8247e5;
+			box-shadow: 0px 0px 0px 3px #dcd4ff, 0px 2px 2px -1px rgba(0, 0, 0, 0.12);
 		}
 
 		&[type='password'] {
+			padding-top: 0;
+			padding-bottom: 0;
 			font-size: 20px;
 		}
 	}
@@ -113,20 +116,10 @@
 		box-shadow: 0 0 0.5px 3px rgba(255, 50, 54, 0.3);
 	}
 
-	&__caption-input {
-		color: #525c76;
-		font-size: 14px;
-		font-style: normal;
-		font-weight: 500;
-		line-height: 160%;
-		margin-left: 26px;
-		padding-bottom: 30px;
-	}
-
-	&__middleName-span {
+	&__input-span {
 		margin-left: 32px;
 		padding-bottom: 2px;
-		color: #8c93a3;
+		color: #525c76;
 		font-size: 12px;
 		font-style: normal;
 		font-weight: 500;
@@ -135,7 +128,7 @@
 	}
 
 	&__submit-button {
-		margin: 24px auto;
+		margin: 30px auto 23px;
 		border-radius: 3px;
 		width: 344px;
 		height: 52px;
@@ -149,7 +142,7 @@
 	}
 
 	&__submit-button_disabled {
-		margin: 24px auto;
+		margin: 30px auto 23px;
 		border-radius: 3px;
 		width: 344px;
 		height: 52px;
@@ -172,6 +165,7 @@
 		font-weight: 500;
 		line-height: 160%;
 		text-decoration: none;
+		margin-bottom: 50px;
 	}
 
 	&__eye-button {
@@ -194,7 +188,7 @@
 
 	&__error-area {
 		display: flex;
-		margin: 2px 0 24px 35px;
+		margin: 2px 0 0 35px;
 		align-self: flex-start;
 	}
 
@@ -206,7 +200,7 @@
 	}
 
 	&__error-message {
-		margin: 0 0 2px 8px;
+		margin: 0 0 0 8px;
 		padding: 0;
 		align-self: center;
 		font-weight: 500;
@@ -216,6 +210,6 @@
 	}
 
 	&__input-space {
-		min-height: 24px;
+		min-height: 19px;
 	}
 }

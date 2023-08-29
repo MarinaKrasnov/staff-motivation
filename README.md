@@ -14,12 +14,6 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
@@ -80,3 +74,23 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Комментарий от ревьюера
+
+BASE_URL нужно вынести в .env
+
+в package.json указать homepage: "."
+
+в коде порядок включения должен быть следующим: глобальные зависимости, потом зависимости приложения, потом зависимости в той же директории
+
+Modal лучше сделать как универсальное обрамление для любой модалки, еще пригодится плюс отработаете композицию. Сейчас функционал дублируется
+
+Сообщения об ошибках из компонент лучше вытащить в константы хотя бы
+
+код не лучшим образом отформатирован или форматирование не применялось местами, неудобно читать, лучше вместо табов использовать пробелы — так более кроссплатформенно и отображение лучше в различных средах.
+
+переменные из компонент нужно вытащить в \_variables.scss и поместить где-нибудь в директории в src, туда же вытащить миксины, по имеющемуся CSS много мест оптимизации
+
+Подключен сторибук, не забывайте вести разработку через него, это не просто документация. Объявили компонент, сделали историю, в процессе разработке смотрим в историю играемся с пропсами и ускоряем процесс работы.
+
+Сейчас достаточно мало кода, хорошую структуру лучше заложить сразу, пока не стало поздно ) Не забудьте задокументировать в README.md структуру кода, процесс работы, конфиги.
