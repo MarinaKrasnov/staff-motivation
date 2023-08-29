@@ -12,11 +12,9 @@ function Main() {
 			<SideNavbar />
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
 			<section className="main-page__section">
+				<Achievements />
 				<MyTasks />
 			</section>
-			{/* Андрей, достижения, начало */}
-			<Achievements />
-			{/* Андрей, достижения, конец */}
 		</main>
 	);
 }
