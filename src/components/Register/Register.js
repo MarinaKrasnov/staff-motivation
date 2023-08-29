@@ -30,7 +30,9 @@ function Register() {
 	const [isEmailInputActive, setEmailInputActive] = useState(false);
 	const [isLastNameInputActive, setLastNameInputActive] = useState(false);
 	const [isFirstNameInputActive, setFirstNameInputActive] = useState(false);
-
+	const [isPasswordInputActive, setPasswordInputActive] = useState(false);
+	const [isConfirmPasswordInputActive, setConfirmPasswordInputActive] =
+		useState(false);
 	function onRegister(data) {
 		signup(data)
 			.then(() => {
@@ -87,7 +89,18 @@ function Register() {
 	function handleLastNameInputBlur() {
 		setLastNameInputActive(false);
 	}
-
+	function handlePasswordInputFocus() {
+		setPasswordInputActive(true);
+	}
+	function handlePasswordInputBlur() {
+		setPasswordInputActive(false);
+	}
+	function handleConfirmPasswordInputFocus() {
+		setConfirmPasswordInputActive(true);
+	}
+	function handleConfirmPasswordInputBlur() {
+		setConfirmPasswordInputActive(false);
+	}
 	return (
 		<div className="register">
 			<div className="register__container">
@@ -198,7 +211,7 @@ function Register() {
 							<div className="register__input-space"> </div>
 						)}
 
-						{watch('password') ? (
+						{watch('password') || isPasswordInputActive ? (
 							<span className="register__input-span">Пароль</span>
 						) : (
 							<div className="register__input-space">{}</div>
@@ -214,6 +227,8 @@ function Register() {
 								placeholder="Пароль"
 								{...register('password', { required: true })}
 								type={isPasswordHidden ? 'password' : 'text'}
+								onFocus={handlePasswordInputFocus}
+								onBlur={handlePasswordInputBlur}
 							/>
 							{watch('password') ? (
 								<button
@@ -240,6 +255,11 @@ function Register() {
 							<div className="register__input-space"> </div>
 						)}
 
+						{watch('password') || isConfirmPasswordInputActive ? (
+							<span className="register__input-span">Повторите пароль</span>
+						) : (
+							<div className="register__input-space">{}</div>
+						)}
 						<div className="register__pass-input">
 							<input
 								className={`register__input ${
@@ -251,7 +271,10 @@ function Register() {
 								name="confirmPassword"
 								placeholder="Повторите пароль"
 								{...register('confirmPassword', { required: true })}
+								onFocus={handleConfirmPasswordInputFocus}
+								onBlur={handleConfirmPasswordInputBlur}
 							/>
+
 							{watch('confirmPassword') ? (
 								<button
 									className="register__eye-button"
