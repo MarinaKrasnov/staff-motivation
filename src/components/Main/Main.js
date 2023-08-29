@@ -3,6 +3,7 @@ import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
 import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
+import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - попап подтверждения выхода;
 
 function Main() {
 	return (
@@ -15,6 +16,7 @@ function Main() {
 				<Achievements />
 				<MyTasks />
 			</section>
+			<ModalConfirm />
 		</main>
 	);
 }
