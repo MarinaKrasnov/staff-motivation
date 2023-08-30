@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import styles from './AchievementsWork.module.css';
+import styles from './DinamicWork.module.scss';
 
-function AchievementsWork() {
+function DinamicWork() {
   const [myAchievements, setMyAchievements] = useState(0);
   const [departmentAchievements, setDepartmentAchievements] = useState(0);
   const [organizationAchievements, setOrganizationAchievements] = useState(0);
@@ -72,4 +72,4 @@ return (
   );
 }
 
-export default AchievementsWork;
+export default DinamicWork;
