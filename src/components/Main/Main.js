@@ -3,6 +3,7 @@ import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
 import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
+import AchievementsWork from '../AchievementsWork/AchievementsWork';
 
 function Main() {
 	return (
@@ -13,6 +14,7 @@ function Main() {
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
 			<section className="main-page__section">
 				<Achievements />
+				<AchievementsWork/>
 				<MyTasks />
 			</section>
 		</main>
