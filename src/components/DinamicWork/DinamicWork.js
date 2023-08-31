@@ -21,19 +21,25 @@ function DinamicWork() {
   useEffect(() => {
     const fetchDataFromServer = async () => {
       try {
-        const response = await fetch('https://api.example.com/achievements');
-        const data = await response.json();
-    
-        setMyAchievements(data.myAchievements);
-        setDepartmentAchievements(data.departmentAchievements);
-        setOrganizationAchievements(data.organizationAchievements);
+        // Заглушка для fetch-запроса
+        const dummyData = {
+          myAchievements: 50,
+          departmentAchievements: 75,
+          organizationAchievements: 90
+        };
+  
+        setMyAchievements(dummyData.myAchievements);
+        setDepartmentAchievements(dummyData.departmentAchievements);
+        setOrganizationAchievements(dummyData.organizationAchievements);
       } catch (error) {
         console.error('Error:', error);
       }
     };
-    
+  
     fetchDataFromServer();
   }, []);
+  
+  
 
 return (
   <section className={styles.main}>

@@ -13,7 +13,7 @@ function Main() {
 			<SideNavbar />
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
 			<section className="main-page__section">
-				<div className='main-page__section1'>
+				<div className='main-page__block'>
 				<Achievements />
 				<DinamicWork/>
 				</div>
