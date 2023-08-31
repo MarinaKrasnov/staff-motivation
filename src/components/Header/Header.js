@@ -1,7 +1,21 @@
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './Header.scss';
 import photoProfile from '../../images/profile-photo.png';
 
-function Header() {
+function Header({ onLogout }) {
+	// анимация тени хедера при скролле
+	useEffect(() => {
+		const headerContainer = document.querySelector('.header__container');
+		window.addEventListener('scroll', () => {
+			if (window.scrollY >= 40) {
+				headerContainer.classList.add('header__container_scrolling');
+			} else {
+				headerContainer.classList.remove('header__container_scrolling');
+			}
+		});
+	});
+
 	return (
 		<header className="header">
 			<div className="header__container">
@@ -37,7 +51,11 @@ function Header() {
 				</div>
 				<div className="header__user-buttons">
 					<button className="header__bell-btn" aria-label="Уведомления" />
-					<button className="header__exit-btn" aria-label="Выход" />
+					<button
+						className="header__exit-btn"
+						aria-label="Выход"
+						onClick={onLogout}
+					/>
 				</div>
 			</div>
 		</header>
@@ -45,3 +63,7 @@ function Header() {
 }
 
 export default Header;
+
+Header.propTypes = {
+	onLogout: PropTypes.func.isRequired,
+};

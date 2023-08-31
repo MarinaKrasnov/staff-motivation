@@ -1,22 +1,28 @@
+import React, { useState } from 'react';
 import './Main.scss';
 import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
 import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
-import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - попап подтверждения выхода;
+import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - модальное окно подтверждения выхода
 
 function Main() {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const handleLogOut = () => setIsOpen(true);
+	const handleClose = () => setIsOpen(false);
+
 	return (
 		<main className="main-page">
 			{/* Егор - верхнее меню и левое боковое меню (начало кода) */}
-			<Header />
+			<Header onLogout={handleLogOut} />
 			<SideNavbar />
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
 			<section className="main-page__section">
 				<Achievements />
 				<MyTasks />
+				{isOpen && <ModalConfirm onClose={handleClose} />}
 			</section>
-			<ModalConfirm />
 		</main>
 	);
 }
