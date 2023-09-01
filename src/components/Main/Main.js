@@ -5,6 +5,7 @@ import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое
 import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
 import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - модальное окно подтверждения выхода
+import DinamicWork from '../DinamicWork/DinamicWork';
 
 function Main() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,10 @@ function Main() {
 			<SideNavbar />
 			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
 			<section className="main-page__section">
-				<Achievements />
+				<div className="main-page__block">
+					<Achievements />
+					<DinamicWork />
+				</div>
 				<MyTasks />
 				{isOpen && <ModalConfirm onClose={handleClose} />}
 			</section>
