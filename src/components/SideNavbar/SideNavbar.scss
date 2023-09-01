@@ -7,6 +7,7 @@
 	padding: 44px 0 44px;
 	display: flex;
 	flex-direction: column;
+	box-sizing: border-box;
 	height: 100vh;
 	position: fixed;
 
@@ -15,7 +16,7 @@
 		flex-direction: row;
 		gap: 8px;
 		align-items: center;
-		margin: 0 27px 68px auto;
+		margin: 0 auto 68px 44px;
 	}
 
 	&__logo {

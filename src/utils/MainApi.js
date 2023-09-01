@@ -8,20 +8,31 @@ const checkResponse = (res) => {
 	return Promise.reject(res.status);
 };
 
-export const signup = (data) => {
-	const requestData = [
-		data.firstName,
-		data.lastName,
-		data.email,
-		data.password,
-	];
-	if (data.middleName) {
-		requestData.middleName = data.middleName;
-	}
+// export const signup = (data) => {
+// 	const requestData = [
+// 		data.firstName,
+// 		data.lastName,
+// 		data.email,
+// 		data.password,
+// 	];
+// 	if (data.middleName) {
+// 		requestData.middleName = data.middleName;
+// 	}
 
-	console.log(data); // проверяю какие данные уходят на бэк
+// 	console.log(data); // проверяю какие данные уходят на бэк
 
-	return fetch(`${BASE_URL}/signup`, {
+// 	return fetch(`${BASE_URL}/signup`, {
+// 		method: 'POST',
+// 		headers: {
+// 			Accept: 'application/json',
+// 			'Content-Type': 'application/json',
+// 		},
+// 		body: JSON.stringify(data),
+// 	}).then(checkResponse);
+// };
+
+export function signup(data) {
+	return fetch(`${BASE_URL}/api/auth/users`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -29,7 +40,7 @@ export const signup = (data) => {
 		},
 		body: JSON.stringify(data),
 	}).then(checkResponse);
-};
+}
 // Аня - страница регистрации(конец кода)
 
 // Андрей, запросы к api - логин, checkToken(если понадобится), getTocken(если понадобится) - начало

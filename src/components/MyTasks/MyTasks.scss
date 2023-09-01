@@ -72,7 +72,7 @@
 		top: 0;
 		left: 0;
 		transition: visibility 0s, opacity 0.3s linear;
-		z-index: 1;
+		z-index: 2;
 	}
 
 	&__sort-popup {
@@ -149,6 +149,7 @@
 		width: 74%;
 		margin: 0 auto 30px;
 		text-align: left;
+		list-style-type: none;
 	}
 
 	&__checkbox-item {
