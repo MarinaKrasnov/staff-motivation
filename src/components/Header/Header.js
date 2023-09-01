@@ -8,7 +8,7 @@ function Header({ onLogout }) {
 	useEffect(() => {
 		const headerContainer = document.querySelector('.header__container');
 		window.addEventListener('scroll', () => {
-			if (window.scrollY >= 40) {
+			if (window.scrollY >= 25) {
 				headerContainer.classList.add('header__container_scrolling');
 			} else {
 				headerContainer.classList.remove('header__container_scrolling');
