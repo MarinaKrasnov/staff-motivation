@@ -9,13 +9,20 @@ const checkResponse = (res) => {
 };
 
 export function signup(data) {
+	const newData = {
+		first_name: data.firstName,
+		last_name: data.lastName,
+		password: data.password,
+		email: data.email,
+		password_confirmation: data.confirmPassword,
+	};
 	return fetch(`${BASE_URL}/api/auth/users/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify(data),
+		body: JSON.stringify(newData),
 	}).then(checkResponse);
 }
 // Аня - страница регистрации(конец кода)
