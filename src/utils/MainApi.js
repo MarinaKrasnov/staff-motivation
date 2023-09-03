@@ -16,6 +16,8 @@ export function signup(data) {
 		email: data.email,
 		password_confirmation: data.confirmPassword,
 	};
+	console.log(newData);
+
 	return fetch(`${BASE_URL}/api/auth/users/`, {
 		method: 'POST',
 		headers: {
