@@ -1,5 +1,3 @@
-![Repo Size](https://img.shields.io/github/languages/code-size/johnturner4004/readme-generator.svg?style=for-the-badge) ![TOP_LANGUAGE](https://img.shields.io/github/languages/top/johnturner4004/readme-generator.svg?style=for-the-badge) ![FORKS](https://img.shields.io/github/forks/johnturner4004/readme-generator.svg?style=for-the-badge&social) ![Stars](https://img.shields.io/github/stars/johnturner4004/readme-generator.svg?style=for-the-badge)
-
 # Motivation System
 
 Совместный проект выпускников Яндекс.Практикума в рамках Акселератора.
@@ -10,7 +8,9 @@
 - frontend-разработчики(React),
 - backend-разработчики(Python)
 - тестировщики,
-- PM.
+- PM
+
+<img src="./src/images/screen.JPG" />
 
 ## Описание
 
@@ -25,8 +25,6 @@
 http://185.41.163.109/main
 
 Макет: https://www.figma.com/file/Q8r447PYECnLhsfjM8bukI/Мотивация-сотрудников-New?node-id=35640%3A26952&mode=dev
-
-<img src="./src/images/screen.JPG" />
 
 ## Технологии:
 
