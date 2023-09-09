@@ -1,6 +1,6 @@
 ![Repo Size](https://img.shields.io/github/languages/code-size/johnturner4004/readme-generator.svg?style=for-the-badge) ![TOP_LANGUAGE](https://img.shields.io/github/languages/top/johnturner4004/readme-generator.svg?style=for-the-badge) ![FORKS](https://img.shields.io/github/forks/johnturner4004/readme-generator.svg?style=for-the-badge&social) ![Stars](https://img.shields.io/github/stars/johnturner4004/readme-generator.svg?style=for-the-badge)
 
-# Staff Motivation
+# Motivation System
 
 Совместный проект выпускников Яндекс.Практикума в рамках Акселератора.
 На данный момент проект находится в стадии разработки.
