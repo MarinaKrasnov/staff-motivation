@@ -18,7 +18,7 @@ export function signup(data) {
 	};
 	console.log(newData);
 
-	return fetch(`${BASE_URL}/api/auth/users/`, {
+	return fetch(`${BASE_URL}/api/users/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -49,7 +49,7 @@ export function checkToken(token) {
 */
 
 export function login(email, password) {
-	return fetch(`${BASE_URL}/api/auth/token/login/`, {
+	return fetch(`${BASE_URL}/api/token/login/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ function request(url, options) {
 export function changePassword(oldPassword, newPassword) {
 	const token = localStorage.getItem('token');
 
-	return request(`/api/auth/users/reset_password/`, {
+	return request(`/api/users/reset_password/`, {
 		// надо определиться new-password или password-recovery ?
 		method: 'POST',
 		headers: {
