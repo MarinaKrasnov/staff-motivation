@@ -1,4 +1,3 @@
-// Аня - страница регистрации, отправка данных (начало кода)
 import { BASE_URL } from './constants';
 
 const checkResponse = (res) => {
@@ -27,8 +26,6 @@ export function signup(data) {
 		body: JSON.stringify(newData),
 	}).then(checkResponse);
 }
-// Аня - страница регистрации(конец кода)
-
 // Андрей, запросы к api - логин, checkToken(если понадобится), getTocken(если понадобится) - начало
 /*
 function getToken() {
@@ -76,7 +73,6 @@ export function changePassword(oldPassword, newPassword) {
 	const token = localStorage.getItem('token');
 
 	return request(`/api/users/reset_password/`, {
-		// надо определиться new-password или password-recovery ?
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
