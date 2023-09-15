@@ -10,6 +10,24 @@ import ModalMessage from '../ModalMessage/ModalMessage';
 import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
 
 function App() {
+	/* проверка токена будет производиться сразу после загрузки приложения
+	useEffect(() => {
+		const jwt = localStorage.getItem('jwt');
+		if (jwt) {
+		  checkToken(jwt)
+			.then((res) => {
+			  if (res) {
+				setLoggedIn(true);
+			  }
+			  console.log('token is OK')
+			}).catch((res) => {
+			  setIsPopupErrorOpen(true)
+			  setPopupError('При проверке токена произошла ошибка')
+			  console.log('token is not OK ', res)
+			})
+		}
+	  }, [loggedIn]) */
+
 	return (
 		<div className="App">
 			<Routes>

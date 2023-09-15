@@ -19,7 +19,7 @@ function Register() {
 		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
-		mode: 'onTouched',
+		mode: 'onChanged',
 		resolver: yupResolver(RegisterSchema),
 	});
 
@@ -104,10 +104,9 @@ function Register() {
 				</header>
 				<main className="form__main">
 					{isError ? (
-						<h2 className="form__error"> {error}</h2>
+						<h2 className="form__error">{error}</h2>
 					) : (
 						<h2 className="form__subtitle">
-							{' '}
 							Создайте учётную запись, чтобы получить доступ к приложению
 						</h2>
 					)}
