@@ -18,7 +18,7 @@ export const LoginSchema = yup.object().shape({
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY),
 });
 
-export const ResetPassordSchema = yup.object().shape({
+export const ResetPasswordSchema = yup.object().shape({
 	email: yup
 		.string()
 		.email(ERROR_MESSAGES.EMAIL.INCORRECT)

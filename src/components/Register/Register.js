@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../utils/ValidationSchemes';
 import { signup } from '../../utils/MainApi';
+import { ERROR_MESSAGES } from '../../utils/Config';
 
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
@@ -37,12 +38,12 @@ function Register() {
 			.catch((err) => {
 				if (err === 400) {
 					setIsError(true);
-					setError('Ошибка регистрации. Проверьте правильность ввода данных');
+					setError(ERROR_MESSAGES.SERVER.REGISTER);
 				} else if (err === 500) {
 					navigate('/server-error');
 				} else {
 					setIsError(true);
-					setError('Что-то пошло не так...');
+					setError(ERROR_MESSAGES.SERVER.ELSE);
 				}
 			});
 	}

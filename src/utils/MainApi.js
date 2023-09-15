@@ -15,8 +15,6 @@ export function signup(data) {
 		email: data.email,
 		password_confirmation: data.confirmPassword,
 	};
-	console.log(newData);
-
 	return fetch(`${BASE_URL}/api/users/`, {
 		method: 'POST',
 		headers: {
@@ -69,17 +67,30 @@ function request(url, options) {
 	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
 }
 
-export function changePassword(oldPassword, newPassword) {
+export function setPassword(oldPassword, newPassword) {
 	const token = localStorage.getItem('token');
-
-	return request(`/api/users/reset_password/`, {
+	const data = {
+		new_password: newPassword,
+		current_password: oldPassword,
+	};
+	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ oldPassword, newPassword }),
+		body: JSON.stringify({ data }),
 	});
 }
 
 // Егор - новый пароль (конец)
+
+export function changePassword(email) {
+	return fetch(`${BASE_URL}/api/users/reset_password/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ email }),
+	}).then(checkResponse);
+}

@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../utils/ValidationSchemes';
 import * as MainApi from '../../utils/MainApi';
+import { ERROR_MESSAGES } from '../../utils/Config';
 // логотипы должны быть в самом низу
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
@@ -48,12 +49,12 @@ export default function Login() {
 			.catch((err) => {
 				if (err === 400) {
 					setIsError(true);
-					setError('Ошибка регистрации. Проверьте правильность ввода данных');
+					setError(ERROR_MESSAGES.SERVER.DATA);
 				} else if (err === 500) {
 					navigate('/server-error');
 				} else {
 					setIsError(true);
-					setError('Что-то пошло не так...');
+					setError(ERROR_MESSAGES.SERVER.ELSE);
 				}
 			});
 	};
