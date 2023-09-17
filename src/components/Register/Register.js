@@ -20,7 +20,7 @@ function Register() {
 		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
-		mode: 'onChanged',
+		mode: 'onChange',
 		resolver: yupResolver(RegisterSchema),
 	});
 
@@ -33,7 +33,7 @@ function Register() {
 		signup(data)
 			.then(() => {
 				navigate('/main');
-				console.log(`${error}'Пользователь зарегистрирован'`); // проверяю успешна ли регистрация
+				console.log('Пользователь зарегистрирован'); // проверяю успешна ли регистрация
 			})
 			.catch((err) => {
 				if (err === 400) {

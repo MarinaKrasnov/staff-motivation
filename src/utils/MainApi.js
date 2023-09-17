@@ -7,6 +7,7 @@ const checkResponse = (res) => {
 	return Promise.reject(res.status);
 };
 
+// регистрация
 export function signup(data) {
 	const newData = {
 		first_name: data.firstName,
@@ -43,6 +44,7 @@ export function checkToken(token) {
 }
 */
 
+// вход/авторизация
 export function login(email, password) {
 	return fetch(`${BASE_URL}/api/token/login/`, {
 		method: 'POST',
@@ -52,10 +54,19 @@ export function login(email, password) {
 		body: JSON.stringify({ email, password }),
 	}).then(checkResponse);
 }
-// Андрей, логин, checkToken - конец
 
-// Егор - новый пароль (начало)
+// запрос на смену пароля
+export function changePassword(email) {
+	return fetch(`${BASE_URL}/api/users/reset_password/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ email }),
+	}).then(checkResponse);
+}
 
+// новый пароль
 const getResponseData = (response) => {
 	if (!response.ok) {
 		return Promise.reject(response.status);
@@ -81,16 +92,4 @@ export function setPassword(oldPassword, newPassword) {
 		},
 		body: JSON.stringify({ data }),
 	});
-}
-
-// Егор - новый пароль (конец)
-
-export function changePassword(email) {
-	return fetch(`${BASE_URL}/api/users/reset_password/`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ email }),
-	}).then(checkResponse);
 }

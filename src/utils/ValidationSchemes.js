@@ -50,19 +50,11 @@ export const RegisterSchema = yup.object().shape({
 		.string()
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
 		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
-		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
-		.oneOf(
-			[yup.ref('confirmPassword'), null],
-			ERROR_MESSAGES.PASSWORD.MUST_MATCH
-		),
-
+		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
 	confirmPassword: yup
 		.string()
 		.required(ERROR_MESSAGES.CONFIRM_PASSWORD.EMPTY)
-		.oneOf(
-			[yup.ref('password'), null],
-			ERROR_MESSAGES.CONFIRM_PASSWORD.MUST_MATCH
-		),
+		.oneOf([yup.ref('password'), null], ERROR_MESSAGES.PASSWORD.MUST_MATCH),
 });
 
 export const NewPasswordSchema = yup.object().shape({
@@ -71,7 +63,7 @@ export const NewPasswordSchema = yup.object().shape({
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
 		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
 		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
-	repeatPassword: yup
+	confirmPassword: yup
 		.string()
 		.required(ERROR_MESSAGES.CONFIRM_PASSWORD.EMPTY)
 		.oneOf([yup.ref('password'), null], ERROR_MESSAGES.PASSWORD.MUST_MATCH),
