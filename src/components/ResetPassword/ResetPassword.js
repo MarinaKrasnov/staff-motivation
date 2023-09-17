@@ -29,10 +29,12 @@ export default function ResetPassword() {
 		if (errors.email) {
 			setIsError(true);
 			setError(errors.email.message);
+		} else if (isValid) {
+			setIsError(false);
 		} else {
 			setIsError(false);
 		}
-	}, [errors.email]);
+	}, [errors.email, isValid]);
 
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
