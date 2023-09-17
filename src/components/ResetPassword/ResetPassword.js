@@ -38,7 +38,7 @@ export default function ResetPassword() {
 		evt.preventDefault();
 		changePassword(data.email)
 			.then(() => {
-				navigate('/message');
+				navigate('/change-password-modal');
 			})
 			.catch((err) => {
 				if (err === 400) {

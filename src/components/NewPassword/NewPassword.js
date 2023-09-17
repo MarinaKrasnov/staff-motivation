@@ -64,7 +64,7 @@ function NewPassword() {
 		evt.preventDefault();
 		changePassword(data.oldPassword, data.password)
 			.then(() => {
-				navigate('/main');
+				navigate('/new-password-modal');
 				console.log('Пароль успешно изменен');
 			})
 			.catch((err) => {
