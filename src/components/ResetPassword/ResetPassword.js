@@ -1,83 +1,108 @@
-import { NavLink } from 'react-router-dom';
+import './ResetPassword.scss';
+import { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ResetPassordSchema } from '../../utils/ValidationSchemes';
-// svg's
-import greyCircleLogo from '../../images/logo.svg';
-import alarmLogo from '../../images/alarm-logo.svg';
+import { ResetPasswordSchema } from '../../utils/ValidationSchemes';
+import { changePassword } from '../../utils/MainApi';
+import { ERROR_MESSAGES } from '../../utils/Config';
+
+import logo from '../../images/M-check.svg';
 
 export default function ResetPassword() {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
+		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onTouched',
-		resolver: yupResolver(ResetPassordSchema),
+		resolver: yupResolver(ResetPasswordSchema),
 	});
-	// функция на сабмит
-	const onSubmit = () => {
-		// нужен api
+
+	const [isError, setIsError] = useState(false);
+	const [error, setError] = useState(null);
+
+	useEffect(() => {
+		if (errors.email) {
+			setIsError(true);
+			setError(errors.email.message);
+		} else if (isValid) {
+			setIsError(false);
+		} else {
+			setIsError(false);
+		}
+	}, [errors.email, isValid]);
+
+	const onSubmit = (data, evt) => {
+		evt.preventDefault();
+		changePassword(data.email)
+			.then(() => {
+				navigate('/change-password-modal');
+			})
+			.catch((err) => {
+				if (err === 400) {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.DATA);
+				} else if (err === 500) {
+					navigate('/server-error');
+				} else {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.ELSE);
+				}
+			});
 	};
 	return (
-		<section className="reset-password">
-			<div className="reset-password__container">
-				<div className="reset-password__title-container">
-					<img
-						className="reset-password__circle-logo"
-						src={greyCircleLogo}
-						alt="лампочка"
-					/>
-					<h2 className="reset-password__title">Motivation System</h2>
-				</div>
-				<p className="reset-password__message">
-					Укажите email, который вы использовали для регистрации
-				</p>
+		<div className="form">
+			<div className="reset-password">
+				<header className="form__header">
+					<img className="form__logo" src={logo} alt="Логотип" />
+					<h1 className="form__title">Motivation System</h1>
+				</header>
+				<main className="form__main">
+					{isError ? (
+						<h2 className="form__error">{error}</h2>
+					) : (
+						<h2 className="form__subtitle">
+							Укажите email, который вы использовали для регистрации
+						</h2>
+					)}
 
-				<form
-					className="reset-password__form"
-					onSubmit={handleSubmit(onSubmit)}
-					noValidate
-				>
-					<input
-						className={`reset-password__input ${
-							errors.email && !isValid && isDirty
-								? 'reset-password__input_no-valid'
-								: ''
-						}`}
-						placeholder="E-mail"
-						{...register('email', { required: true })}
-					/>
-					<div
-						className={`reset-password__error-area ${
-							!errors.email ? 'reset-password__error-area_hidden' : ''
-						}`}
+					<form
+						className="form__form"
+						onSubmit={handleSubmit(onSubmit)}
+						noValidate
 					>
-						<img
-							className="reset-password__alarm-logo"
-							src={alarmLogo}
-							alt="уведомление"
-						/>
-						<p className="reset-password__error-message">
-							{errors.email?.message}
-						</p>
-					</div>
+						<label className="form__label" htmlFor="email">
+							Email
+							<input
+								id="email"
+								name="email"
+								className={`form__input ${
+									errors.email && !isValid && isDirty
+										? 'form__input_no-valid'
+										: ''
+								} ${watch('email') ? 'form__input_filled' : ''}`}
+								{...register('email', { required: true })}
+							/>
+						</label>
 
-					<button
-						className="reset-password__button"
-						type="submit"
-						disabled={!isDirty || !isValid}
-					>
-						Сбросить пароль
-					</button>
-				</form>
-
-				<NavLink className="reset-password__link" to="/signin">
-					Отменить
-				</NavLink>
+						<button
+							className="form__submit-button"
+							type="submit"
+							disabled={!isValid || !isDirty || isError}
+						>
+							Сбросить пароль
+						</button>
+					</form>
+					<NavLink to="/signin" className="form__caption-link">
+						Отменить
+					</NavLink>
+				</main>
 			</div>
-		</section>
+		</div>
 	);
 }
 

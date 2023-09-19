@@ -1,154 +1,168 @@
-import React, { useState } from 'react';
+import './NewPassword.scss';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NewPasswordSchema } from '../../utils/ValidationSchemes';
-import * as MainApi from '../../utils/MainApi';
-import './NewPassword.scss';
-import errorIcon from '../../images/error-icon.svg';
+import { changePassword } from '../../utils/MainApi';
+import { ERROR_MESSAGES } from '../../utils/Config';
+
+import logo from '../../images/M-check.svg';
+import eyeButton from '../../images/Icon-hidden-pass.svg';
 
 function NewPassword() {
-	const [passwordVisible, setPasswordVisible] = useState(false);
-	const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
-	const [passwordDirty, setPasswordDirty] = useState(false);
-	const [repeatPasswordDirty, setRepeatPasswordDirty] = useState(false);
+	const navigate = useNavigate();
+
+	const [isError, setIsError] = useState(false);
+	const [error, setError] = useState(null);
+	const [isPasswordHidden, setPasswordHidden] = useState(false);
+	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
 
 	const {
 		register,
 		handleSubmit,
-		setValue,
-		formState: { errors, isValid },
+		// setValue,
+		watch,
+		formState: { errors, isValid, isDirty },
 	} = useForm({
-		// mode: 'onChange',
-		mode: 'onTouched',
+		mode: 'onChange',
+		// mode: 'onTouched',
 		resolver: yupResolver(NewPasswordSchema),
 	});
 
-	const handleChange = (e) => {
-		setValue('password', e.target.value);
-		setPasswordDirty(true);
-	};
+	useEffect(() => {
+		if (errors.password) {
+			setIsError(true);
+			setError(errors.password.message);
+		} else if (errors.confirmPassword) {
+			setIsError(true);
+			setError(errors.confirmPassword.message);
+		} else if (isValid) {
+			setIsError(false);
+		} else {
+			setIsError(false);
+		}
+	}, [errors.password, errors.confirmPassword, isValid]);
 
-	const handleChangeRepeat = (e) => {
-		setValue('repeatPassword', e.target.value);
-		setRepeatPasswordDirty(true);
-	};
+	function handlePasswordHidden() {
+		if (isPasswordHidden) {
+			setPasswordHidden(false);
+		} else {
+			setPasswordHidden(true);
+		}
+	}
 
-	const togglePasswordVisibility = () => {
-		setPasswordVisible(!passwordVisible);
-	};
+	function handleConfirmPasswordHidden() {
+		if (isConfirmPasswordHidden) {
+			setConfirmPasswordHidden(false);
+		} else {
+			setConfirmPasswordHidden(true);
+		}
+	}
 
-	const toggleRepeatPasswordVisibility = () => {
-		setRepeatPasswordVisible(!repeatPasswordVisible);
-	};
-
-	// запрос на смену пароля
-	const onSubmit = (data) => {
-		MainApi.changePassword(data.oldPassword, data.password)
+	const onSubmit = (data, evt) => {
+		evt.preventDefault();
+		changePassword(data.oldPassword, data.password)
 			.then(() => {
+				navigate('/new-password-modal');
 				console.log('Пароль успешно изменен');
-				// здесь будет открываться Виталин компонент (попап с кнопкой)
 			})
-			.catch((error) => {
-				console.log('Ошибка при смене пароля:', error);
-				// что-то будет происходит, если возникнут ошибки при смене пароля
+			.catch((err) => {
+				if (err === 400) {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.REGISTER);
+				} else if (err === 500) {
+					navigate('/server-error');
+				} else {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.ELSE);
+				}
 			});
 	};
 
 	return (
-		<section className="new-password">
-			<div className="new-password__container">
-				<div className="new-password__title-container">
-					<div className="new-password__logo" />
-					<h2 className="new-password__title">Motivation System</h2>
-				</div>
-				<p className="new-password__subtitle">
-					Войдите в аккаунт, чтобы получить доступ к приложению
-				</p>
-				<form className="new-password__form" onSubmit={handleSubmit(onSubmit)}>
-					<div className="new-password__input-container">
-						<input
-							className={`new-password__input ${
-								errors.password ? 'new-password__input_no-valid' : ''
-							}`}
-							type={passwordVisible ? 'text' : 'password'}
-							placeholder="Пароль"
-							{...register('password')}
-							onChange={handleChange}
-						/>
-						<div className="new-password__error-container">
-							{errors.password && (
-								<div className="new-password__error-message">
-									<img
-										src={errorIcon}
-										alt="Error Icon"
-										className="new-password__error-icon"
-									/>
-									{errors.password.message}
-								</div>
-							)}
-						</div>
-						{passwordDirty && (
-							<div className="new-password__btn-container">
-								<button
-									className={`new-password__hide-btn ${
-										passwordVisible ? 'new-password__hide-btn_visible' : ''
-									}`}
-									onClick={togglePasswordVisibility}
-									type="button"
-								>
-									Hide
-								</button>
-							</div>
-						)}
-					</div>
-					<div className="new-password__input-container">
-						<input
-							className={`new-password__input ${
-								errors.repeatPassword ? 'new-password__input_no-valid' : ''
-							}`}
-							type={repeatPasswordVisible ? 'text' : 'password'}
-							placeholder="Повторите пароль"
-							{...register('repeatPassword')}
-							onChange={handleChangeRepeat}
-						/>
-						<div className="new-password__error-container">
-							{errors.repeatPassword && (
-								<div className="new-password__error-message">
-									<img
-										src={errorIcon}
-										alt="Предупреждение"
-										className="new-password__error-icon"
-									/>
-									{errors.repeatPassword.message}
-								</div>
-							)}
-						</div>
-						{repeatPasswordDirty && (
-							<div className="new-password__btn-container">
-								<button
-									className={`new-password__hide-btn ${
-										repeatPasswordVisible
-											? 'new-password__hide-btn_visible'
-											: ''
-									}`}
-									onClick={toggleRepeatPasswordVisibility}
-									type="button"
-								>
-									Hide
-								</button>
-							</div>
-						)}
-					</div>
-					<button
-						className="new-password__submit-btn"
-						type="submit"
-						disabled={!isValid}
+		<div className="form">
+			<div className="new-password">
+				<header className="form__header">
+					<img className="form__logo" src={logo} alt="Логотип" />
+					<h1 className="form__title">Motivation System</h1>
+				</header>
+				<main className="form__main">
+					{isError ? (
+						<h2 className="new-password__error">{error}</h2>
+					) : (
+						<h2 className="form__subtitle">
+							Войдите в аккаунт, чтобы получть доступ к приложению
+						</h2>
+					)}
+					<form
+						className="form__form"
+						onSubmit={handleSubmit(onSubmit)}
+						noValidate
 					>
-						Изменить пароль
-					</button>
-				</form>
+						<div className="form__pass-input">
+							<label className="form__label" htmlFor="password">
+								Пароль
+								<input
+									id="password"
+									name="password"
+									type={isPasswordHidden ? 'password' : 'text'}
+									className={`form__input ${
+										errors.password && !isValid && isDirty
+											? 'form__input_no-valid'
+											: ''
+									} ${watch('password') ? 'form__input_filled' : ''}`}
+									{...register('password', { required: true })}
+								/>
+								{watch('password') ? (
+									<button
+										className="form__eye-button"
+										type="button"
+										onClick={handlePasswordHidden}
+									>
+										<img src={eyeButton} alt="скрыть пароль" />
+									</button>
+								) : null}
+							</label>
+						</div>
+
+						<div className="form__pass-input">
+							<label className="form__label" htmlFor="confirmPassword">
+								Повторите пароль
+								<input
+									id="confirmPassword"
+									name="confirmPassword"
+									type={isConfirmPasswordHidden ? 'password' : 'text'}
+									className={`form__input ${
+										errors.confirmPassword && !isValid && isDirty
+											? 'form__input_no-valid'
+											: ''
+									} ${watch('confirmPassword') ? 'form__input_filled' : ''}`}
+									{...register('confirmPassword', { required: true })}
+								/>
+								{watch('confirmPassword') ? (
+									<button
+										className="form__eye-button"
+										type="button"
+										onClick={handleConfirmPasswordHidden}
+									>
+										<img src={eyeButton} alt="скрыть пароль" />
+									</button>
+								) : null}
+							</label>
+						</div>
+
+						<button
+							className="form__submit-button"
+							type="submit"
+							disabled={!isValid || !isDirty || isError}
+						>
+							Изменить пароль
+						</button>
+					</form>
+				</main>
 			</div>
-		</section>
+		</div>
 	);
 }
 

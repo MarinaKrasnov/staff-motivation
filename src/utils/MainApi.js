@@ -1,4 +1,3 @@
-// Аня - страница регистрации, отправка данных (начало кода)
 import { BASE_URL } from './constants';
 
 const checkResponse = (res) => {
@@ -8,6 +7,7 @@ const checkResponse = (res) => {
 	return Promise.reject(res.status);
 };
 
+// регистрация
 export function signup(data) {
 	const newData = {
 		first_name: data.firstName,
@@ -16,8 +16,6 @@ export function signup(data) {
 		email: data.email,
 		password_confirmation: data.confirmPassword,
 	};
-	console.log(newData);
-
 	return fetch(`${BASE_URL}/api/users/`, {
 		method: 'POST',
 		headers: {
@@ -27,8 +25,6 @@ export function signup(data) {
 		body: JSON.stringify(newData),
 	}).then(checkResponse);
 }
-// Аня - страница регистрации(конец кода)
-
 // Андрей, запросы к api - логин, checkToken(если понадобится), getTocken(если понадобится) - начало
 /*
 function getToken() {
@@ -48,6 +44,7 @@ export function checkToken(token) {
 }
 */
 
+// вход/авторизация
 export function login(email, password) {
 	return fetch(`${BASE_URL}/api/token/login/`, {
 		method: 'POST',
@@ -57,10 +54,19 @@ export function login(email, password) {
 		body: JSON.stringify({ email, password }),
 	}).then(checkResponse);
 }
-// Андрей, логин, checkToken - конец
 
-// Егор - новый пароль (начало)
+// запрос на смену пароля
+export function changePassword(email) {
+	return fetch(`${BASE_URL}/api/users/reset_password/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ email }),
+	}).then(checkResponse);
+}
 
+// новый пароль
 const getResponseData = (response) => {
 	if (!response.ok) {
 		return Promise.reject(response.status);
@@ -72,18 +78,18 @@ function request(url, options) {
 	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
 }
 
-export function changePassword(oldPassword, newPassword) {
+export function setPassword(oldPassword, newPassword) {
 	const token = localStorage.getItem('token');
-
-	return request(`/api/users/reset_password/`, {
-		// надо определиться new-password или password-recovery ?
+	const data = {
+		new_password: newPassword,
+		current_password: oldPassword,
+	};
+	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ oldPassword, newPassword }),
+		body: JSON.stringify({ data }),
 	});
 }
-
-// Егор - новый пароль (конец)
