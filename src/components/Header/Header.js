@@ -6,12 +6,12 @@ import photoProfile from '../../images/profile-photo.png';
 function Header({ onLogout }) {
 	// анимация тени хедера при скролле
 	useEffect(() => {
-		const headerContainer = document.querySelector('.header__container');
+		const headerContainer = document.querySelector('.header');
 		window.addEventListener('scroll', () => {
 			if (window.scrollY >= 25) {
-				headerContainer.classList.add('header__container_scrolling');
+				headerContainer.classList.add('header_scrolling');
 			} else {
-				headerContainer.classList.remove('header__container_scrolling');
+				headerContainer.classList.remove('header_scrolling');
 			}
 		});
 	});
@@ -19,6 +19,7 @@ function Header({ onLogout }) {
 	return (
 		<header className="header">
 			<div className="header__container">
+				<div className="header__logo">Motivation System</div>
 				<div className="header__user-info">
 					<img
 						className="header__photo"
@@ -33,7 +34,7 @@ function Header({ onLogout }) {
 				<div className="header__user-points">
 					<div className="header__points-container">
 						<div className="header__points">35 Б</div>
-						<div className="header__points-text">за спринт</div>
+						<div className="header__points-text">за месяц</div>
 					</div>
 					<div className="header__points-container">
 						<div className="header__points header__points_rating">485 Б</div>
@@ -41,12 +42,11 @@ function Header({ onLogout }) {
 							рейтинг
 						</div>
 					</div>
-				</div>
-				<div className="header__vertical-line" />
-				<div className="header__points-container">
-					<div className="header__points header__points_place">2</div>
-					<div className="header__points-text header__points-text_place">
-						место в рейтинге
+					<div className="header__points-container">
+						<div className="header__points header__points_place">2</div>
+						<div className="header__points-text header__points-text_place">
+							в рейтинге
+						</div>
 					</div>
 				</div>
 				<div className="header__user-buttons">
