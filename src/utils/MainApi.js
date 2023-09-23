@@ -93,3 +93,45 @@ export function setPassword(oldPassword, newPassword) {
 		body: JSON.stringify({ data }),
 	});
 }
+
+// блок 'Мои задачи'
+
+export function getTasks() {
+	const token = localStorage.getItem('token');
+
+	return fetch(`${BASE_URL}/api/tasks/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+	}).then(checkResponse);
+}
+
+export function getTaskInfo(id) {
+	const token = localStorage.getItem('token');
+
+	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+	}).then(checkResponse);
+}
+
+export function confirmTask(id, data) {
+	const token = localStorage.getItem('token');
+
+	return fetch(`${BASE_URL}/api/tasks/${id}/sent_for_review`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}

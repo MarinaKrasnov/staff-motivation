@@ -39,6 +39,14 @@
 			"prettier"
 		],
 		"rules": {
+			"camelcase": [
+				"error",
+				{
+					"allow": [
+						"_"
+					]
+				}
+			],
 			"react/jsx-filename-extension": [
 				1,
 				{

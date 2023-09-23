@@ -32,7 +32,7 @@ function Register() {
 	function onRegister(data) {
 		signup(data)
 			.then(() => {
-				navigate('/activation-message-modal');
+				navigate('/activation-message-modal'); // модалка активации
 				console.log('Пользователь зарегистрирован'); // проверяю успешна ли регистрация
 			})
 			.catch((err) => {

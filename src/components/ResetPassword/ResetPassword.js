@@ -40,7 +40,7 @@ export default function ResetPassword() {
 		evt.preventDefault();
 		changePassword(data.email)
 			.then(() => {
-				navigate('/change-password-modal');
+				navigate('/change-password-modal'); // модальное окно: мы отравили вам на почту ссылку для востановления парол
 			})
 			.catch((err) => {
 				if (err === 400) {
