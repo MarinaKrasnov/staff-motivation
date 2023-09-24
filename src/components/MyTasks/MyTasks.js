@@ -126,14 +126,15 @@ function MyTasks() {
 	}
 
 	function handleDeadlineSort() {
-		// const notInSort = 'approve' || 'sent_for_review'
+		const notToSort = 'sent_for_review' || 'approve';
+
 		if (isDeadlineSort) {
 			setDeadlineSort(false);
 			const sortArray = tasksArray.sort((a, b) => {
-				if (a.status === 'approve' && b.status !== 'approve') {
+				if (a.status === notToSort && b.status !== notToSort) {
 					return 1;
 				}
-				if (a.status !== 'approve' && b.status === 'approve') {
+				if (a.status !== notToSort && b.status === notToSort) {
 					return -1;
 				}
 				return a.id - b.id;
@@ -143,10 +144,10 @@ function MyTasks() {
 		}
 
 		const sortArray = tasksArray.sort((a, b) => {
-			if (a.status === 'approve' && b.status !== 'approve') {
+			if (a.status === notToSort && b.status !== notToSort) {
 				return 1;
 			}
-			if (a.status !== 'approve' && b.status === 'approve') {
+			if (a.status !== notToSort && b.status === notToSort) {
 				return -1;
 			}
 			return new Date(a.deadline) - new Date(b.deadline);
