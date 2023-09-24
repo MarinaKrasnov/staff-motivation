@@ -11,7 +11,7 @@ import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 import Modal from '../Modal/Modal';
 import styles from '../Modal/Modal.module.scss';
-import ClaudSlash from '../../CloudSlash.svg';
+import ClaudSlash from '../../images/CloudSlash.svg';
 
 function NewPassword() {
 	const navigate = useNavigate();
@@ -72,26 +72,26 @@ function NewPassword() {
 	}
 	useEffect(() => {
 		const handleKeyDown = (event) => {
-		  if (event.key === 'Escape') {
-			setIsServerErrorOpen(false);
-		  }
+			if (event.key === 'Escape') {
+				setIsServerErrorOpen(false);
+			}
 		};
-	
+
 		const handleMouseDown = (event) => {
-		  if (!modalRef.current || modalRef.current.contains(event.target)) {
-			return;
-		  }
-		  setIsServerErrorOpen(false);
+			if (!modalRef.current || modalRef.current.contains(event.target)) {
+				return;
+			}
+			setIsServerErrorOpen(false);
 		};
-	
+
 		document.addEventListener('keydown', handleKeyDown);
 		document.addEventListener('mousedown', handleMouseDown);
-	
+
 		return () => {
-		  document.removeEventListener('keydown', handleKeyDown);
-		  document.removeEventListener('mousedown', handleMouseDown);
+			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('mousedown', handleMouseDown);
 		};
-	  }, []);
+	}, []);
 
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
@@ -194,27 +194,28 @@ function NewPassword() {
 						</button>
 					</form>
 					<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-  					<section className={styles.ModulePort}>
-   					 <div className={styles.Module}>
-     				 <img src={logo1} className="App-logo" alt="logo" />
-     				 <h2 className={styles.Text3}>Ваш пароль успешно изменен!</h2>
-     				 <button className={styles.button} onClick={handleLogin}>
-       				Войти
-      				</button>
-    				</div>
-  					</section>
-				</Modal>
-				<Modal isOpen={isServerErrorOpen}>
-      <section className={styles.ModalPort} ref={modalRef}>
-					<div className={styles.Module}>
-						<img src={ClaudSlash} className="App-logo" alt="logo" />
-                        <h1 className={styles.Text1}>Сервер временно не доступен</h1>
-						<h2 className={styles.Text2}>
-                        Мы делаем всё возможное, чтобы возобновить работу приложения. Приносим извинения за доставленные неудобства.
-						</h2>
-					</div>
-				</section>
-      </Modal>
+						<section className={styles.ModulePort}>
+							<div className={styles.Module}>
+								<img src={logo1} className="App-logo" alt="logo" />
+								<h2 className={styles.Text3}>Ваш пароль успешно изменен!</h2>
+								<button className={styles.button} onClick={handleLogin}>
+									Войти
+								</button>
+							</div>
+						</section>
+					</Modal>
+					<Modal isOpen={isServerErrorOpen}>
+						<section className={styles.ModalPort} ref={modalRef}>
+							<div className={styles.Module}>
+								<img src={ClaudSlash} className="App-logo" alt="logo" />
+								<h1 className={styles.Text1}>Сервер временно не доступен</h1>
+								<h2 className={styles.Text2}>
+									Мы делаем всё возможное, чтобы возобновить работу приложения.
+									Приносим извинения за доставленные неудобства.
+								</h2>
+							</div>
+						</section>
+					</Modal>
 				</main>
 			</div>
 		</div>

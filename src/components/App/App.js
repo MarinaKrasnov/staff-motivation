@@ -7,7 +7,7 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
-
+import ServerError from '../ServerError/ServerError';
 
 function App() {
 	/* проверка токена будет производиться сразу после загрузки приложения
@@ -41,6 +41,7 @@ function App() {
 				<Route path="/signin" element={<Login />} />
 				{/* уведомление об отправке ссылки для создания нового пароля на почту */}
 				<Route path="/reset-password" element={<ResetPassword />} />
+				<Route path="/server-error" element={<ServerError />} />
 			</Routes>
 		</div>
 	);

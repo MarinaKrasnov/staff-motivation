@@ -1,58 +1,61 @@
 import './Register.scss';
-import React, { useState, useEffect, useRef} from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../utils/ValidationSchemes';
 import { signup } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-import logo1 from '../../images/CircleWavyCheck.svg';
-import styles from '../Modal/Modal.module.scss';
+import logoActivation from '../../images/CircleWavyCheck.svg';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 import Modal from '../Modal/Modal';
-import ClaudSlash from '../../CloudSlash.svg';
+import styles from '../Modal/Modal.module.scss';
 
 function Register() {
 	// поменяй  false на true, что бы посмтореть на модалку
-	const [isOpen, setIsOpen] = useState(false);
-	const [isServerErrorOpen, setIsServerErrorOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 	const modalRef = useRef(null);
-  
+	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors, isValid, isDirty },
-	  } = useForm({
+	} = useForm({
 		mode: 'onChange',
 		resolver: yupResolver(RegisterSchema),
-	  });
+	});
 
 	const [isError, setIsError] = useState(false);
-  	const [error, setError] = useState(null);
-  	const [isPasswordHidden, setPasswordHidden] = useState(false);
-  	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
-  
-	  function onRegister(data) {
-		signup(data)
-		  .then(() => {
-			setIsOpen(true);
-			console.log('Пользователь зарегистрирован');
-		  })
-		  .catch((err) => {
-			if (err === 400) {
-			  setIsError(true);
-			  setError(ERROR_MESSAGES.SERVER.REGISTER);
-			} else if (err === 500) {
-				setIsServerErrorOpen(true);
-			} else {
-			  setIsError(true);
-			  setError(ERROR_MESSAGES.SERVER.ELSE);
-			}
-		  });
-	  }
-	 
+	const [error, setError] = useState(null);
+	const [isPasswordHidden, setPasswordHidden] = useState(false);
+	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
+
+	function onRegister(data) {
+		if (watch('password') === watch('confirmPassword')) {
+			signup(data)
+				.then(() => {
+					navigate('/signin');
+					// setIsOpen(true);
+				})
+				.catch((err) => {
+					if (err === 400) {
+						setIsError(true);
+						setError(ERROR_MESSAGES.SERVER.REGISTER);
+					} else if (err === 500) {
+						navigate('/server-error');
+					} else {
+						setIsError(true);
+						setError(ERROR_MESSAGES.SERVER.ELSE);
+					}
+				});
+		} else {
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
+		}
+	}
+
 	function onSubmit(data, evt) {
 		evt.preventDefault();
 		onRegister(data);
@@ -60,67 +63,64 @@ function Register() {
 
 	function handlePasswordHidden() {
 		setPasswordHidden(!isPasswordHidden);
-	  }
-	
-	  function handleConfirmPasswordHidden() {
+	}
+
+	function handleConfirmPasswordHidden() {
 		setConfirmPasswordHidden(!isConfirmPasswordHidden);
-	  }
-	
-	  useEffect(() => {
+	}
+
+	useEffect(() => {
 		const handleKeyDown = (event) => {
-		  if (event.key === 'Escape') {
-			setIsOpen(false);
-			setIsServerErrorOpen(false);
-		  }
+			if (event.key === 'Escape') {
+				setIsOpen(false);
+			}
 		};
-	
+
 		const handleMouseDown = (event) => {
-		  if (!modalRef.current || modalRef.current.contains(event.target)) {
-			return;
-		  }
-	
-		  setIsOpen(false);
-		  setIsServerErrorOpen(false);
+			if (!modalRef.current || modalRef.current.contains(event.target)) {
+				return;
+			}
+
+			setIsOpen(false);
 		};
-	
+
 		document.addEventListener('keydown', handleKeyDown);
 		document.addEventListener('mousedown', handleMouseDown);
-	
+
 		return () => {
-		  document.removeEventListener('keydown', handleKeyDown);
-		  document.removeEventListener('mousedown', handleMouseDown);
+			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('mousedown', handleMouseDown);
 		};
-	  }, []);
-	  
-	  useEffect(() => {
+	}, []);
+
+	useEffect(() => {
 		if (
-		  errors.email ||
-		  errors.lastName ||
-		  errors.firstName ||
-		  errors.password ||
-		  errors.confirmPassword
+			errors.email ||
+			errors.lastName ||
+			errors.firstName ||
+			errors.password ||
+			errors.confirmPassword
 		) {
-		  setIsError(true);
-		  setError(
-			errors.email?.message ||
-			  errors.lastName?.message ||
-			  errors.firstName?.message ||
-			  errors.password?.message ||
-			  errors.confirmPassword?.message
-		  );
+			setIsError(true);
+			setError(
+				errors.email?.message ||
+					errors.lastName?.message ||
+					errors.firstName?.message ||
+					errors.password?.message ||
+					errors.confirmPassword?.message
+			);
 		} else {
-		  setIsError(false);
-		  setError(null);
+			setIsError(false);
+			setError(null);
 		}
-	  }, [
+	}, [
 		errors.email,
 		errors.lastName,
 		errors.firstName,
 		errors.password,
 		errors.confirmPassword,
-	  ]);
-	
-	
+	]);
+
 	return (
 		<div className="form">
 			<div className="form__container">
@@ -215,7 +215,7 @@ function Register() {
 								<input
 									id="confirmPassword"
 									name="confirmPassword"
-									type={isPasswordHidden ? 'password' : 'text'}
+									type={isConfirmPasswordHidden ? 'password' : 'text'}
 									className={`form__input ${
 										errors.confirmPassword && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -236,38 +236,29 @@ function Register() {
 						</div>
 
 						<button
-						className="form__submit-button"
-  						type="submit"
-  						disabled={!isValid || !isDirty || isError}
+							className="form__submit-button"
+							type="submit"
+							disabled={!isValid || !isDirty || isError}
 						>
-  						Зарегистрироваться
+							Зарегистрироваться
 						</button>
-			
 					</form>
 					<NavLink to="/signin" className="form__caption-link">
 						У меня есть аккаунт.&#8194;Войти
 					</NavLink>
-					<Modal isOpen={isOpen}>
-      <section className={styles.ModalPort} ref={modalRef}>
-					<div className={styles.Module}>
-						<img src={logo1} className="App-logo" alt="logo" />
-						<h2 className={styles.Message}>
-            После активации аккаунта мы отправим вам электронное письмо. В нём будет ссылка на вашу страницу в приложении.
-						</h2>
-					</div>
-				</section>
-      </Modal>
-	  <Modal isOpen={isServerErrorOpen}>
-      <section className={styles.ModalPort} ref={modalRef}>
-					<div className={styles.Module}>
-						<img src={ClaudSlash} className="App-logo" alt="logo" />
-                        <h1 className={styles.Text1}>Сервер временно не доступен</h1>
-						<h2 className={styles.Text2}>
-                        Мы делаем всё возможное, чтобы возобновить работу приложения. Приносим извинения за доставленные неудобства.
-						</h2>
-					</div>
-				</section>
-      </Modal>
+					{isOpen ? (
+						<Modal isOpen={isOpen}>
+							<section className={styles.ModalPort} ref={modalRef}>
+								<div className={styles.Module}>
+									<img src={logoActivation} className="App-logo" alt="logo" />
+									<h2 className={styles.Message}>
+										После активации аккаунта мы отправим вам электронное письмо.
+										В нём будет ссылка на вашу страницу в приложении.
+									</h2>
+								</div>
+							</section>
+						</Modal>
+					) : null}
 				</main>
 			</div>
 		</div>
@@ -275,6 +266,3 @@ function Register() {
 }
 
 export default Register;
-
-
-

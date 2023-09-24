@@ -2,29 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.scss';
 
-const Modal1 = ({ isOpen, children }) => {
-  if (!isOpen) return null;
+function Modal({ children }) {
+	return (
+		<div className={styles.modalOverlay}>
+			<div className={styles.modal}>{children}</div>
+		</div>
+	);
+}
 
-  return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        {children}
-      </div>
-    </div>
-  );
+Modal.propTypes = {
+	children: PropTypes.node.isRequired,
 };
 
-Modal1.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
-export default Modal1;
-
-
-
-
-
+export default Modal;
 
 // import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';

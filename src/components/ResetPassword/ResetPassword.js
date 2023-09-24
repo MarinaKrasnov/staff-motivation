@@ -11,7 +11,7 @@ import logo from '../../images/M-check.svg';
 import Modal from '../Modal/Modal';
 import logo1 from '../../images/CircleWavyCheck.svg';
 import styles from '../Modal/Modal.module.scss';
-import ClaudSlash from '../../CloudSlash.svg';
+import ClaudSlash from '../../images/CloudSlash.svg';
 
 export default function ResetPassword() {
 	// поменяй  false на true, что бы посмтореть на модалку
@@ -40,19 +40,19 @@ export default function ResetPassword() {
 				setIsServerErrorOpen(false);
 			}
 		};
-  
+
 		const handleMouseDown = (event) => {
 			if (!modalRef.current || modalRef.current.contains(event.target)) {
 				return;
 			}
-  
+
 			setIsOpen(false);
 			setIsServerErrorOpen(false);
 		};
-  
+
 		document.addEventListener('keydown', handleKeyDown);
 		document.addEventListener('mousedown', handleMouseDown);
-  
+
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
 			document.removeEventListener('mousedown', handleMouseDown);
@@ -73,23 +73,22 @@ export default function ResetPassword() {
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
 		changePassword(data.email)
-		  .then(() => {
-			setIsOpen(true);
-		  })
-		  .catch((err) => {
-			if (err === 400) {
-			  setIsError(true);
-			  setError(ERROR_MESSAGES.SERVER.DATA);
-			} else if (err === 500) {
-				setIsServerErrorOpen(true);
-			} else {
-			  setIsError(true);
-			  setError(ERROR_MESSAGES.SERVER.ELSE);
-			}
-		  });
-	  };
-	  
-	  
+			.then(() => {
+				setIsOpen(true);
+			})
+			.catch((err) => {
+				if (err === 400) {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.DATA);
+				} else if (err === 500) {
+					setIsServerErrorOpen(true);
+				} else {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.ELSE);
+				}
+			});
+	};
+
 	return (
 		<div className="form">
 			<div className="reset-password">
@@ -137,27 +136,28 @@ export default function ResetPassword() {
 						Отменить
 					</NavLink>
 					<Modal isOpen={isOpen}>
-      <section className={styles.ModalPort} ref={modalRef}>
-					<div className={styles.Module}>
-						<img src={logo1} className="App-logo" alt="logo" />
-						<h2 className={styles.Message}>
-							Мы отправили ссылку для создания нового пароля на вашу электронную
-							почту
-						</h2>
-					</div>
-				</section>
-      </Modal>
-	  <Modal isOpen={isServerErrorOpen}>
-      <section className={styles.ModalPort} ref={modalRef}>
-					<div className={styles.Module}>
-						<img src={ClaudSlash} className="App-logo" alt="logo" />
-                        <h1 className={styles.Text1}>Сервер временно не доступен</h1>
-						<h2 className={styles.Text2}>
-                        Мы делаем всё возможное, чтобы возобновить работу приложения. Приносим извинения за доставленные неудобства.
-						</h2>
-					</div>
-				</section>
-      </Modal>
+						<section className={styles.ModalPort} ref={modalRef}>
+							<div className={styles.Module}>
+								<img src={logo1} className="App-logo" alt="logo" />
+								<h2 className={styles.Message}>
+									Мы отправили ссылку для создания нового пароля на вашу
+									электронную почту
+								</h2>
+							</div>
+						</section>
+					</Modal>
+					<Modal isOpen={isServerErrorOpen}>
+						<section className={styles.ModalPort} ref={modalRef}>
+							<div className={styles.Module}>
+								<img src={ClaudSlash} className="App-logo" alt="logo" />
+								<h1 className={styles.Text1}>Сервер временно не доступен</h1>
+								<h2 className={styles.Text2}>
+									Мы делаем всё возможное, чтобы возобновить работу приложения.
+									Приносим извинения за доставленные неудобства.
+								</h2>
+							</div>
+						</section>
+					</Modal>
 				</main>
 			</div>
 		</div>
