@@ -43,7 +43,9 @@ function MyTasks() {
 	useEffect(() => {
 		getTasks()
 			.then((data) => {
-				const sort = data.tasks.sort((a, b) => a.id - b.id);
+				const sort = data.tasks.sort(
+					(a, b) => new Date(a.created_at) - new Date(b.created_at)
+				);
 				setTasksArray(sort);
 				localStorage.setItem('myTasks', JSON.stringify(sort));
 			})
@@ -137,7 +139,7 @@ function MyTasks() {
 				if (a.status !== notToSort && b.status === notToSort) {
 					return -1;
 				}
-				return a.id - b.id;
+				return new Date(a.created_at) - new Date(b.created_at);
 			});
 			setTasksArray(sortArray);
 			return;
