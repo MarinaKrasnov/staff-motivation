@@ -1,4 +1,3 @@
-// Аня - страница регистрации, отправка данных (начало кода)
 import { BASE_URL } from './constants';
 
 const checkResponse = (res) => {
@@ -8,30 +7,24 @@ const checkResponse = (res) => {
 	return Promise.reject(res.status);
 };
 
-export const signup = (data) => {
-	const requestData = [
-		data.firstName,
-		data.lastName,
-		data.email,
-		data.password,
-	];
-	if (data.middleName) {
-		requestData.middleName = data.middleName;
-	}
-
-	console.log(data); // проверяю какие данные уходят на бэк
-
-	return fetch(`${BASE_URL}/signup`, {
+// регистрация
+export function signup(data) {
+	const newData = {
+		first_name: data.firstName,
+		last_name: data.lastName,
+		password: data.password,
+		email: data.email,
+		password_confirmation: data.confirmPassword,
+	};
+	return fetch(`${BASE_URL}/api/users/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify(data),
+		body: JSON.stringify(newData),
 	}).then(checkResponse);
-};
-// Аня - страница регистрации(конец кода)
-
+}
 // Андрей, запросы к api - логин, checkToken(если понадобится), getTocken(если понадобится) - начало
 /*
 function getToken() {
@@ -51,8 +44,9 @@ export function checkToken(token) {
 }
 */
 
+// вход/авторизация
 export function login(email, password) {
-	return fetch(`${BASE_URL}/token/login`, {
+	return fetch(`${BASE_URL}/api/token/login/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -60,10 +54,19 @@ export function login(email, password) {
 		body: JSON.stringify({ email, password }),
 	}).then(checkResponse);
 }
-// Андрей, логин, checkToken - конец
 
-// Егор - новый пароль (начало)
+// запрос на смену пароля
+export function changePassword(email) {
+	return fetch(`${BASE_URL}/api/users/reset_password/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ email }),
+	}).then(checkResponse);
+}
 
+// новый пароль
 const getResponseData = (response) => {
 	if (!response.ok) {
 		return Promise.reject(response.status);
@@ -75,18 +78,18 @@ function request(url, options) {
 	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
 }
 
-export function changePassword(oldPassword, newPassword) {
+export function setPassword(oldPassword, newPassword) {
 	const token = localStorage.getItem('token');
-
-	return request(`/users/new-password`, {
-		// надо определиться new-password или password-recovery ?
+	const data = {
+		new_password: newPassword,
+		current_password: oldPassword,
+	};
+	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ oldPassword, newPassword }),
+		body: JSON.stringify({ data }),
 	});
 }
-
-// Егор - новый пароль (конец)

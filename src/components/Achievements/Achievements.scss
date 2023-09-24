@@ -3,19 +3,18 @@ $accentDarkGrey400: #525c76;
 $accentLightGrey900: #8c93a3;
 
 .achievements {
-	position: fixed;
 	top: 216px;
 	right: 46.4%;
 	margin: 0;
-	width: 33.34%;
+	width: 43%;
 	height: 334px;
 	background-color: #fff;
 	border-radius: 24px;
-
 	column-gap: 16px;
+	padding-bottom: 30px;
 
 	&__title {
-		margin: 24px 0 0 32px;
+		padding: 24px 0 0 32px;
 		font-size: 24px;
 		font-weight: 500;
 		line-height: 36px;
@@ -28,8 +27,9 @@ $accentLightGrey900: #8c93a3;
 		display: grid;
 		grid-template-columns: repeat(2, minmax(10px, 200px));
 		grid-template-rows: repeat(2, 1fr);
-		gap: 16px;
+		gap: 10px;
 		list-style: none;
+		padding: 0;
 	}
 
 	&__achieve {

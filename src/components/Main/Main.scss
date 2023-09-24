@@ -1,0 +1,17 @@
+.main-page {
+	display: block;
+	position: relative;
+	min-height: 100%;
+	background-color: #eeeff2;
+}
+
+.main-page__section {
+	position: absolute;
+	top: 180px;
+	left: 20.5%;
+	margin-top: 44px;
+}
+
+.main-page__block {
+	display: flex;
+}

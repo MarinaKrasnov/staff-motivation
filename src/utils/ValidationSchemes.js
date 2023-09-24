@@ -1,8 +1,7 @@
 import * as yup from 'yup';
-import emailRegex, { nameRegex } from './RegExps'; // Аня - страница регистрации
+import { emailRegex, nameRegex } from './RegExps';
 import { ERROR_MESSAGES } from './Config';
 
-// Андрей, схема логина, начало
 export const LoginSchema = yup.object().shape({
 	email: yup
 		.string()
@@ -10,16 +9,16 @@ export const LoginSchema = yup.object().shape({
 		.required(ERROR_MESSAGES.EMAIL.EMPTY)
 		.test('Validate Email', ERROR_MESSAGES.EMAIL.INCORRECT, (value) => {
 			const RegEx = emailRegex;
-			return RegEx.test(String(value).toLowerCase()); // использую регулярное выражение для валидации е-мейла
+			return RegEx.test(String(value).toLowerCase()); // регулярное выражение для валидации е-мейла
 		}),
 	password: yup
 		.string()
-		.min(6, ERROR_MESSAGES.PASSWORD.TO_SHORT)
+		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
 		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY),
 });
 
-export const ResetPassordSchema = yup.object().shape({
+export const ResetPasswordSchema = yup.object().shape({
 	email: yup
 		.string()
 		.email(ERROR_MESSAGES.EMAIL.INCORRECT)
@@ -29,9 +28,7 @@ export const ResetPassordSchema = yup.object().shape({
 			return RegEx.test(String(value).toLowerCase());
 		}),
 });
-// Андрей, схема логина, конец
 
-// Аня - валидация на странице регистрации(начало кода)
 export const RegisterSchema = yup.object().shape({
 	firstName: yup
 		.string()
@@ -40,11 +37,6 @@ export const RegisterSchema = yup.object().shape({
 	lastName: yup
 		.string()
 		.required(ERROR_MESSAGES.NAME.EMPTY_LASTNAME)
-		.matches(nameRegex, ERROR_MESSAGES.NAME.INCORRECT),
-	middleName: yup
-		.string()
-		.nullable()
-		.notRequired()
 		.matches(nameRegex, ERROR_MESSAGES.NAME.INCORRECT),
 	email: yup
 		.string()
@@ -72,17 +64,19 @@ export const RegisterSchema = yup.object().shape({
 			ERROR_MESSAGES.CONFIRM_PASSWORD.MUST_MATCH
 		),
 });
-// Аня - валидация на странице регистрации (конец кода)
-// Егор - новый пароль (начало)
+
 export const NewPasswordSchema = yup.object().shape({
 	password: yup
 		.string()
-		.required('Пароль обязателен для заполнения')
-		.min(6, 'Пароль должен содержать минимум 6 символов')
-		.max(30, 'Пароль должен содержать не более 30 символов'),
-	repeatPassword: yup
+		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
+		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
+		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
+
+	confirmPassword: yup
 		.string()
-		.required('Повторение пароля обязательно для заполнения')
-		.oneOf([yup.ref('password'), null], 'Пароли должны совпадать'),
+		.required(ERROR_MESSAGES.CONFIRM_PASSWORD.EMPTY)
+		.oneOf(
+			[yup.ref('password'), null],
+			ERROR_MESSAGES.CONFIRM_PASSWORD.MUST_MATCH
+		),
 });
-// Егор - новый пароль (конец)
