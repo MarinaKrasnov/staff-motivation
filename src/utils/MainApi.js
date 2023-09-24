@@ -97,40 +97,36 @@ export function setPassword(oldPassword, newPassword) {
 // блок 'Мои задачи'
 
 export function getTasks() {
-	const token = localStorage.getItem('token');
-
 	return fetch(`${BASE_URL}/api/tasks/`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
 	}).then(checkResponse);
 }
 
 export function getTaskInfo(id) {
-	const token = localStorage.getItem('token');
+	// const token = localStorage.getItem('token');
 
 	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
 	}).then(checkResponse);
 }
 
 export function confirmTask(id, data) {
-	const token = localStorage.getItem('token');
-
-	return fetch(`${BASE_URL}/api/tasks/${id}/sent_for_review`, {
+	return fetch(`${BASE_URL}/api/tasks/${id}/send_for_review/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
 		body: JSON.stringify({ data }),
 	}).then(checkResponse);

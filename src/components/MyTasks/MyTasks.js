@@ -1,16 +1,14 @@
 import './MyTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyTask from '../MyTask/MyTask';
-import { tasksList } from '../../utils/constants';
 import iconFilter from '../../images/SortAscending.png';
+import { getTasks, getTaskInfo, confirmTask } from '../../utils/MainApi';
 
 function MyTasks() {
-	/* const todayDate = new Date().toLocaleDateString();
-	const tomorrowDate = new Date(
-		new Date().getTime() + 24 * 60 * 60 * 1000
-	).toLocaleDateString(); */
+	const navigate = useNavigate();
 
-	const [tasksArray, setTasksArray] = useState(tasksList);
+	const [tasksArray, setTasksArray] = useState([]);
 	const [isArray, setArray] = useState(true);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
@@ -19,9 +17,17 @@ function MyTasks() {
 	const [timeOutTasksButton, setTimeOutTasksButton] = useState(false);
 	const [popupInfo, setPopupInfo] = useState([]);
 	const [statusName, setStatusName] = useState('');
+	const [isDeadlineSort, setDeadlineSort] = useState(false);
 
-	const { status, reward_points, title, description, created_at, deadline } =
-		popupInfo;
+	const {
+		status,
+		reward_points,
+		title,
+		description,
+		created_at,
+		deadline,
+		id,
+	} = popupInfo;
 
 	const dateDeadline = new Date(deadline);
 	const dateCreated = new Date(created_at);
@@ -31,6 +37,24 @@ function MyTasks() {
 		options
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
+	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
+	console.log(storagedArray);
+
+	useEffect(() => {
+		getTasks()
+			.then((data) => {
+				const sort = data.tasks.sort((a, b) => a.id - b.id);
+				setTasksArray(sort);
+				localStorage.setItem('myTasks', JSON.stringify(sort));
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				} else {
+					setTasksArray([]);
+				}
+			});
+	}, [navigate]);
 
 	useEffect(() => {
 		if (tasksArray.length === 0 || null) {
@@ -65,7 +89,7 @@ function MyTasks() {
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
-		setTasksArray(tasksList);
+		setTasksArray(storagedArray);
 	}
 
 	function handleActiveTasksSort() {
@@ -73,7 +97,7 @@ function MyTasks() {
 		setActiveTaskstButton(true);
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
-		const filteredTasks = tasksList.filter(
+		const filteredTasks = storagedArray.filter(
 			(task) => task.status === 'created' || task.status === 'rejected'
 		);
 		setTasksArray(filteredTasks);
@@ -84,7 +108,7 @@ function MyTasks() {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		setTimeOutTasksButton(false);
-		const filteredTasks = tasksList.filter(
+		const filteredTasks = storagedArray.filter(
 			(task) => task.status === 'sent_for_review'
 		);
 		setTasksArray(filteredTasks);
@@ -95,26 +119,63 @@ function MyTasks() {
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
-		const filteredTasks = tasksList.filter(
+		const filteredTasks = storagedArray.filter(
 			(task) => task.status === 'is_overdue'
 		);
 		setTasksArray(filteredTasks);
 	}
 
 	function handleDeadlineSort() {
-		setTasksArray(tasksArray);
-		console.log('click-click');
-	}
-
-	const handlePopupOpen = useCallback((id, disablePopup) => {
-		const itemData = tasksList.find((item) => item.id === id);
-		setPopupInfo(itemData);
-		if (disablePopup) {
-			setIsPopupOpen(false);
+		// const notInSort = 'approve' || 'sent_for_review'
+		if (isDeadlineSort) {
+			setDeadlineSort(false);
+			const sortArray = tasksArray.sort((a, b) => {
+				if (a.status === 'approve' && b.status !== 'approve') {
+					return 1;
+				}
+				if (a.status !== 'approve' && b.status === 'approve') {
+					return -1;
+				}
+				return a.id - b.id;
+			});
+			setTasksArray(sortArray);
 			return;
 		}
-		setIsPopupOpen(true);
-	}, []);
+
+		const sortArray = tasksArray.sort((a, b) => {
+			if (a.status === 'approve' && b.status !== 'approve') {
+				return 1;
+			}
+			if (a.status !== 'approve' && b.status === 'approve') {
+				return -1;
+			}
+			return new Date(a.deadline) - new Date(b.deadline);
+		});
+		setTasksArray(sortArray);
+		setDeadlineSort(true);
+	}
+
+	const handlePopupOpen = useCallback(
+		(idPopup, disablePopup) => {
+			if (!disablePopup) {
+				getTaskInfo(idPopup)
+					.then((data) => {
+						setPopupInfo(data);
+						setIsPopupOpen(true);
+					})
+					.catch((res) => {
+						if (res === 500) {
+							navigate('/server-error');
+						} else {
+							setTasksArray([]);
+						}
+					});
+				return;
+			}
+			setIsPopupOpen(false);
+		},
+		[navigate]
+	);
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
@@ -127,7 +188,15 @@ function MyTasks() {
 	}
 
 	function confirmTaskPopup() {
-		setIsPopupOpen(false);
+		confirmTask(id, popupInfo)
+			.then(() => {
+				setIsPopupOpen(false);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				}
+			});
 	}
 
 	return (
