@@ -1,6 +1,7 @@
 import './ResetPassword.scss';
 import { useState, useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+
 // import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,13 +12,11 @@ import logo from '../../images/M-check.svg';
 import Modal from '../Modal/Modal';
 import logo1 from '../../images/CircleWavyCheck.svg';
 import styles from '../Modal/Modal.module.scss';
-import ClaudSlash from '../../images/CloudSlash.svg';
 
 export default function ResetPassword() {
 	// поменяй  false на true, что бы посмтореть на модалку
 	const [isOpen, setIsOpen] = useState(false);
-	const [isServerErrorOpen, setIsServerErrorOpen] = useState(false);
-
+	const navigate = useNavigate();
 	const modalRef = useRef(null);
 
 	const {
@@ -37,7 +36,6 @@ export default function ResetPassword() {
 		const handleKeyDown = (event) => {
 			if (event.key === 'Escape') {
 				setIsOpen(false);
-				setIsServerErrorOpen(false);
 			}
 		};
 
@@ -45,9 +43,7 @@ export default function ResetPassword() {
 			if (!modalRef.current || modalRef.current.contains(event.target)) {
 				return;
 			}
-
 			setIsOpen(false);
-			setIsServerErrorOpen(false);
 		};
 
 		document.addEventListener('keydown', handleKeyDown);
@@ -81,7 +77,7 @@ export default function ResetPassword() {
 					setIsError(true);
 					setError(ERROR_MESSAGES.SERVER.DATA);
 				} else if (err === 500) {
-					setIsServerErrorOpen(true);
+					navigate('/server-error');
 				} else {
 					setIsError(true);
 					setError(ERROR_MESSAGES.SERVER.ELSE);
@@ -98,7 +94,7 @@ export default function ResetPassword() {
 				</header>
 				<main className="form__main">
 					{isError ? (
-						<h2 className="form__error">{error}</h2>
+						<h2 className="form__error reset-password__error">{error}</h2>
 					) : (
 						<h2 className="form__subtitle">
 							Укажите email, который вы использовали для регистрации
@@ -135,29 +131,19 @@ export default function ResetPassword() {
 					<NavLink to="/signin" className="form__caption-link">
 						Отменить
 					</NavLink>
-					<Modal isOpen={isOpen}>
-						<section className={styles.ModalPort} ref={modalRef}>
-							<div className={styles.Module}>
-								<img src={logo1} className="App-logo" alt="logo" />
-								<h2 className={styles.Message}>
-									Мы отправили ссылку для создания нового пароля на вашу
-									электронную почту
-								</h2>
-							</div>
-						</section>
-					</Modal>
-					<Modal isOpen={isServerErrorOpen}>
-						<section className={styles.ModalPort} ref={modalRef}>
-							<div className={styles.Module}>
-								<img src={ClaudSlash} className="App-logo" alt="logo" />
-								<h1 className={styles.Text1}>Сервер временно не доступен</h1>
-								<h2 className={styles.Text2}>
-									Мы делаем всё возможное, чтобы возобновить работу приложения.
-									Приносим извинения за доставленные неудобства.
-								</h2>
-							</div>
-						</section>
-					</Modal>
+					{isOpen ? (
+						<Modal>
+							<section className={styles.ModalPort} ref={modalRef}>
+								<div className={styles.Module}>
+									<img src={logo1} className="App-logo" alt="logo" />
+									<h2 className={styles.Message}>
+										Мы отправили ссылку для создания нового пароля на вашу
+										электронную почту
+									</h2>
+								</div>
+							</section>
+						</Modal>
+					) : null}
 				</main>
 			</div>
 		</div>

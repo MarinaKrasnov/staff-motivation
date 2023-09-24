@@ -14,7 +14,7 @@ import styles from '../Modal/Modal.module.scss';
 
 function Register() {
 	// поменяй  false на true, что бы посмтореть на модалку
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const modalRef = useRef(null);
 	const navigate = useNavigate();
 
@@ -52,6 +52,7 @@ function Register() {
 					}
 				});
 		} else {
+			setIsError(true);
 			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
 		}
 	}
@@ -109,6 +110,9 @@ function Register() {
 					errors.password?.message ||
 					errors.confirmPassword?.message
 			);
+		} else if (watch('confirmPassword') !== watch('password')) {
+			setIsError(false);
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
 		} else {
 			setIsError(false);
 			setError(null);
@@ -119,6 +123,7 @@ function Register() {
 		errors.firstName,
 		errors.password,
 		errors.confirmPassword,
+		watch,
 	]);
 
 	return (
@@ -189,7 +194,7 @@ function Register() {
 								<input
 									id="password"
 									name="password"
-									type={isPasswordHidden ? 'password' : 'text'}
+									type={isPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.password && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -215,7 +220,7 @@ function Register() {
 								<input
 									id="confirmPassword"
 									name="confirmPassword"
-									type={isConfirmPasswordHidden ? 'password' : 'text'}
+									type={isConfirmPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.confirmPassword && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -247,7 +252,7 @@ function Register() {
 						У меня есть аккаунт.&#8194;Войти
 					</NavLink>
 					{isOpen ? (
-						<Modal isOpen={isOpen}>
+						<Modal>
 							<section className={styles.ModalPort} ref={modalRef}>
 								<div className={styles.Module}>
 									<img src={logoActivation} className="App-logo" alt="logo" />

@@ -1,27 +1,23 @@
 import './NewPassword.scss';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NewPasswordSchema } from '../../utils/ValidationSchemes';
-import { changePassword } from '../../utils/MainApi';
+import { setPassword } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
 import logo1 from '../../images/CircleWavyCheck.svg';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 import Modal from '../Modal/Modal';
 import styles from '../Modal/Modal.module.scss';
-import ClaudSlash from '../../images/CloudSlash.svg';
 
 function NewPassword() {
 	const navigate = useNavigate();
 	// поменяй  false на true, что бы посмтореть на модалку
 	const [isOpen, setIsOpen] = useState(false);
-	const [isServerErrorOpen, setIsServerErrorOpen] = useState(false);
-	const modalRef = useRef(null);
-	// Используем navigate для перенаправления на страницу Signin
 	const handleLogin = () => {
-		navigate('/Signin');
+		navigate('/signin');
 	};
 
 	const [isError, setIsError] = useState(false);
@@ -50,10 +46,12 @@ function NewPassword() {
 			setError(errors.confirmPassword.message);
 		} else if (isValid) {
 			setIsError(false);
+		} else if (watch('password') !== watch('confirmPassword')) {
+			setIsError(true);
 		} else {
 			setIsError(false);
 		}
-	}, [errors.password, errors.confirmPassword, isValid]);
+	}, [errors.password, errors.confirmPassword, isValid, watch]);
 
 	function handlePasswordHidden() {
 		if (isPasswordHidden) {
@@ -70,47 +68,29 @@ function NewPassword() {
 			setConfirmPasswordHidden(true);
 		}
 	}
-	useEffect(() => {
-		const handleKeyDown = (event) => {
-			if (event.key === 'Escape') {
-				setIsServerErrorOpen(false);
-			}
-		};
-
-		const handleMouseDown = (event) => {
-			if (!modalRef.current || modalRef.current.contains(event.target)) {
-				return;
-			}
-			setIsServerErrorOpen(false);
-		};
-
-		document.addEventListener('keydown', handleKeyDown);
-		document.addEventListener('mousedown', handleMouseDown);
-
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
-			document.removeEventListener('mousedown', handleMouseDown);
-		};
-	}, []);
 
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
-		changePassword(data.oldPassword, data.password)
-			.then(() => {
-				setIsOpen(true);
-				console.log('Пароль успешно изменен');
-			})
-			.catch((err) => {
-				if (err === 400) {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.REGISTER);
-				} else if (err === 500) {
-					setIsServerErrorOpen(true);
-				} else {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.ELSE);
-				}
-			});
+		if (watch('password') === watch('confirmPassword')) {
+			setPassword(data)
+				.then(() => {
+					setIsOpen(true);
+				})
+				.catch((err) => {
+					if (err === 400) {
+						setIsError(true);
+						setError(ERROR_MESSAGES.SERVER.REGISTER);
+					} else if (err === 500) {
+						navigate('/server-error');
+					} else {
+						setIsError(true);
+						setError(ERROR_MESSAGES.SERVER.ELSE);
+					}
+				});
+		} else {
+			setIsError(true);
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
+		}
 	};
 
 	return (
@@ -139,7 +119,7 @@ function NewPassword() {
 								<input
 									id="password"
 									name="password"
-									type={isPasswordHidden ? 'password' : 'text'}
+									type={isPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.password && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -165,7 +145,7 @@ function NewPassword() {
 								<input
 									id="confirmPassword"
 									name="confirmPassword"
-									type={isConfirmPasswordHidden ? 'password' : 'text'}
+									type={isConfirmPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.confirmPassword && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -193,29 +173,19 @@ function NewPassword() {
 							Изменить пароль
 						</button>
 					</form>
-					<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-						<section className={styles.ModulePort}>
-							<div className={styles.Module}>
-								<img src={logo1} className="App-logo" alt="logo" />
-								<h2 className={styles.Text3}>Ваш пароль успешно изменен!</h2>
-								<button className={styles.button} onClick={handleLogin}>
-									Войти
-								</button>
-							</div>
-						</section>
-					</Modal>
-					<Modal isOpen={isServerErrorOpen}>
-						<section className={styles.ModalPort} ref={modalRef}>
-							<div className={styles.Module}>
-								<img src={ClaudSlash} className="App-logo" alt="logo" />
-								<h1 className={styles.Text1}>Сервер временно не доступен</h1>
-								<h2 className={styles.Text2}>
-									Мы делаем всё возможное, чтобы возобновить работу приложения.
-									Приносим извинения за доставленные неудобства.
-								</h2>
-							</div>
-						</section>
-					</Modal>
+					{isOpen ? (
+						<Modal>
+							<section className={styles.ModulePort}>
+								<div className={styles.Module}>
+									<img src={logo1} className="App-logo" alt="logo" />
+									<h2 className={styles.Text3}>Ваш пароль успешно изменен!</h2>
+									<button className={styles.button} onClick={handleLogin}>
+										Войти
+									</button>
+								</div>
+							</section>
+						</Modal>
+					) : null}
 				</main>
 			</div>
 		</div>

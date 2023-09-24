@@ -57,12 +57,14 @@ export function login(email, password) {
 
 // запрос на смену пароля
 export function changePassword(email) {
+	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/users/reset_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ email }),
+		body: JSON.stringify(email),
 	}).then(checkResponse);
 }
 
@@ -78,18 +80,19 @@ function request(url, options) {
 	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
 }
 
-export function setPassword(oldPassword, newPassword) {
+export function setPassword(data) {
 	const token = localStorage.getItem('token');
-	const data = {
-		new_password: newPassword,
-		current_password: oldPassword,
+	const currentData = {
+		new_password: data.password,
+		current_password: data.confirmPassword,
 	};
+	console.log(currentData);
 	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ data }),
+		body: JSON.stringify({ currentData }),
 	});
 }

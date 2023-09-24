@@ -10,8 +10,15 @@ function Modal({ children }) {
 	);
 }
 
+/* Modal.propTypes = {
+	children: PropTypes.node.isDefined,
+}; */
+
 Modal.propTypes = {
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
+};
+Modal.defaultProps = {
+	children: null,
 };
 
 export default Modal;

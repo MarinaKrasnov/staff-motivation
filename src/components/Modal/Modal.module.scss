@@ -1,17 +1,17 @@
 .modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .modal {
-    width: 530px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal {
+	width: 530px;
 	height: 340px;
 	display: flex;
 	position: fixed;
@@ -23,13 +23,13 @@
 	align-items: center;
 	background-color: #ffffff;
 	margin: auto;
-  }
-  
-  .modal-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
+}
+
+.modal-close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
 
 .Message {
 	width: 370px;
@@ -103,10 +103,10 @@
 	align-items: center;
 }
 
-@media screen and (max-width: 500px) {
-    .modal {
-        max-width: 360px;
-    }
+@media screen and (max-width: 530px) {
+	.modal {
+		max-width: 360px;
+	}
 	.button {
 		max-width: 328px;
 		height: 36px;
@@ -128,19 +128,6 @@
 		width: 328px;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // $color_1: white;
 // $color_2: #525c76;
