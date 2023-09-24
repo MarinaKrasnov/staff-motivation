@@ -34,32 +34,32 @@ function Register() {
 	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
 
 	function onRegister(data) {
-		if (watch('password') === watch('confirmPassword')) {
-			signup(data)
-				.then(() => {
-					navigate('/signin');
-					// setIsOpen(true);
-				})
-				.catch((err) => {
-					if (err === 400) {
-						setIsError(true);
-						setError(ERROR_MESSAGES.SERVER.REGISTER);
-					} else if (err === 500) {
-						navigate('/server-error');
-					} else {
-						setIsError(true);
-						setError(ERROR_MESSAGES.SERVER.ELSE);
-					}
-				});
-		} else {
-			setIsError(true);
-			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
-		}
+		signup(data)
+			.then(() => {
+				navigate('/signin');
+				// setIsOpen(true);
+			})
+			.catch((err) => {
+				if (err === 400) {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.REGISTER);
+				} else if (err === 500) {
+					navigate('/server-error');
+				} else {
+					setIsError(true);
+					setError(ERROR_MESSAGES.SERVER.ELSE);
+				}
+			});
 	}
 
 	function onSubmit(data, evt) {
 		evt.preventDefault();
-		onRegister(data);
+		if (watch('password') === watch('confirmPassword')) {
+			onRegister(data);
+		} else {
+			setIsError(true);
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
+		}
 	}
 
 	function handlePasswordHidden() {
@@ -110,8 +110,8 @@ function Register() {
 					errors.password?.message ||
 					errors.confirmPassword?.message
 			);
-		} else if (watch('confirmPassword') !== watch('password')) {
-			setIsError(false);
+		} else if (watch('password') !== watch('confirmPassword')) {
+			setIsError(true);
 			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
 		} else {
 			setIsError(false);
