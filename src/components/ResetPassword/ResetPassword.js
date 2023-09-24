@@ -1,17 +1,25 @@
 import './ResetPassword.scss';
-import { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPasswordSchema } from '../../utils/ValidationSchemes';
 import { changePassword } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-
 import logo from '../../images/M-check.svg';
+import Modal from '../Modal/Modal';
+import logo1 from '../../images/CircleWavyCheck.svg';
+import styles from '../Modal/Modal.module.scss';
+import ClaudSlash from '../../CloudSlash.svg';
 
 export default function ResetPassword() {
-	const navigate = useNavigate();
+	// поменяй  false на true, что бы посмтореть на модалку
+	const [isOpen, setIsOpen] = useState(false);
+	const [isServerErrorOpen, setIsServerErrorOpen] = useState(false);
+
+	const modalRef = useRef(null);
+
 	const {
 		register,
 		handleSubmit,
@@ -24,6 +32,32 @@ export default function ResetPassword() {
 
 	const [isError, setIsError] = useState(false);
 	const [error, setError] = useState(null);
+
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			if (event.key === 'Escape') {
+				setIsOpen(false);
+				setIsServerErrorOpen(false);
+			}
+		};
+  
+		const handleMouseDown = (event) => {
+			if (!modalRef.current || modalRef.current.contains(event.target)) {
+				return;
+			}
+  
+			setIsOpen(false);
+			setIsServerErrorOpen(false);
+		};
+  
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('mousedown', handleMouseDown);
+  
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('mousedown', handleMouseDown);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (errors.email) {
@@ -39,21 +73,23 @@ export default function ResetPassword() {
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
 		changePassword(data.email)
-			.then(() => {
-				navigate('/change-password-modal');
-			})
-			.catch((err) => {
-				if (err === 400) {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.DATA);
-				} else if (err === 500) {
-					navigate('/server-error');
-				} else {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.ELSE);
-				}
-			});
-	};
+		  .then(() => {
+			setIsOpen(true);
+		  })
+		  .catch((err) => {
+			if (err === 400) {
+			  setIsError(true);
+			  setError(ERROR_MESSAGES.SERVER.DATA);
+			} else if (err === 500) {
+				setIsServerErrorOpen(true);
+			} else {
+			  setIsError(true);
+			  setError(ERROR_MESSAGES.SERVER.ELSE);
+			}
+		  });
+	  };
+	  
+	  
 	return (
 		<div className="form">
 			<div className="reset-password">
@@ -100,6 +136,28 @@ export default function ResetPassword() {
 					<NavLink to="/signin" className="form__caption-link">
 						Отменить
 					</NavLink>
+					<Modal isOpen={isOpen}>
+      <section className={styles.ModalPort} ref={modalRef}>
+					<div className={styles.Module}>
+						<img src={logo1} className="App-logo" alt="logo" />
+						<h2 className={styles.Message}>
+							Мы отправили ссылку для создания нового пароля на вашу электронную
+							почту
+						</h2>
+					</div>
+				</section>
+      </Modal>
+	  <Modal isOpen={isServerErrorOpen}>
+      <section className={styles.ModalPort} ref={modalRef}>
+					<div className={styles.Module}>
+						<img src={ClaudSlash} className="App-logo" alt="logo" />
+                        <h1 className={styles.Text1}>Сервер временно не доступен</h1>
+						<h2 className={styles.Text2}>
+                        Мы делаем всё возможное, чтобы возобновить работу приложения. Приносим извинения за доставленные неудобства.
+						</h2>
+					</div>
+				</section>
+      </Modal>
 				</main>
 			</div>
 		</div>

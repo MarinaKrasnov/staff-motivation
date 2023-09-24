@@ -1,101 +1,126 @@
 import './Register.scss';
-import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef} from 'react';
+import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../utils/ValidationSchemes';
 import { signup } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-
+import logo1 from '../../images/CircleWavyCheck.svg';
+import styles from '../Modal/Modal.module.scss';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
+import Modal from '../Modal/Modal';
+import ClaudSlash from '../../CloudSlash.svg';
 
 function Register() {
-	const navigate = useNavigate();
+	// поменяй  false на true, что бы посмтореть на модалку
+	const [isOpen, setIsOpen] = useState(false);
+	const [isServerErrorOpen, setIsServerErrorOpen] = useState(false);
+	const modalRef = useRef(null);
+  
 	const {
 		register,
 		handleSubmit,
-		// setValue,
-		// getValues,
 		watch,
 		formState: { errors, isValid, isDirty },
-	} = useForm({
+	  } = useForm({
 		mode: 'onChange',
 		resolver: yupResolver(RegisterSchema),
-	});
+	  });
 
 	const [isError, setIsError] = useState(false);
-	const [error, setError] = useState(null);
-	const [isPasswordHidden, setPasswordHidden] = useState(false);
-	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
-
-	function onRegister(data) {
+  	const [error, setError] = useState(null);
+  	const [isPasswordHidden, setPasswordHidden] = useState(false);
+  	const [isConfirmPasswordHidden, setConfirmPasswordHidden] = useState(false);
+  
+	  function onRegister(data) {
 		signup(data)
-			.then(() => {
-				navigate('/activation-message-modal');
-				console.log('Пользователь зарегистрирован'); // проверяю успешна ли регистрация
-			})
-			.catch((err) => {
-				if (err === 400) {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.REGISTER);
-				} else if (err === 500) {
-					navigate('/server-error');
-				} else {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.ELSE);
-				}
-			});
-	}
-
+		  .then(() => {
+			setIsOpen(true);
+			console.log('Пользователь зарегистрирован');
+		  })
+		  .catch((err) => {
+			if (err === 400) {
+			  setIsError(true);
+			  setError(ERROR_MESSAGES.SERVER.REGISTER);
+			} else if (err === 500) {
+				setIsServerErrorOpen(true);
+			} else {
+			  setIsError(true);
+			  setError(ERROR_MESSAGES.SERVER.ELSE);
+			}
+		  });
+	  }
+	 
 	function onSubmit(data, evt) {
 		evt.preventDefault();
 		onRegister(data);
 	}
 
 	function handlePasswordHidden() {
-		if (isPasswordHidden) {
-			setPasswordHidden(false);
+		setPasswordHidden(!isPasswordHidden);
+	  }
+	
+	  function handleConfirmPasswordHidden() {
+		setConfirmPasswordHidden(!isConfirmPasswordHidden);
+	  }
+	
+	  useEffect(() => {
+		const handleKeyDown = (event) => {
+		  if (event.key === 'Escape') {
+			setIsOpen(false);
+			setIsServerErrorOpen(false);
+		  }
+		};
+	
+		const handleMouseDown = (event) => {
+		  if (!modalRef.current || modalRef.current.contains(event.target)) {
+			return;
+		  }
+	
+		  setIsOpen(false);
+		  setIsServerErrorOpen(false);
+		};
+	
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('mousedown', handleMouseDown);
+	
+		return () => {
+		  document.removeEventListener('keydown', handleKeyDown);
+		  document.removeEventListener('mousedown', handleMouseDown);
+		};
+	  }, []);
+	  
+	  useEffect(() => {
+		if (
+		  errors.email ||
+		  errors.lastName ||
+		  errors.firstName ||
+		  errors.password ||
+		  errors.confirmPassword
+		) {
+		  setIsError(true);
+		  setError(
+			errors.email?.message ||
+			  errors.lastName?.message ||
+			  errors.firstName?.message ||
+			  errors.password?.message ||
+			  errors.confirmPassword?.message
+		  );
 		} else {
-			setPasswordHidden(true);
+		  setIsError(false);
+		  setError(null);
 		}
-	}
-
-	function handleConfirmPasswordHidden() {
-		if (isConfirmPasswordHidden) {
-			setConfirmPasswordHidden(false);
-		} else {
-			setConfirmPasswordHidden(true);
-		}
-	}
-
-	useEffect(() => {
-		if (errors.email) {
-			setIsError(true);
-			setError(errors.email.message);
-		} else if (errors.lastName) {
-			setIsError(true);
-			setError(errors.lastName.message);
-		} else if (errors.firstName) {
-			setIsError(true);
-			setError(errors.firstName.message);
-		} else if (errors.password) {
-			setIsError(true);
-			setError(errors.password.message);
-		} else if (errors.confirmPassword) {
-			setIsError(true);
-			setError(errors.confirmPassword.message);
-		} else {
-			setIsError(false);
-		}
-	}, [
+	  }, [
 		errors.email,
 		errors.lastName,
 		errors.firstName,
 		errors.password,
 		errors.confirmPassword,
-	]);
-
+	  ]);
+	
+	
 	return (
 		<div className="form">
 			<div className="form__container">
@@ -211,16 +236,38 @@ function Register() {
 						</div>
 
 						<button
-							className="form__submit-button"
-							type="submit"
-							disabled={!isValid || !isDirty || isError}
+						className="form__submit-button"
+  						type="submit"
+  						disabled={!isValid || !isDirty || isError}
 						>
-							Зарегистрироваться
+  						Зарегистрироваться
 						</button>
+			
 					</form>
 					<NavLink to="/signin" className="form__caption-link">
 						У меня есть аккаунт.&#8194;Войти
 					</NavLink>
+					<Modal isOpen={isOpen}>
+      <section className={styles.ModalPort} ref={modalRef}>
+					<div className={styles.Module}>
+						<img src={logo1} className="App-logo" alt="logo" />
+						<h2 className={styles.Message}>
+            После активации аккаунта мы отправим вам электронное письмо. В нём будет ссылка на вашу страницу в приложении.
+						</h2>
+					</div>
+				</section>
+      </Modal>
+	  <Modal isOpen={isServerErrorOpen}>
+      <section className={styles.ModalPort} ref={modalRef}>
+					<div className={styles.Module}>
+						<img src={ClaudSlash} className="App-logo" alt="logo" />
+                        <h1 className={styles.Text1}>Сервер временно не доступен</h1>
+						<h2 className={styles.Text2}>
+                        Мы делаем всё возможное, чтобы возобновить работу приложения. Приносим извинения за доставленные неудобства.
+						</h2>
+					</div>
+				</section>
+      </Modal>
 				</main>
 			</div>
 		</div>
@@ -228,3 +275,6 @@ function Register() {
 }
 
 export default Register;
+
+
+
