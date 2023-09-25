@@ -7,7 +7,7 @@ $mainWhite: #ffffff;
 	min-height: 620px;
 	border-radius: 4px;
 	background-color: $mainWhite;
-	@media(max-width: 1024px) {
+	@media (max-width: 1024px) {
 		width: 522px;
 		min-height: 506px;
 	}
@@ -20,13 +20,12 @@ $mainWhite: #ffffff;
 		color: #ff3236;
 		margin-bottom: 39px;
 
-		@media(max-width: 1024px) {
+		@media (max-width: 1024px) {
 			font-size: 15px;
 			margin-bottom: 32px;
-
 		}
 
-		@media(max-width: 500px) {
+		@media (max-width: 500px) {
 			margin-top: 8px;
 		}
 	}
@@ -36,10 +35,10 @@ $mainWhite: #ffffff;
 		flex-direction: row;
 		justify-content: space-between;
 		margin-bottom: 20px;
-		@media(max-width: 1024px) {
+		@media (max-width: 1024px) {
 			margin-bottom: 15px;
 		}
-		@media(max-width: 500px) {
+		@media (max-width: 500px) {
 			width: 328px;
 		}
 	}
@@ -83,10 +82,9 @@ $mainWhite: #ffffff;
 		font-size: 16px;
 		line-height: 160%;
 		color: #525c76;
-		@media(max-width: 1024px) {
+		@media (max-width: 1024px) {
 			font-size: 15px;
 		}
-
 	}
 
 	&__link {
@@ -98,7 +96,7 @@ $mainWhite: #ffffff;
 		font-size: 16px;
 		line-height: 160%;
 	}
-	@media(max-width: 1024px) {
+	@media (max-width: 1024px) {
 		font-size: 15px;
 	}
 }
