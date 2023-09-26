@@ -34,7 +34,7 @@ function getToken() {
 
 export function checkToken(token) {
 	return fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
+	method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`, // не знаю используют ли джанго/пайтон беки Бирера
@@ -95,4 +95,42 @@ export function setPassword(data) {
 		},
 		body: JSON.stringify({ currentData }),
 	});
+}
+
+// данные на странице профиля
+
+// Личные данные
+export function getUsersInfo() {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/users/me/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `${token}`,
+		},
+	}).then(checkResponse);
+}
+
+export function setUsersInfo(data) {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/users/me/`, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `${token}`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}
+
+// Блок Достижения
+export function getUsersProgress() {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/progress/users/`, {
+		method: ' GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `${token}`,
+		},
+	}).then(checkResponse);
 }
