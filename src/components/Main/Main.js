@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Main.scss';
 import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
@@ -8,9 +9,14 @@ import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - мода�
 import DinamicWork from '../DinamicWork/DinamicWork';
 
 function Main() {
+	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 
-	const handleLogOut = () => setIsOpen(true);
+	const handleLogOut = () => {
+		setIsOpen(true);
+		localStorage.clear();
+		navigate('/signin');
+	};
 	const handleClose = () => setIsOpen(false);
 
 	return (

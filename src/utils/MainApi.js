@@ -1,5 +1,7 @@
 import { BASE_URL } from './constants';
 
+const token = localStorage.getItem('token');
+
 const checkResponse = (res) => {
 	if (res.ok) {
 		return res.json();
@@ -57,12 +59,11 @@ export function login(email, password) {
 
 // запрос на смену пароля
 export function changePassword(email) {
-	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/users/reset_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: token,
 		},
 		body: JSON.stringify(email),
 	}).then(checkResponse);
@@ -81,17 +82,15 @@ function request(url, options) {
 }
 
 export function setPassword(data) {
-	const token = localStorage.getItem('token');
 	const currentData = {
 		new_password: data.password,
 		current_password: data.confirmPassword,
 	};
-	console.log(currentData);
 	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `${token}`,
 		},
 		body: JSON.stringify({ currentData }),
 	});
