@@ -50,11 +50,7 @@ export const RegisterSchema = yup.object().shape({
 		.string()
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
 		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
-		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
-		.oneOf(
-			[yup.ref('confirmPassword'), null],
-			ERROR_MESSAGES.PASSWORD.MUST_MATCH
-		),
+		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
 
 	confirmPassword: yup
 		.string()
