@@ -8,6 +8,7 @@ import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
 import ModalMessage from '../ModalMessage/ModalMessage';
 import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
+import Profile from '../Profile/Profile';
 
 function App() {
 	/* проверка токена будет производиться сразу после загрузки приложения
@@ -32,6 +33,7 @@ function App() {
 		<div className="App">
 			<Routes>
 				<Route path="/main" element={<Main />} />
+				<Route path="/profile" element={<Profile />} />
 				{/* модальное окно подтвеождения профиля после регистрации */}
 				<Route path="/activation-message-modal" element={<Modal />} />
 				{/* модальное окно открывается при успешном изменении пароля */}
