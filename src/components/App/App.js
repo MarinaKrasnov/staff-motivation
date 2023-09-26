@@ -10,20 +10,9 @@ import ServerError from '../ServerError/ServerError';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
-	const [currentUser, setCurrentUser] = useState({
-		name: '',
-		email: '',
-		id: '',
-	});
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	console.log(setCurrentUser);
-	const CurrentUserContext = React.createContext();
-	/* const location = useLocation();
-	const locationSingin = location.pathname.endsWith('/signin')
 
-
-	const navigate = useNavigate(); */
 	/* function removeToken() {
 		if(!isCheckboxPressed){
 		localStorage.removeItem('token');
@@ -35,16 +24,14 @@ function App() {
 	useEffect(() => {
 		if (token) {
 			setLoggedIn(!!token);
-			setIsLoading(false);
-			console.log(isLoading);
 		}
 	}, [loggedIn, token, isLoading]);
 
-	/* useEffect(() => {
-		if (locationSingin && loggedIn) {
-			navigate('/main')
-		}
-	}) */
+	useEffect(() => {
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 50);
+	}, []);
 
 	/* проверка токена будет производиться сразу после загрузки приложения
 	useEffect(() => {
@@ -63,32 +50,30 @@ function App() {
 			})
 		}
 	  }, [loggedIn]) */
-	console.log(loggedIn);
+
 	return (
-		<CurrentUserContext.Provider value={currentUser}>
-			<div className="App">
-				<Routes>
-					<Route
-						path="/main"
-						element={
-							<ProtectedRoute
-								component={Main}
-								loggedIn={loggedIn}
-								isLoading={isLoading}
-								key={loggedIn}
-							/>
-						}
-					/>
-					{/* роут для страницы профиля */}
-					<Route path="/signup" element={<Register />} />
-					<Route path="/new-password" element={<NewPassword />} />
-					<Route path="/signin" element={<Login />} />
-					<Route path="/reset-password" element={<ResetPassword />} />
-					<Route path="/server-error" element={<ServerError />} />
-					{/* роут для ошибки 404 */}
-				</Routes>
-			</div>
-		</CurrentUserContext.Provider>
+		<div className="App">
+			<Routes>
+				<Route
+					path="/main"
+					element={
+						<ProtectedRoute
+							component={Main}
+							loggedIn={loggedIn}
+							isLoading={isLoading}
+							key={loggedIn}
+						/>
+					}
+				/>
+				{/* роут для страницы профиля */}
+				<Route path="/signup" element={<Register />} />
+				<Route path="/new-password" element={<NewPassword />} />
+				<Route path="/signin" element={<Login />} />
+				<Route path="/reset-password" element={<ResetPassword />} />
+				<Route path="/server-error" element={<ServerError />} />
+				{/* роут для ошибки 404 */}
+			</Routes>
+		</div>
 	);
 }
 
