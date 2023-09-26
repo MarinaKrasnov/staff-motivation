@@ -180,7 +180,7 @@ export default function Login() {
 	);
 }
 /* Login.propTypes = {
-	isCheckboxPressed: PropTypes.bool.isRequired,
+	removeToken: PropTypes.func.isRequired,
 	// handleIsRememberMePressed: PropTypes.func.isRequired,
 	// onSignIn: PropTypes.func.isRequired,
 	// isPasswordHidden: PropTypes.bool.isRequired,

@@ -12,13 +12,15 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	// const [isCheckboxPressed, setCheckboxPressed] = useState(false)
 
 	/* function removeToken() {
 		if(!isCheckboxPressed){
 		localStorage.removeItem('token');
 	  }
 	}
-	  window.addEventListener('unload', removeToken); */
+	  window.addEventListener('unload', removeToken) */
+
 	const token = localStorage.getItem('token');
 
 	useEffect(() => {
