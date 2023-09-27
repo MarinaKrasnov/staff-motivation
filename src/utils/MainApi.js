@@ -76,7 +76,7 @@ export function getUserData() {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 			// Authorization: `Bearer ${token}`,
 		},
 	}).then(checkResponse);
@@ -89,8 +89,8 @@ export function getNotification() {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
-			// Authorization: `Bearer ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
@@ -116,7 +116,7 @@ export function setPassword(data) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${token}`,
+			Authorization: `Token ${token}`,
 		},
 		body: JSON.stringify({ currentData }),
 	});
@@ -129,7 +129,7 @@ export function getUsersProgress() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
@@ -141,20 +141,18 @@ export function getTasks() {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
 
 export function getTaskInfo(id) {
-	// const token = localStorage.getItem('token');
-
 	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
@@ -165,7 +163,7 @@ export function confirmTask(id, data) {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 		},
 		body: JSON.stringify({ data }),
 	}).then(checkResponse);
