@@ -95,3 +95,41 @@ export function setPassword(data) {
 		body: JSON.stringify({ currentData }),
 	});
 }
+
+// блок 'Мои задачи'
+
+export function getTasks() {
+	return fetch(`${BASE_URL}/api/tasks/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+	}).then(checkResponse);
+}
+
+export function getTaskInfo(id) {
+	// const token = localStorage.getItem('token');
+
+	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+	}).then(checkResponse);
+}
+
+export function confirmTask(id, data) {
+	return fetch(`${BASE_URL}/api/tasks/${id}/send_for_review/`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}
