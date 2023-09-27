@@ -21,10 +21,8 @@ function Main() {
 
 	return (
 		<main className="main-page">
-			{/* Егор - верхнее меню и левое боковое меню (начало кода) */}
 			<Header onLogout={handleLogOut} />
 			<SideNavbar />
-			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
 			<section className="main-page__section">
 				<div className="main-page__block">
 					<Achievements />

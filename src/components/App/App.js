@@ -57,7 +57,7 @@ function App() {
 		<div className="App">
 			<Routes>
 				<Route
-					path="/main"
+					path="/"
 					element={
 						<ProtectedRoute
 							component={Main}

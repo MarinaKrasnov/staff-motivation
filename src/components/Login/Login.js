@@ -43,7 +43,7 @@ export default function Login() {
 		MainApi.login(email, password)
 			.then((data) => {
 				localStorage.setItem('token', data.auth_token);
-				navigate('/main');
+				navigate('/');
 				console.log(localStorage.getItem('token'));
 			})
 			.catch((err) => {
