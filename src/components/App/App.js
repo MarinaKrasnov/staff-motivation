@@ -1,16 +1,41 @@
 import './App.css';
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes /* useLocation, useNavigate */ } from 'react-router-dom';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
-import Modal from '../Modal/Modal';
 import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
 import Profile from '../Profile/Profile';
 import ServerError from '../ServerError/ServerError';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	// const [isCheckboxPressed, setCheckboxPressed] = useState(false)
+
+	/* function removeToken() {
+		if(!isCheckboxPressed){
+		localStorage.removeItem('token');
+	  }
+	}
+	  window.addEventListener('unload', removeToken) */
+
+	const token = localStorage.getItem('token');
+
+	useEffect(() => {
+		if (token) {
+			setLoggedIn(!!token);
+		}
+	}, [loggedIn, token, isLoading]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 50);
+	}, []);
+
 	/* проверка токена будет производиться сразу после загрузки приложения
 	useEffect(() => {
 		const jwt = localStorage.getItem('jwt');
@@ -32,18 +57,24 @@ function App() {
 	return (
 		<div className="App">
 			<Routes>
-				<Route path="/main" element={<Main />} />
 				<Route path="/profile" element={<Profile />} />
-				{/* модальное окно подтвеождения профиля после регистрации */}
-				<Route path="/activation-message-modal" element={<Modal />} />
-				{/* модальное окно открывается при успешном изменении пароля */}
-				<Route path="/new-password-modal" element={<Modal />} />
+				<Route
+					path="/"
+					element={
+						<ProtectedRoute
+							component={Main}
+							loggedIn={loggedIn}
+							isLoading={isLoading}
+							key={loggedIn}
+						/>
+					}
+				/>
 				<Route path="/signup" element={<Register />} />
 				<Route path="/new-password" element={<NewPassword />} />
 				<Route path="/signin" element={<Login />} />
-				{/* уведомление об отправке ссылки для создания нового пароля на почту */}
 				<Route path="/reset-password" element={<ResetPassword />} />
 				<Route path="/server-error" element={<ServerError />} />
+				{/* роут для ошибки 404 */}
 			</Routes>
 		</div>
 	);
