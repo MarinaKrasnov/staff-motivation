@@ -38,7 +38,6 @@ function MyTasks() {
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
-	console.log(storagedArray);
 
 	useEffect(() => {
 		getTasks()

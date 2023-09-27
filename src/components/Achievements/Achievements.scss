@@ -6,15 +6,15 @@ $accentLightGrey900: #8c93a3;
 	top: 216px;
 	right: 46.4%;
 	margin: 0;
-	width: 43%;
-	height: 334px;
+	width: 47%;
+	min-height: 134px;
 	background-color: #fff;
 	border-radius: 24px;
 	column-gap: 16px;
 	padding-bottom: 30px;
 
 	&__title {
-		padding: 24px 0 0 32px;
+		padding: 13px 0 0 32px;
 		font-size: 24px;
 		font-weight: 500;
 		line-height: 36px;
@@ -23,11 +23,10 @@ $accentLightGrey900: #8c93a3;
 	}
 
 	&__stats-container {
-		margin: 24px 32px 0;
-		display: grid;
-		grid-template-columns: repeat(2, minmax(10px, 200px));
-		grid-template-rows: repeat(2, 1fr);
+		display: flex;
+		flex-direction: row;
 		gap: 10px;
+		margin: 24px 32px 0;
 		list-style: none;
 		padding: 0;
 	}
@@ -35,10 +34,11 @@ $accentLightGrey900: #8c93a3;
 	&__achieve {
 		display: flex;
 		flex-direction: column;
+		width: 50%;
 	}
 
 	&__name {
-		margin: 4px 0 0 4px;
+		margin: 0;
 		font-size: 18px;
 		font-weight: 500;
 		line-height: 28px;

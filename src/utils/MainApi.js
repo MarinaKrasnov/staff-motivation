@@ -86,7 +86,6 @@ export function setPassword(data) {
 		new_password: data.password,
 		current_password: data.confirmPassword,
 	};
-	console.log(currentData);
 	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {
@@ -97,6 +96,17 @@ export function setPassword(data) {
 	});
 }
 
+// Главная страница
+
+export function getUsersProgress() {
+	return fetch(`${BASE_URL}/api/progress/users/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
+		},
+	}).then(checkResponse);
+}
 // блок 'Мои задачи'
 
 export function getTasks() {
