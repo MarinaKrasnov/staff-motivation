@@ -22,7 +22,6 @@
 		right: 64px;
 		box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.08);
 
-
 		@media (min-width: 1440px) {
 			right: calc(64px + (100vw - 1440px) / 2);
 		}
