@@ -9,7 +9,7 @@
 		"@testing-library/user-event": "^13.2.1",
 		"clsx": "^1.2.1",
 		"moment": "^2.29.4",
-		"prop-types": "15.8.1",
+		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.45.4",
@@ -39,6 +39,14 @@
 			"prettier"
 		],
 		"rules": {
+			"camelcase": [
+				"error",
+				{
+					"allow": [
+						"_"
+					]
+				}
+			],
 			"react/jsx-filename-extension": [
 				1,
 				{

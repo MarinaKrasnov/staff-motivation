@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import './Main.scss';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import SideNavbar from '../SideNavbar/SideNavbar';
 import MyTasks from '../MyTasks/MyTasks';
@@ -8,13 +9,17 @@ import ModalConfirm from '../ModalConfirm/ModalConfirm';
 import ModalUpload from '../ModalUpload/ModalUpload';
 import Notifications from '../Notifications/Notifications';
 import DinamicWork from '../DinamicWork/DinamicWork';
-import { getNotification } from '../../utils/MainApi';
+import { getNotification, getUsersProgress } from '../../utils/MainApi';
 
 function Main() {
 	const [isOpenModalConfirm, setIsOpenModalconfirm] = useState(false);
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
 	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
+	const navigate = useNavigate();
+	const [userProgressData, setUserProgressData] = useState([]);
+	const { department_progress, personal_progress, progress_for_deadline } =
+		userProgressData;
 
 	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
 	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
@@ -37,6 +42,20 @@ function Main() {
 		fetchData();
 	}, []);
 
+	useEffect(() => {
+		getUsersProgress()
+			.then((data) => {
+				setUserProgressData(data[0]);
+				console.log(data);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				}
+				console.log(res);
+			});
+	}, [navigate]);
+
 	return (
 		<main className="main-page">
 			<Header
@@ -48,8 +67,11 @@ function Main() {
 			<SideNavbar />
 			<section className="main-page__section">
 				<div className="main-page__block">
-					<Achievements />
-					<DinamicWork />
+					<Achievements progressForDeadline={progress_for_deadline} />
+					<DinamicWork
+						myDinamic={personal_progress}
+						departmentDinamic={department_progress}
+					/>
 				</div>
 				<MyTasks />
 				{isOpenModalConfirm && (

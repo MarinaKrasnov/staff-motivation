@@ -4,14 +4,21 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NewPasswordSchema } from '../../utils/ValidationSchemes';
-import { changePassword } from '../../utils/MainApi';
+import { setPassword } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-
+import logo1 from '../../images/CircleWavyCheck.svg';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
+import Modal from '../Modal/Modal';
+import styles from '../Modal/Modal.module.scss';
 
 function NewPassword() {
 	const navigate = useNavigate();
+	// поменяй  false на true, что бы посмтореть на модалку
+	const [isOpen, setIsOpen] = useState(false);
+	const handleLogin = () => {
+		navigate('/signin');
+	};
 
 	const [isError, setIsError] = useState(false);
 	const [error, setError] = useState(null);
@@ -39,10 +46,12 @@ function NewPassword() {
 			setError(errors.confirmPassword.message);
 		} else if (isValid) {
 			setIsError(false);
+		} else if (watch('password') !== watch('confirmPassword')) {
+			setIsError(true);
 		} else {
 			setIsError(false);
 		}
-	}, [errors.password, errors.confirmPassword, isValid]);
+	}, [errors.password, errors.confirmPassword, isValid, watch]);
 
 	function handlePasswordHidden() {
 		if (isPasswordHidden) {
@@ -62,22 +71,26 @@ function NewPassword() {
 
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
-		changePassword(data.oldPassword, data.password)
-			.then(() => {
-				navigate('/new-password-modal');
-				console.log('Пароль успешно изменен');
-			})
-			.catch((err) => {
-				if (err === 400) {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.REGISTER);
-				} else if (err === 500) {
-					navigate('/server-error');
-				} else {
-					setIsError(true);
-					setError(ERROR_MESSAGES.SERVER.ELSE);
-				}
-			});
+		if (watch('password') === watch('confirmPassword')) {
+			setPassword(data)
+				.then(() => {
+					setIsOpen(true);
+				})
+				.catch((err) => {
+					if (err === 400) {
+						setIsError(true);
+						setError(ERROR_MESSAGES.SERVER.REGISTER);
+					} else if (err === 500) {
+						navigate('/server-error');
+					} else {
+						setIsError(true);
+						setError(ERROR_MESSAGES.SERVER.ELSE);
+					}
+				});
+		} else {
+			setIsError(true);
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
+		}
 	};
 
 	return (
@@ -106,7 +119,7 @@ function NewPassword() {
 								<input
 									id="password"
 									name="password"
-									type={isPasswordHidden ? 'password' : 'text'}
+									type={isPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.password && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -132,7 +145,7 @@ function NewPassword() {
 								<input
 									id="confirmPassword"
 									name="confirmPassword"
-									type={isConfirmPasswordHidden ? 'password' : 'text'}
+									type={isConfirmPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.confirmPassword && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -160,6 +173,19 @@ function NewPassword() {
 							Изменить пароль
 						</button>
 					</form>
+					{isOpen ? (
+						<Modal>
+							<section className={styles.ModulePort}>
+								<div className={styles.Module}>
+									<img src={logo1} className="App-logo" alt="logo" />
+									<h2 className={styles.Text3}>Ваш пароль успешно изменен!</h2>
+									<button className={styles.button} onClick={handleLogin}>
+										Войти
+									</button>
+								</div>
+							</section>
+						</Modal>
+					) : null}
 				</main>
 			</div>
 		</div>

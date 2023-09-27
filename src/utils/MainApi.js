@@ -57,12 +57,14 @@ export function login(email, password) {
 
 // запрос на смену пароля
 export function changePassword(email) {
+	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/users/reset_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ email }),
+		body: JSON.stringify(email),
 	}).then(checkResponse);
 }
 
@@ -104,11 +106,11 @@ function request(url, options) {
 	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
 }
 
-export function setPassword(oldPassword, newPassword) {
+export function setPassword(data) {
 	const token = localStorage.getItem('token');
-	const data = {
-		new_password: newPassword,
-		current_password: oldPassword,
+	const currentData = {
+		new_password: data.password,
+		current_password: data.confirmPassword,
 	};
 	return request(`/api/users/set_password/`, {
 		method: 'POST',
@@ -116,6 +118,55 @@ export function setPassword(oldPassword, newPassword) {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ data }),
+		body: JSON.stringify({ currentData }),
 	});
+}
+
+// Главная страница
+
+export function getUsersProgress() {
+	return fetch(`${BASE_URL}/api/progress/users/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
+		},
+	}).then(checkResponse);
+}
+// блок 'Мои задачи'
+
+export function getTasks() {
+	return fetch(`${BASE_URL}/api/tasks/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+	}).then(checkResponse);
+}
+
+export function getTaskInfo(id) {
+	// const token = localStorage.getItem('token');
+
+	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+	}).then(checkResponse);
+}
+
+export function confirmTask(id, data) {
+	return fetch(`${BASE_URL}/api/tasks/${id}/send_for_review/`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
 }
