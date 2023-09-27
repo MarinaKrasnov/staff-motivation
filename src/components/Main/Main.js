@@ -12,11 +12,14 @@ import DinamicWork from '../DinamicWork/DinamicWork';
 import { getNotification, getUsersProgress } from '../../utils/MainApi';
 
 function Main() {
+	const navigate = useNavigate();
+	// const [isOpen, setIsOpen] = useState(false);
+
 	const [isOpenModalConfirm, setIsOpenModalconfirm] = useState(false);
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
 	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
-	const navigate = useNavigate();
+
 	const [userProgressData, setUserProgressData] = useState([]);
 	const { department_progress, personal_progress, progress_for_deadline } =
 		userProgressData;
@@ -56,6 +59,13 @@ function Main() {
 			});
 	}, [navigate]);
 
+	/* const handleLogOut = () => {
+		setIsOpen(true);
+		localStorage.clear();
+		navigate('/signin');
+	};
+	const handleClose = () => setIsOpen(false); */
+
 	return (
 		<main className="main-page">
 			<Header
@@ -63,6 +73,7 @@ function Main() {
 				handleOpenPushesModal={handleOpenPushesModal}
 				handleOpenUploadModal={handleOpenUploadModal}
 				notificationsData={notificationsData}
+				// onLogout={handleLogOut}
 			/>
 			<SideNavbar />
 			<section className="main-page__section">

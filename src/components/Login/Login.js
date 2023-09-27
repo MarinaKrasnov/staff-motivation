@@ -1,7 +1,7 @@
 import './Login.scss';
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import PropTypes from 'prop-types'; на слуйчай выноса пропсов в app.js
+// import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../utils/ValidationSchemes';
@@ -29,6 +29,7 @@ export default function Login() {
 	const handleIsRememberMePressed = () => {
 		setIsRememberMePressed(!isRememberMePressed);
 	};
+
 	// стейт скрытого пароля
 	const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 	const handleIsPasswordHidden = () => {
@@ -41,10 +42,9 @@ export default function Login() {
 	const handleLogin = (email, password) => {
 		MainApi.login(email, password)
 			.then((data) => {
-				if (data.token && isRememberMePressed) {
-					localStorage.setItem('token', data.token); // пока не понятно, что будет присылать api
-				}
-				navigate('/main');
+				localStorage.setItem('token', data.auth_token);
+				navigate('/');
+				console.log(localStorage.getItem('token'));
 			})
 			.catch((err) => {
 				if (err === 400) {
@@ -179,12 +179,10 @@ export default function Login() {
 		</div>
 	);
 }
-/* на случай выноса пропсов в app.js
-Login.propTypes = {
-	isRememberMePressed: PropTypes.bool.isRequired,
-	handleIsRememberMePressed: PropTypes.func.isRequired,
-	onSignIn: PropTypes.func.isRequired,
-	isPasswordHidden: PropTypes.bool.isRequired,
-	onHidePasswordClick: PropTypes.func.isRequired,
-};
-*/
+/* Login.propTypes = {
+	removeToken: PropTypes.func.isRequired,
+	// handleIsRememberMePressed: PropTypes.func.isRequired,
+	// onSignIn: PropTypes.func.isRequired,
+	// isPasswordHidden: PropTypes.bool.isRequired,
+	// onHidePasswordClick: PropTypes.func.isRequired,
+}; */
