@@ -86,7 +86,6 @@ export function setPassword(data) {
 		new_password: data.password,
 		current_password: data.confirmPassword,
 	};
-	console.log(currentData);
 	return request(`/api/users/set_password/`, {
 		method: 'POST',
 		headers: {

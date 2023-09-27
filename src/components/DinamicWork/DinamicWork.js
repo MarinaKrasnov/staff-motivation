@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './DinamicWork.module.scss';
 
-function DinamicWork() {
-	const [myAchievements, setMyAchievements] = useState(0);
-	const [departmentAchievements, setDepartmentAchievements] = useState(0);
-
+function DinamicWork({ myDinamic, departmentDinamic }) {
 	const calculatePercentage = (value) => Math.round(value);
 
 	const calculateProgressBarColor = (percentage) => {
@@ -17,25 +15,6 @@ function DinamicWork() {
 		return styles.notStarted;
 	};
 
-	useEffect(() => {
-		const fetchDataFromServer = async () => {
-			try {
-				// Заглушка для fetch-запроса
-				const dummyData = {
-					myAchievements: 33,
-					departmentAchievements: 87,
-				};
-
-				setMyAchievements(dummyData.myAchievements);
-				setDepartmentAchievements(dummyData.departmentAchievements);
-			} catch (error) {
-				console.error('Error:', error);
-			}
-		};
-
-		fetchDataFromServer();
-	}, []);
-
 	return (
 		<section className={styles.main}>
 			<div className={styles.dinamicWork}>
@@ -44,18 +23,18 @@ function DinamicWork() {
 					<div className={styles.fieldInfo}>
 						<h3 className={styles.texth3}>Мои достижения</h3>
 						<span className={styles.progressPercentage}>
-							{calculatePercentage(myAchievements)}%
+							{calculatePercentage(myDinamic)}%
 						</span>
 					</div>
 					<div
 						className={`${styles.progressBar} ${calculateProgressBarColor(
-							myAchievements
+							myDinamic
 						)}`}
 					>
 						<div
 							className={styles.progressFill}
 							style={{
-								width: `${calculatePercentage(myAchievements)}%`,
+								width: `${calculatePercentage(myDinamic)}%`,
 								backgroundColor: '#49536E',
 							}}
 						/>
@@ -65,29 +44,39 @@ function DinamicWork() {
 					<div className={styles.fieldInfo}>
 						<h3 className={styles.texth3}>Достижения отдела</h3>
 						<span className={styles.progressPercentage}>
-							{calculatePercentage(departmentAchievements)}%
+							{calculatePercentage(departmentDinamic)}%
 						</span>
 					</div>
 					<div
 						className={`${styles.progressBar} ${calculateProgressBarColor(
-							departmentAchievements
+							departmentDinamic
 						)}`}
 					>
 						<div
 							className={styles.progressFill}
 							style={{
-								width: `${calculatePercentage(departmentAchievements)}%`,
+								width: `${calculatePercentage(departmentDinamic || 0)}%`,
 								backgroundColor: '#2561ED',
 							}}
 						/>
 					</div>
 				</div>
 				<div className={styles.field}>
-					<p className={styles.text}>%от достижений компании за месяц</p>
+					<p className={styles.text}>% от достижений компании за месяц</p>
 				</div>
 			</div>
 		</section>
 	);
 }
+
+DinamicWork.propTypes = {
+	departmentDinamic: PropTypes.number,
+	myDinamic: PropTypes.number,
+};
+
+DinamicWork.defaultProps = {
+	departmentDinamic: 0,
+	myDinamic: 0,
+};
 
 export default DinamicWork;
