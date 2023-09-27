@@ -8,6 +8,7 @@ function Header({
 	notificationsData,
 	handleOpenModalConfirm,
 	handleOpenPushesModal,
+	// handleOpenUploadModal, // временное решение
 }) {
 	const [userData, setUserData] = useState({
 		first_name: '',
@@ -58,6 +59,8 @@ function Header({
 
 	return (
 		<header className="header">
+			{/* //временная кнопка открытия модального окна */}
+			{/* <button className='button-photo' onClick={handleOpenUploadModal}>Upload</button> */}
 			<div className="header__container">
 				<div className="header__logo">Motivation System</div>
 				<div className="header__user-info">
@@ -124,6 +127,7 @@ export default Header;
 Header.propTypes = {
 	handleOpenModalConfirm: PropTypes.func.isRequired,
 	handleOpenPushesModal: PropTypes.func.isRequired,
+	// handleOpenUploadModal: PropTypes.func.isRequired,
 	notificationsData: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,

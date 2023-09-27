@@ -5,6 +5,7 @@ import SideNavbar from '../SideNavbar/SideNavbar';
 import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
 import ModalConfirm from '../ModalConfirm/ModalConfirm';
+import ModalUpload from '../ModalUpload/ModalUpload';
 import Notifications from '../Notifications/Notifications';
 import DinamicWork from '../DinamicWork/DinamicWork';
 import { getNotification } from '../../utils/MainApi';
@@ -12,23 +13,15 @@ import { getNotification } from '../../utils/MainApi';
 function Main() {
 	const [isOpenModalConfirm, setIsOpenModalconfirm] = useState(false);
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
+	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
 
 	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
 	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
 	const handleOpenPushesModal = () => setIsPushesModal(true);
 	const handleClosePushesModal = () => setIsPushesModal(false);
-
-	// useEffect(() => {
-	// 	getNotification()
-	// 		.then((data) => {
-	// 			setNotificationsData(data);
-	// 			console.log(data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('Ошибка получения данных:', error);
-	// 		});
-	// }, []);
+	const handleOpenUploadModal = () => setIsUploadModal(true);
+	const handleCloseUploadModal = () => setIsUploadModal(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -49,6 +42,7 @@ function Main() {
 			<Header
 				handleOpenModalConfirm={handleOpenModalConfirm}
 				handleOpenPushesModal={handleOpenPushesModal}
+				handleOpenUploadModal={handleOpenUploadModal}
 				notificationsData={notificationsData}
 			/>
 			<SideNavbar />
@@ -67,6 +61,7 @@ function Main() {
 						notificationsData={notificationsData}
 					/>
 				)}
+				{isUploadModal && <ModalUpload onClose={handleCloseUploadModal} />}
 			</section>
 		</main>
 	);
