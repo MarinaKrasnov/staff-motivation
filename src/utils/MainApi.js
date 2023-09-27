@@ -96,3 +96,15 @@ export function setPassword(data) {
 		body: JSON.stringify({ currentData }),
 	});
 }
+
+// Главная страница
+
+export function getUsersProgress() {
+	return fetch(`${BASE_URL}/api/progress/users/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
+		},
+	}).then(checkResponse);
+}

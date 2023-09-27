@@ -1,4 +1,5 @@
 import './Achievements.scss';
+import React from 'react';
 import achieveLogo from '../../images/achieve-mark.svg';
 
 export default function Achievements() {
@@ -22,28 +23,7 @@ export default function Achievements() {
 				</li>
 
 				<li className="achievements__achieve">
-					<p className="achievements__name">Вовлечённость</p>
-					<div className="achievements__score-container">
-						<img
-							className="achievements__logo"
-							src={achieveLogo}
-							alt="достижение"
-						/>
-						<p className="achievements__score">{`+${score} Б`}</p>
-					</div>
-					<p className="achievements__completion">По итогам спринта</p>
-				</li>
-
-				<li className="achievements__achieve">
 					<p className="achievements__name">Соблюдение дедлайна</p>
-					<div className="achievements__score-container">
-						<p className="achievements__score">{`+${score} Б`}</p>
-					</div>
-					<p className="achievements__completion">{`Выполнено на: ${completion}%`}</p>
-				</li>
-
-				<li className="achievements__achieve">
-					<p className="achievements__name">Пройдено обучение</p>
 					<div className="achievements__score-container">
 						<p className="achievements__score">{`+${score} Б`}</p>
 					</div>

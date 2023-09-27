@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Main.scss';
 import Header from '../Header/Header'; // Егор -- верхнее меню
 import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
@@ -6,12 +6,26 @@ import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
 import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - модальное окно подтверждения выхода
 import DinamicWork from '../DinamicWork/DinamicWork';
+import { getUsersProgress } from '../../utils/MainApi';
 
 function Main() {
 	const [isOpen, setIsOpen] = useState(false);
+	const [userProgressData, setUserProgressData] = useState([]);
 
 	const handleLogOut = () => setIsOpen(true);
 	const handleClose = () => setIsOpen(false);
+
+	console.log(userProgressData);
+
+	useEffect(() => {
+		getUsersProgress()
+			.then((data) => {
+				setUserProgressData(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	});
 
 	return (
 		<main className="main-page">
