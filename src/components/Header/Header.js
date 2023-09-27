@@ -56,17 +56,6 @@ function Header({
 			});
 	}, []);
 
-	// useEffect(() => {
-	// 	getNotification()
-	// 		.then((data) => {
-	// 			setPushes(data);
-	// 			console.log(data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log('Ошибка получения данных:', error);
-	// 		});
-	// }, []);
-
 	return (
 		<header className="header">
 			<div className="header__container">
