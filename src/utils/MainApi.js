@@ -1,5 +1,7 @@
 import { BASE_URL } from './constants';
 
+const token = localStorage.getItem('token');
+
 const checkResponse = (res) => {
 	if (res.ok) {
 		return res.json();
@@ -25,25 +27,6 @@ export function signup(data) {
 		body: JSON.stringify(newData),
 	}).then(checkResponse);
 }
-// Андрей, запросы к api - логин, checkToken(если понадобится), getTocken(если понадобится) - начало
-/*
-function getToken() {
-  const token = localStorage.getItem("jwt");
-  return token;
-}
-
-export function checkToken(token) {
-	return fetch(`${BASE_URL}/users/me`, {
-	method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`, // не знаю используют ли джанго/пайтон беки Бирера
-		},
-	})
-	.then(checkResponse)
-}
-*/
-
 // вход/авторизация
 export function login(email, password) {
 	return fetch(`${BASE_URL}/api/token/login/`, {
@@ -57,12 +40,11 @@ export function login(email, password) {
 
 // запрос на смену пароля
 export function changePassword(email) {
-	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/users/reset_password/`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `Token ${token}`,
 		},
 		body: JSON.stringify(email),
 	}).then(checkResponse);
@@ -81,7 +63,6 @@ function request(url, options) {
 }
 
 export function setPassword(data) {
-	const token = localStorage.getItem('token');
 	const currentData = {
 		new_password: data.password,
 		current_password: data.confirmPassword,
@@ -90,7 +71,7 @@ export function setPassword(data) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`,
+			Authorization: `Token ${token}`,
 		},
 		body: JSON.stringify({ currentData }),
 	});
@@ -103,7 +84,8 @@ export function getUsersProgress() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
+			Authorization: `Token ${token}`,
+			// Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
 		},
 	}).then(checkResponse);
 }
@@ -115,20 +97,18 @@ export function getTasks() {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
 
 export function getTaskInfo(id) {
-	// const token = localStorage.getItem('token');
-
 	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
@@ -139,7 +119,8 @@ export function confirmTask(id, data) {
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			Authorization: `Token ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
 		body: JSON.stringify({ data }),
 	}).then(checkResponse);
@@ -149,36 +130,35 @@ export function confirmTask(id, data) {
 
 // Личные данные
 export function getUsersInfo() {
-	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/users/me/`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${token}`,
+			Authorization: `Token ${token}`,
 		},
 	}).then(checkResponse);
 }
 
 export function setUsersInfo(data) {
-	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/users/me/`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${token}`,
+			Authorization: `Token ${token}`,
 		},
 		body: JSON.stringify({ data }),
 	}).then(checkResponse);
 }
 
-// Блок Достижения
-export function getUsersProgress() {
-	const token = localStorage.getItem('token');
-	return fetch(`${BASE_URL}/api/progress/users/`, {
-		method: ' GET',
+/*
+export function checkToken(token) {
+	return fetch(`${BASE_URL}/users/me`, {
+	method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${token}`,
+			Authorization: `Bearer ${token}`, // не знаю используют ли джанго/пайтон беки Бирера
 		},
-	}).then(checkResponse);
+	})
+	.then(checkResponse)
 }
+*/

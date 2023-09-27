@@ -6,31 +6,34 @@ import logoLamp from '../../images/logo.svg';
 import { getUsersInfo, setUsersInfo } from '../../utils/MainApi';
 
 function PersonalData() {
+	const [userData, setUserData] = useState([]);
+
 	const profile = {
-		// временно, заменить на данные от бэка
-		photo: logoLamp, // затычка
+		photo: logoLamp,
 		name: 'Вася Вася Вася',
 		job: 'Маркетолог',
 		department: 'Отдел контент-маркетинга',
 		level: 'Middle',
+
 		phone: '+7 915 999-99-99',
 		telegram: '@ivanov879.ivan',
 		email: 'i.ivanov@yandex.ru',
 		github: '@ivanov.marketing',
 		linkedin: 'Вася',
-		birthday: '01.01.1999',
+		birthday: userData.birthday,
 	};
 
-	const [userData, setUserData] = useState(null);
-	// const {   } = userData
+	// console.log(first_name);
 
-	console.log(userData);
+	// console.log(last_name);
+	console.log(profile.birthday);
+	// console.log(email);
 
 	function getInfo() {
 		getUsersInfo()
 			.then((data) => {
 				console.log(data);
-				setUserData(data);
+				setUserData(data[0]);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -39,7 +42,7 @@ function PersonalData() {
 
 	useEffect(() => {
 		getInfo();
-	});
+	}, []);
 
 	const {
 		register,
