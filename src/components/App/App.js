@@ -6,7 +6,7 @@ import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
-import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
+import Main from '../Main/Main';
 import ServerError from '../ServerError/ServerError';
 
 function App() {

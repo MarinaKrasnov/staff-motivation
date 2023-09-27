@@ -1,44 +1,45 @@
 import React from 'react';
 import './SideNavbar.scss';
 import { NavLink } from 'react-router-dom';
+import { ReactComponent as Newspaper } from '../../images/Newspaper.svg';
+import { ReactComponent as House } from '../../images/House.svg';
+import { ReactComponent as Users } from '../../images/Users.svg';
+import { ReactComponent as Gear } from '../../images/GearSix.svg';
 
 function SideNavbar() {
+	const setActiveLink = ({ isActive }) =>
+		isActive
+			? 'side-navbar__navigation-link_active'
+			: 'side-navbar__navigation-link';
 	return (
 		<nav className="side-navbar">
-			<div className="side-navbar__title-container">
-				<div className="side-navbar__logo">logo</div>
-				<h1 className="side-navbar__title">Motivation System</h1>
-			</div>
 			<ul className="side-navbar__navigation">
 				<li className="side-navbar__navigation-item">
-					<div className="side-navbar__navigation-icon side-navbar__navigation-icon-house" />
-					<NavLink className="side-navbar__navigation-link" to="/main">
+					<House className="side-navbar__navigation-icon" />
+					<NavLink className={setActiveLink} to="/main">
 						Главная
 					</NavLink>
 				</li>
 				<li className="side-navbar__navigation-item">
-					<div className="side-navbar__navigation-icon side-navbar__navigation-icon-newspaper" />
-					<NavLink className="side-navbar__navigation-link" to="/news">
+					<Newspaper className="side-navbar__navigation-icon" />
+
+					<NavLink className={setActiveLink} to="/news">
 						Новости
 					</NavLink>
 				</li>
 				<li className="side-navbar__navigation-item">
-					<div className="side-navbar__navigation-icon side-navbar__navigation-icon-database" />
-					<NavLink className="side-navbar__navigation-link" to="/database">
+					<Users className="side-navbar__navigation-icon" />
+					<NavLink className={setActiveLink} to="/database">
 						База данных
 					</NavLink>
 				</li>
+				<li className="side-navbar__navigation-item">
+					<Gear className="side-navbar__navigation-icon" />
+					<NavLink className={setActiveLink} to="/profile">
+						Профиль
+					</NavLink>
+				</li>
 			</ul>
-			<div className="side-navbar__profile-link">
-				<ul className="side-navbar__navigation">
-					<li className="side-navbar__navigation-item">
-						<div className="side-navbar__navigation-icon side-navbar__navigation-icon-gear" />
-						<NavLink className="side-navbar__navigation-link" to="/profile">
-							Профиль
-						</NavLink>
-					</li>
-				</ul>
-			</div>
 		</nav>
 	);
 }
