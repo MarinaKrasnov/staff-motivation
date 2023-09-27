@@ -16,16 +16,17 @@ function SideNavbar() {
 			<ul className="side-navbar__navigation">
 				<li className="side-navbar__navigation-item">
 					<House className="side-navbar__navigation-icon" />
-					<NavLink className={setActiveLink} to="/main">
+					<NavLink className={setActiveLink} to="/">
 						Главная
 					</NavLink>
 				</li>
 				<li className="side-navbar__navigation-item">
 					<Newspaper className="side-navbar__navigation-icon" />
+					<p className={setActiveLink}>Новости</p>
 
-					<NavLink className={setActiveLink} to="/news">
+					{/* <NavLink className={setActiveLink} >
 						Новости
-					</NavLink>
+	</NavLink> */}
 				</li>
 				<li className="side-navbar__navigation-item">
 					<Users className="side-navbar__navigation-icon" />
