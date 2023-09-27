@@ -1,31 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Main.scss';
-import Header from '../Header/Header'; // Егор -- верхнее меню
-// import SideNavbar from '../SideNavbar/SideNavbar'; // Егор -- боковое меню
+import Header from '../Header/Header';
+import SideNavbar from '../SideNavbar/SideNavbar';
 import MyTasks from '../MyTasks/MyTasks';
 import Achievements from '../Achievements/Achievements';
-import ModalConfirm from '../ModalConfirm/ModalConfirm'; // Егор - модальное окно подтверждения выхода
+import ModalConfirm from '../ModalConfirm/ModalConfirm';
+import Notifications from '../Notifications/Notifications';
 import DinamicWork from '../DinamicWork/DinamicWork';
+import { getNotification } from '../../utils/MainApi';
 
 function Main() {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpenModalConfirm, setIsOpenModalconfirm] = useState(false);
+	const [isOpenPushesModal, setIsPushesModal] = useState(false);
+	const [notificationsData, setNotificationsData] = useState([]);
 
-	const handleLogOut = () => setIsOpen(true);
-	const handleClose = () => setIsOpen(false);
+	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
+	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
+	const handleOpenPushesModal = () => setIsPushesModal(true);
+	const handleClosePushesModal = () => setIsPushesModal(false);
+
+	// useEffect(() => {
+	// 	getNotification()
+	// 		.then((data) => {
+	// 			setNotificationsData(data);
+	// 			console.log(data);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log('Ошибка получения данных:', error);
+	// 		});
+	// }, []);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const data = await getNotification();
+				setNotificationsData(data);
+				console.log(data);
+			} catch (error) {
+				console.log('Ошибка получения данных:', error);
+			}
+		};
+
+		fetchData();
+	}, []);
 
 	return (
 		<main className="main-page">
-			{/* Егор - верхнее меню и левое боковое меню (начало кода) */}
-			<Header onLogout={handleLogOut} />
-			{/* <SideNavbar /> */}
-			{/* Егор - верхнее меню и левое боковое меню (конец кода) */}
+			<Header
+				handleOpenModalConfirm={handleOpenModalConfirm}
+				handleOpenPushesModal={handleOpenPushesModal}
+				notificationsData={notificationsData}
+			/>
+			<SideNavbar />
 			<section className="main-page__section">
 				<div className="main-page__block">
 					<Achievements />
 					<DinamicWork />
 				</div>
 				<MyTasks />
-				{isOpen && <ModalConfirm onClose={handleClose} />}
+				{isOpenModalConfirm && (
+					<ModalConfirm onClose={handleCloseModalConfirm} />
+				)}
+				{isOpenPushesModal && (
+					<Notifications
+						onClose={handleClosePushesModal}
+						notificationsData={notificationsData}
+					/>
+				)}
 			</section>
 		</main>
 	);

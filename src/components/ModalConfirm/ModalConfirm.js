@@ -13,7 +13,7 @@ function ModalConfirm({ onClose }) {
 				<div className="modal-confirm__container">
 					<div className="modal-confirm__logo" />
 					<p className="modal-confirm__text">
-						Вы уверены, что хотите выйти из профиля
+						Вы уверены, что хотите выйти из профиля?
 					</p>
 					<div className="modal-confirm__button-container">
 						<button className="modal-confirm__button" onClick={onClose}>

@@ -66,6 +66,32 @@ export function changePassword(email) {
 	}).then(checkResponse);
 }
 
+export function getUserData() {
+	// const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/curent_user_info/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			// Authorization: `Bearer ${token}`,
+		},
+	}).then(checkResponse);
+}
+
+export function getNotification() {
+	// const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/user/my_notifications/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			// Authorization: `Bearer ${token}`,
+		},
+	}).then(checkResponse);
+}
+
 // новый пароль
 const getResponseData = (response) => {
 	if (!response.ok) {
