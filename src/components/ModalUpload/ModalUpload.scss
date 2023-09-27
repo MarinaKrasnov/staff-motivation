@@ -35,7 +35,7 @@
 		line-height: 25px;
 		font-weight: 500;
 		color: #0f1d40;
-        margin: 0;
+		margin: 0;
 	}
 
 	&__image {
@@ -50,7 +50,7 @@
 		color: #525c76;
 		margin: 0;
 		height: auto;
-        white-space: pre-line;
+		white-space: pre-line;
 	}
 
 	&__button {
@@ -66,17 +66,17 @@
 		position: relative;
 		display: flex;
 		flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 6px 12px;
+		align-items: center;
+		justify-content: space-between;
+		padding: 6px 12px;
 	}
 	&__button-icon {
 		background-image: url('../../images/upload-icon.svg');
 		background-repeat: no-repeat;
 		background-size: 12px 12px;
-        width: 12px;
-        height: 12px;
-        padding: 2px;
+		width: 12px;
+		height: 12px;
+		padding: 2px;
 	}
 	&__button-text {
 		font-size: 14px;
@@ -91,10 +91,10 @@
 		height: 18px;
 		top: 32px;
 		right: 32px;
-        background-image: url('../../images/close-btn.svg');
+		background-image: url('../../images/close-btn.svg');
 		background-repeat: no-repeat;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
 	}
 }
