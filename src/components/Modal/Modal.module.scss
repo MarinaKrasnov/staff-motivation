@@ -1,14 +1,97 @@
-$color_1: white;
-$color_2: #525c76;
-$background-color_1: #ffffff;
-$mainSmokyWhite: #f4f4f4;
-
-.back {
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
 	display: flex;
 	align-items: center;
-	width: 100%;
-	height: 100vh;
-	background-color: $mainSmokyWhite;
+	justify-content: center;
+}
+
+.modal {
+	width: 530px;
+	height: 340px;
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	justify-content: center;
+	align-items: center;
+	background-color: #ffffff;
+	margin: auto;
+}
+
+.modal-close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.Message {
+	width: 370px;
+	font-size: 15px;
+	font-style: normal;
+	line-height: 24px;
+	text-align: center;
+	color: #525c76;
+	font-weight: 500;
+	margin-top: 20px;
+}
+
+.Text1 {
+	width: 370px;
+	font-size: 18px;
+	font-style: normal;
+	line-height: 28.8px;
+	text-align: center;
+	color: #525c76;
+	font-weight: 500;
+	margin: 20px 0 12px 0;
+	font-family: PT Root UI;
+}
+
+.Text2 {
+	width: 370px;
+	font-size: 15px;
+	font-style: normal;
+	line-height: 24px;
+	text-align: center;
+	color: #525c76;
+	font-weight: 500;
+	margin: 0px;
+	font-family: PT Root UI;
+}
+
+.Text3 {
+	width: 370px;
+	font-size: 16px;
+	font-style: normal;
+	line-height: 25.6px;
+	text-align: center;
+	color: #525c76;
+	font-weight: 500;
+	margin-top: 20px;
+	margin-bottom: 0;
+	font-family: PT Root UI;
+}
+
+.button {
+	border: none;
+	border-radius: 3px;
+	font-weight: 500;
+	width: 426px;
+	height: 52px;
+	background: #783ae1;
+	color: white;
+	font-size: 16px;
+	padding: 10px 16px 10px 16px;
+	margin-top: 40px;
+	font-family: PT Root UI;
+	line-height: 25.6px;
 }
 
 .Module {
@@ -19,43 +102,91 @@ $mainSmokyWhite: #f4f4f4;
 	flex-direction: column;
 	align-items: center;
 }
-.ModulePort {
-	width: 530px;
-	height: 419px;
-	display: flex;
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	justify-content: center;
-	align-items: center;
-	background-color: $background-color_1;
-	margin: auto;
-}
-.button {
-	border: none;
-	border-radius: 3px;
-	font-weight: 500;
-	width: 344px;
-	height: 52px;
-	background: #8247e5;
-	color: $color_1;
-	font-size: 18px;
-	padding: 10px 16px 10px 16px;
-	margin-top: 40px;
-}
-.Message {
-	width: 370px;
-	height: 29px;
-	font-size: 18px;
-	line-height: 28.8px;
-	text-align: center;
-	color: $color_2;
-	font-weight: 400;
-	margin-top: 24px;
+
+@media screen and (max-width: 530px) {
+	.modal {
+		max-width: 360px;
+	}
+	.button {
+		max-width: 328px;
+		height: 36px;
+		padding: 0;
+	}
+	.Module {
+		max-width: 328px;
+	}
+	.Message {
+		width: 328px;
+	}
+	.Text1 {
+		width: 328px;
+	}
+	.Text2 {
+		width: 328px;
+	}
+	.Text3 {
+		width: 328px;
+	}
 }
 
-.openButton {
-	margin: auto;
-}
+// $color_1: white;
+// $color_2: #525c76;
+// $background-color_1: #ffffff;
+// $mainSmokyWhite: #f4f4f4;
+
+// .back {
+// 	display: flex;
+// 	align-items: center;
+// 	width: 100%;
+// 	height: 100vh;
+// 	background-color: $mainSmokyWhite;
+// }
+
+// .Module {
+// 	display: flex;
+// 	position: relative;
+// 	width: 720px;
+// 	border-radius: 40px;
+// 	flex-direction: column;
+// 	align-items: center;
+// }
+// .ModulePort {
+// 	width: 530px;
+// 	height: 419px;
+// 	display: flex;
+// 	position: fixed;
+// 	top: 0;
+// 	left: 0;
+// 	bottom: 0;
+// 	right: 0;
+// 	justify-content: center;
+// 	align-items: center;
+// 	background-color: $background-color_1;
+// 	margin: auto;
+// }
+// .button {
+// 	border: none;
+// 	border-radius: 3px;
+// 	font-weight: 500;
+// 	width: 344px;
+// 	height: 52px;
+// 	background: #8247e5;
+// 	color: $color_1;
+// 	font-size: 18px;
+// 	padding: 10px 16px 10px 16px;
+// 	margin-top: 40px;
+// }
+// .Message {
+// 	width: 370px;
+// 	height: 29px;
+// 	font-size: 18px;
+// 	line-height: 28.8px;
+// 	text-align: center;
+// 	color: $color_2;
+// 	font-weight: 400;
+// 	margin-top: 24px;
+// }
+
+// .openButton {
+// 	margin: auto;
+// }

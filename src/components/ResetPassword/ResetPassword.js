@@ -1,17 +1,24 @@
 import './ResetPassword.scss';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+
 // import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPasswordSchema } from '../../utils/ValidationSchemes';
 import { changePassword } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-
 import logo from '../../images/M-check.svg';
+import Modal from '../Modal/Modal';
+import logo1 from '../../images/CircleWavyCheck.svg';
+import styles from '../Modal/Modal.module.scss';
 
 export default function ResetPassword() {
+	// поменяй  false на true, что бы посмтореть на модалку
+	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
+	const modalRef = useRef(null);
+
 	const {
 		register,
 		handleSubmit,
@@ -24,6 +31,29 @@ export default function ResetPassword() {
 
 	const [isError, setIsError] = useState(false);
 	const [error, setError] = useState(null);
+
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			if (event.key === 'Escape') {
+				setIsOpen(false);
+			}
+		};
+
+		const handleMouseDown = (event) => {
+			if (!modalRef.current || modalRef.current.contains(event.target)) {
+				return;
+			}
+			setIsOpen(false);
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('mousedown', handleMouseDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('mousedown', handleMouseDown);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (errors.email) {
@@ -40,7 +70,7 @@ export default function ResetPassword() {
 		evt.preventDefault();
 		changePassword(data.email)
 			.then(() => {
-				navigate('/change-password-modal'); // модальное окно: мы отравили вам на почту ссылку для востановления парол
+				setIsOpen(true);
 			})
 			.catch((err) => {
 				if (err === 400) {
@@ -54,6 +84,7 @@ export default function ResetPassword() {
 				}
 			});
 	};
+
 	return (
 		<div className="form">
 			<div className="reset-password">
@@ -63,7 +94,7 @@ export default function ResetPassword() {
 				</header>
 				<main className="form__main">
 					{isError ? (
-						<h2 className="form__error">{error}</h2>
+						<h2 className="form__error reset-password__error">{error}</h2>
 					) : (
 						<h2 className="form__subtitle">
 							Укажите email, который вы использовали для регистрации
@@ -100,6 +131,19 @@ export default function ResetPassword() {
 					<NavLink to="/signin" className="form__caption-link">
 						Отменить
 					</NavLink>
+					{isOpen ? (
+						<Modal>
+							<section className={styles.ModalPort} ref={modalRef}>
+								<div className={styles.Module}>
+									<img src={logo1} className="App-logo" alt="logo" />
+									<h2 className={styles.Message}>
+										Мы отправили ссылку для создания нового пароля на вашу
+										электронную почту
+									</h2>
+								</div>
+							</section>
+						</Modal>
+					) : null}
 				</main>
 			</div>
 		</div>

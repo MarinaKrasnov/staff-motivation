@@ -1,22 +1,26 @@
 import './Register.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../utils/ValidationSchemes';
 import { signup } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-
+import logoActivation from '../../images/CircleWavyCheck.svg';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
+import Modal from '../Modal/Modal';
+import styles from '../Modal/Modal.module.scss';
 
 function Register() {
+	// поменяй  false на true, что бы посмтореть на модалку
+	const [isOpen, setIsOpen] = useState(false);
+	const modalRef = useRef(null);
 	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
-		// setValue,
-		// getValues,
 		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
@@ -32,8 +36,8 @@ function Register() {
 	function onRegister(data) {
 		signup(data)
 			.then(() => {
-				navigate('/activation-message-modal'); // модалка активации
-				console.log('Пользователь зарегистрирован'); // проверяю успешна ли регистрация
+				navigate('/signin');
+				// setIsOpen(true);
 			})
 			.catch((err) => {
 				if (err === 400) {
@@ -50,43 +54,68 @@ function Register() {
 
 	function onSubmit(data, evt) {
 		evt.preventDefault();
-		onRegister(data);
+		if (watch('password') === watch('confirmPassword')) {
+			onRegister(data);
+		} else {
+			setIsError(true);
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
+		}
 	}
 
 	function handlePasswordHidden() {
-		if (isPasswordHidden) {
-			setPasswordHidden(false);
-		} else {
-			setPasswordHidden(true);
-		}
+		setPasswordHidden(!isPasswordHidden);
 	}
 
 	function handleConfirmPasswordHidden() {
-		if (isConfirmPasswordHidden) {
-			setConfirmPasswordHidden(false);
-		} else {
-			setConfirmPasswordHidden(true);
-		}
+		setConfirmPasswordHidden(!isConfirmPasswordHidden);
 	}
 
 	useEffect(() => {
-		if (errors.email) {
+		const handleKeyDown = (event) => {
+			if (event.key === 'Escape') {
+				setIsOpen(false);
+			}
+		};
+
+		const handleMouseDown = (event) => {
+			if (!modalRef.current || modalRef.current.contains(event.target)) {
+				return;
+			}
+
+			setIsOpen(false);
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('mousedown', handleMouseDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('mousedown', handleMouseDown);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (
+			errors.email ||
+			errors.lastName ||
+			errors.firstName ||
+			errors.password ||
+			errors.confirmPassword
+		) {
 			setIsError(true);
-			setError(errors.email.message);
-		} else if (errors.lastName) {
+			setError(
+				errors.email?.message ||
+					errors.lastName?.message ||
+					errors.firstName?.message ||
+					errors.password?.message ||
+					errors.confirmPassword?.message
+			);
+		} else if (watch('password') !== watch('confirmPassword')) {
 			setIsError(true);
-			setError(errors.lastName.message);
-		} else if (errors.firstName) {
-			setIsError(true);
-			setError(errors.firstName.message);
-		} else if (errors.password) {
-			setIsError(true);
-			setError(errors.password.message);
-		} else if (errors.confirmPassword) {
-			setIsError(true);
-			setError(errors.confirmPassword.message);
+			setError(ERROR_MESSAGES.PASSWORD.MUST_MATCH);
 		} else {
 			setIsError(false);
+			setError(null);
 		}
 	}, [
 		errors.email,
@@ -94,6 +123,7 @@ function Register() {
 		errors.firstName,
 		errors.password,
 		errors.confirmPassword,
+		watch,
 	]);
 
 	return (
@@ -164,7 +194,7 @@ function Register() {
 								<input
 									id="password"
 									name="password"
-									type={isPasswordHidden ? 'password' : 'text'}
+									type={isPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.password && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -190,7 +220,7 @@ function Register() {
 								<input
 									id="confirmPassword"
 									name="confirmPassword"
-									type={isPasswordHidden ? 'password' : 'text'}
+									type={isConfirmPasswordHidden ? 'text' : 'password'}
 									className={`form__input ${
 										errors.confirmPassword && !isValid && isDirty
 											? 'form__input_no-valid'
@@ -221,6 +251,19 @@ function Register() {
 					<NavLink to="/signin" className="form__caption-link">
 						У меня есть аккаунт.&#8194;Войти
 					</NavLink>
+					{isOpen ? (
+						<Modal>
+							<section className={styles.ModalPort} ref={modalRef}>
+								<div className={styles.Module}>
+									<img src={logoActivation} className="App-logo" alt="logo" />
+									<h2 className={styles.Message}>
+										После активации аккаунта мы отправим вам электронное письмо.
+										В нём будет ссылка на вашу страницу в приложении.
+									</h2>
+								</div>
+							</section>
+						</Modal>
+					) : null}
 				</main>
 			</div>
 		</div>

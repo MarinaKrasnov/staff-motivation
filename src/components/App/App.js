@@ -6,8 +6,8 @@ import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Modal from '../Modal/Modal';
-import ModalMessage from '../ModalMessage/ModalMessage';
 import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
+import ServerError from '../ServerError/ServerError';
 
 function App() {
 	/* проверка токена будет производиться сразу после загрузки приложения
@@ -40,8 +40,8 @@ function App() {
 				<Route path="/new-password" element={<NewPassword />} />
 				<Route path="/signin" element={<Login />} />
 				{/* уведомление об отправке ссылки для создания нового пароля на почту */}
-				<Route path="/change-password-modal" element={<ModalMessage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
+				<Route path="/server-error" element={<ServerError />} />
 			</Routes>
 		</div>
 	);
