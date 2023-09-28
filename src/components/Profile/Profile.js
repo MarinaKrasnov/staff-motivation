@@ -1,6 +1,6 @@
 import './Profile.scss';
 import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import SideNavbar from '../SideNavbar/SideNavbar';
 import ModalConfirm from '../ModalConfirm/ModalConfirm';
@@ -8,15 +8,24 @@ import ModalUpload from '../ModalUpload/ModalUpload';
 import Notifications from '../Notifications/Notifications';
 import PersonalData from '../PersonalData/PersonalData';
 import { getNotification } from '../../utils/MainApi';
+import WorkExperience from '../WorkExperience/WorkExperience';
+import TrackRecordDiagram from '../TrackRecordDiagram/TrackRecordDiagram';
+import TrackRecord from '../TrackRecord/TrackRecord';
 
 function Profile() {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	// const [isOpen, setIsOpen] = useState(false);
 
 	const [isOpenModalConfirm, setIsOpenModalconfirm] = useState(false);
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
 	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
+
+	const handleLogOut = () => {
+		setIsOpenModalconfirm(false);
+		localStorage.clear();
+		navigate('/signin');
+	};
 
 	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
 	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
@@ -39,12 +48,7 @@ function Profile() {
 		fetchData();
 	}, []);
 
-	/* const handleLogOut = () => {
-		setIsOpen(true);
-		localStorage.clear();
-		navigate('/signin');
-	};
-	const handleClose = () => setIsOpen(false); */
+	// const handleClose = () => setIsOpen(false); */
 
 	return (
 		<main className="main-page">
@@ -57,9 +61,20 @@ function Profile() {
 			/>
 			<SideNavbar />
 			<section className="main-page__section">
-				<PersonalData />
+				<div className="profile">
+					<div className="profile__data">
+						<PersonalData />
+						<div className="profile__sections">
+							<WorkExperience />
+							<TrackRecordDiagram />
+						</div>
+					</div>
+					<TrackRecord />
+				</div>
 			</section>
-			{isOpenModalConfirm && <ModalConfirm onClose={handleCloseModalConfirm} />}
+			{isOpenModalConfirm && (
+				<ModalConfirm onClose={handleCloseModalConfirm} onExit={handleLogOut} />
+			)}
 			{isOpenPushesModal && (
 				<Notifications
 					onClose={handleClosePushesModal}

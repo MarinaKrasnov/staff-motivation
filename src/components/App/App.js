@@ -61,11 +61,12 @@ function App() {
 					path="/"
 					element={
 						<ProtectedRoute
-							component={Main}
 							loggedIn={loggedIn}
 							isLoading={isLoading}
 							key={loggedIn}
-						/>
+						>
+							<Main />
+						</ProtectedRoute>
 					}
 				/>
 				<Route path="/profile" element={<Profile />} />
