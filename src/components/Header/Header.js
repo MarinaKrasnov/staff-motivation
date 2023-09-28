@@ -61,22 +61,18 @@ function Header({
 						<div className="header__points">{`${userData.reward_points_for_current_month} Б`}</div>
 						<div className="header__points-text">за месяц</div>
 					</div>
-					{userData.reward_points_for_current_month > 0 ? (
-						<>
-							<div className="header__points-container">
-								<div className="header__points header__points_rating">{`${userData.reward_points} Б`}</div>
-								<div className="header__points-text header__points-text_rating">
-									рейтинг
-								</div>
-							</div>
-							<div className="header__points-container">
-								<div className="header__points header__points_place">{`${userData.rating}-й`}</div>
-								<div className="header__points-text header__points-text_place">
-									в рейтинге
-								</div>
-							</div>
-						</>
-					) : null}
+					<div className="header__points-container">
+						<div className="header__points header__points_rating">{`${userData.reward_points} Б`}</div>
+						<div className="header__points-text header__points-text_rating">
+							рейтинг
+						</div>
+					</div>
+					<div className="header__points-container">
+						<div className="header__points header__points_place">{`${userData.rating}-й`}</div>
+						<div className="header__points-text header__points-text_place">
+							в рейтинге
+						</div>
+					</div>
 				</div>
 				<div className="header__user-buttons">
 					<div className="header__bell-container">
