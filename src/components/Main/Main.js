@@ -38,6 +38,7 @@ function Main() {
 	});
 
 	const handleLogOut = () => {
+		setIsOpenModalconfirm(false);
 		localStorage.clear();
 		navigate('/signin');
 	};
@@ -106,6 +107,7 @@ function Main() {
 				notificationsData={notificationsData}
 				userData={userData}
 				// onLogout={handleLogOut}
+				onExit={handleLogOut}
 			/>
 			<SideNavbar />
 			<section className="main-page__section">
@@ -118,7 +120,10 @@ function Main() {
 				</div>
 				<MyTasks />
 				{isOpenModalConfirm && (
-					<ModalConfirm onClose={handleCloseModalConfirm} />
+					<ModalConfirm
+						onClose={handleCloseModalConfirm}
+						onExit={handleLogOut}
+					/>
 				)}
 				{isOpenPushesModal && (
 					<Notifications

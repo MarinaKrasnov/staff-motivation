@@ -1,8 +1,7 @@
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './ModalConfirm.scss';
 
-function ModalConfirm({ onClose }) {
+function ModalConfirm({ onClose, onExit }) {
 	return (
 		<div className="modal" aria-hidden="true" onClick={onClose}>
 			<div
@@ -19,12 +18,13 @@ function ModalConfirm({ onClose }) {
 						<button className="modal-confirm__button" onClick={onClose}>
 							Отменить
 						</button>
-						<NavLink
+						<button
 							className="modal-confirm__button modal-confirm__button_confirm"
 							to="/signin"
+							onClick={onExit}
 						>
 							Да
-						</NavLink>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -36,4 +36,5 @@ export default ModalConfirm;
 
 ModalConfirm.propTypes = {
 	onClose: PropTypes.func.isRequired,
+	onExit: PropTypes.func.isRequired,
 };
