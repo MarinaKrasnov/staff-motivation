@@ -20,13 +20,13 @@ function PersonalData() {
 		email: 'i.ivanov@yandex.ru',
 		github: '@ivanov.marketing',
 		linkedin: 'Вася',
-		birthday: userData.birthday,
+		birthday: '01.01.1991',
 	};
 
 	// console.log(first_name);
 
 	// console.log(last_name);
-	console.log(profile.birthday);
+	console.log(userData);
 	// console.log(email);
 
 	function getInfo() {

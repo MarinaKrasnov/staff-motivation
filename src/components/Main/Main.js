@@ -17,7 +17,7 @@ function Main() {
 
 	const [isOpenModalConfirm, setIsOpenModalconfirm] = useState(false);
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
-	const [isUploadModal, setIsUploadModal] = useState(false);
+	const [isUploadModal, setIsUploadModal] = useState(true);
 	const [notificationsData, setNotificationsData] = useState([]);
 
 	const [userProgressData, setUserProgressData] = useState([]);

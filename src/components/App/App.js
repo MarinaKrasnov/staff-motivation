@@ -5,7 +5,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
-import Main from '../Main/Main'; // Егор - добавил компонент для сборки главной страницы
+import Main from '../Main/Main';
 import Profile from '../Profile/Profile';
 import ServerError from '../ServerError/ServerError';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -57,7 +57,6 @@ function App() {
 	return (
 		<div className="App">
 			<Routes>
-				<Route path="/profile" element={<Profile />} />
 				<Route
 					path="/"
 					element={
@@ -69,6 +68,7 @@ function App() {
 						/>
 					}
 				/>
+				<Route path="/profile" element={<Profile />} />
 				<Route path="/signup" element={<Register />} />
 				<Route path="/new-password" element={<NewPassword />} />
 				<Route path="/signin" element={<Login />} />
