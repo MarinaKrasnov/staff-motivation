@@ -24,8 +24,16 @@ function Main() {
 	const { department_progress, personal_progress, progress_for_deadline } =
 		userProgressData;
 
+	const handleLogOut = () => {
+		localStorage.clear();
+		navigate('/signin');
+	};
+
 	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
-	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
+	const handleCloseModalConfirm = () => {
+		setIsOpenModalconfirm(false);
+		handleLogOut();
+	};
 	const handleOpenPushesModal = () => setIsPushesModal(true);
 	const handleClosePushesModal = () => setIsPushesModal(false);
 	const handleOpenUploadModal = () => setIsUploadModal(true);
@@ -59,12 +67,7 @@ function Main() {
 			});
 	}, [navigate]);
 
-	/* const handleLogOut = () => {
-		setIsOpen(true);
-		localStorage.clear();
-		navigate('/signin');
-	};
-	const handleClose = () => setIsOpen(false); */
+	// const handleClose = () => setIsOpen(false); */
 
 	return (
 		<main className="main-page">
