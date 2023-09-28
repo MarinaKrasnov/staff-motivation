@@ -13,7 +13,18 @@
 		grid-template-rows: 29px 24px 24px 39px;
 	}
 
+	&__plug {
+		background-color: #ff9783;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 116px;
+		height: 116px;
+		border-radius: 50%;
+	}
+
 	&__photo {
+		border-radius: 50%;
 		margin: 0;
 		width: 116px;
 		height: 116px;

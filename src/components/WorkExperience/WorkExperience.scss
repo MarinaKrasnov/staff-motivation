@@ -1,47 +1,47 @@
 .section {
-    top: 216px;
-    margin: 0 0 6.5% 0;
-    max-width: 561px;
-    min-height: 208px;
-    background-color: #fff;
-    border-radius: 24px;
-    padding: 20px 30px 40px;
+	top: 216px;
+	margin: 0 0 6.5% 0;
+	max-width: 561px;
+	min-height: 208px;
+	background-color: #fff;
+	border-radius: 24px;
+	padding: 20px 30px 40px;
 
-    &__title {
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 160%;
-        text-align: start;
-        color: #0F1D40;
-        margin: 22px 0 15px;
-    }
+	&__title {
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 160%;
+		text-align: start;
+		color: #0f1d40;
+		margin: 22px 0 15px;
+	}
 
-    &__text {
-        color: #525C76;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 160%;
-        margin: 0 0 5px 0;
-    }
+	&__text {
+		color: #525c76;
+		font-size: 16px;
+		font-weight: 700;
+		line-height: 160%;
+		margin: 0 0 5px 0;
+	}
 
-    &__hardskills-list {
-        display: flex;
-        flex-direction: row;
-        margin: -10px 0 0;
-        padding: 0;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
+	&__hardskills-list {
+		display: flex;
+		flex-direction: row;
+		margin: -10px 0 0;
+		padding: 0;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
 
-    &__hardskills-item {
-        list-style: none;
-        margin: 0;
-        padding: 3px 15px;
-        color: #FFFFFF;
-        border-radius: 3px;
-        background: #8247E5;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 160%;
-    }
+	&__hardskills-item {
+		list-style: none;
+		margin: 0;
+		padding: 3px 15px;
+		color: #ffffff;
+		border-radius: 3px;
+		background: #8247e5;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 160%;
+	}
 }

@@ -1,7 +1,7 @@
 import './Login.scss';
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../utils/ValidationSchemes';
@@ -11,7 +11,7 @@ import { ERROR_MESSAGES } from '../../utils/Config';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 
-export default function Login() {
+export default function Login({ setLoggedIn }) {
 	const navigate = useNavigate();
 	// react-hook-form useForm
 	const {
@@ -43,6 +43,7 @@ export default function Login() {
 		MainApi.login(email, password)
 			.then((data) => {
 				localStorage.setItem('token', data.auth_token);
+				setLoggedIn(true);
 				navigate('/');
 				console.log(localStorage.getItem('token'));
 			})
@@ -179,10 +180,11 @@ export default function Login() {
 		</div>
 	);
 }
-/* Login.propTypes = {
-	removeToken: PropTypes.func.isRequired,
+Login.propTypes = {
+	setLoggedIn: PropTypes.func.isRequired,
+	// removeToken: PropTypes.func.isRequired,
 	// handleIsRememberMePressed: PropTypes.func.isRequired,
 	// onSignIn: PropTypes.func.isRequired,
 	// isPasswordHidden: PropTypes.bool.isRequired,
 	// onHidePasswordClick: PropTypes.func.isRequired,
-}; */
+};

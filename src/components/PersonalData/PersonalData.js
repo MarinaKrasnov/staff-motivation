@@ -1,39 +1,23 @@
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './PersonalData.scss';
 import chagePhoto from '../../images/change-photo.svg';
-import logoLamp from '../../images/logo.svg';
 import { getUsersInfo, setUsersInfo } from '../../utils/MainApi';
 
-function PersonalData() {
-	const [userData, setUserData] = useState([]);
+function PersonalData({ userData }) {
+	const [personalData, setPersonalData] = useState([]);
+	const [contacts, setContacts] = useState([]);
 
 	const profile = {
-		photo: logoLamp,
-		name: 'Вася Вася Вася',
-		job: 'Маркетолог',
-		department: 'Отдел контент-маркетинга',
 		level: 'Middle',
-
-		phone: '+7 915 999-99-99',
-		telegram: '@ivanov879.ivan',
-		email: 'i.ivanov@yandex.ru',
-		github: '@ivanov.marketing',
-		linkedin: 'Вася',
-		birthday: '01.01.1991',
 	};
-
-	// console.log(first_name);
-
-	// console.log(last_name);
-	console.log(userData);
-	// console.log(email);
 
 	function getInfo() {
 		getUsersInfo()
 			.then((data) => {
-				console.log(data);
-				setUserData(data[0]);
+				setContacts(data.contacts);
+				setPersonalData(data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -43,6 +27,15 @@ function PersonalData() {
 	useEffect(() => {
 		getInfo();
 	}, []);
+
+	const firstNameInitial = userData.first_name
+		? userData.first_name.charAt(0).toUpperCase()
+		: '';
+	const lastNameInitial = userData.last_name
+		? userData.last_name.charAt(0).toUpperCase()
+		: '';
+	const initials = `${firstNameInitial}${lastNameInitial}`;
+	const fullName = `${userData.first_name} ${userData.last_name}`;
 
 	const {
 		register,
@@ -73,15 +66,21 @@ function PersonalData() {
 	return (
 		<section className="personal-data">
 			<div className="personal-data__photo-container">
-				<img
-					className="personal-data__photo"
-					src={profile.photo}
-					alt="фотография профиля"
-				/>
-				<h1 className="personal-data__name">{profile.name}</h1>
-				<p className="personal-data__job">{profile.job}</p>
-				<p className="personal-data__department">{profile.department}</p>
-				<p className="personal-data__level">{`Уровень: ${profile.level}`}</p>
+				{userData.image === null ? (
+					<div className="personal-data__plug">{initials}</div>
+				) : (
+					<img
+						className="personal-data__photo"
+						src={userData.photo || null}
+						alt="Фотография сотрудника"
+					/>
+				)}
+				<h1 className="personal-data__name">{fullName}</h1>
+				<p className="personal-data__job">{userData.role}</p>
+				<p className="personal-data__department">{userData.department}</p>
+				<p className="personal-data__level">{`Уровень: ${
+					userData.position || profile.level
+				}`}</p>
 				<button className="personal-data__change-photo-button" type="button">
 					<img
 						className="personal-data__change-photo-logo"
@@ -99,11 +98,11 @@ function PersonalData() {
 						Телефон
 						<input
 							className="personal-data__input "
-							defaultValue={profile.phone}
+							defaultValue={contacts.phone || ''}
 							type="text"
 							name="phone"
 							id="phone"
-							{...register('phone', { required: true })}
+							{...register('phone', { required: false })}
 						/>
 					</label>
 					<label
@@ -113,11 +112,11 @@ function PersonalData() {
 						Telegram
 						<input
 							className="personal-data__input"
-							defaultValue={profile.telegram}
+							defaultValue={contacts.telegram}
 							type="text"
 							name="telegram"
 							id="telegram"
-							{...register('telegram', { required: true })}
+							{...register('telegram', { required: false })}
 						/>
 					</label>
 					<label
@@ -127,11 +126,11 @@ function PersonalData() {
 						Электронная почта
 						<input
 							className="personal-data__input "
-							defaultValue={profile.email}
+							defaultValue={personalData.email}
 							type="email"
 							name="email"
 							id="email"
-							{...register('email', { required: true })}
+							{...register('email', { required: false })}
 						/>
 					</label>
 					<label
@@ -141,11 +140,11 @@ function PersonalData() {
 						GitHub
 						<input
 							className="personal-data__input "
-							defaultValue={profile.github}
+							defaultValue={contacts.github}
 							type="text"
 							name="github"
 							id="github"
-							{...register('github', { required: true })}
+							{...register('github', { required: false })}
 						/>
 					</label>
 					<label
@@ -155,11 +154,11 @@ function PersonalData() {
 						LinkedIn
 						<input
 							className="personal-data__input "
-							defaultValue={profile.linkedin}
+							defaultValue={contacts.linkedin}
 							type="text"
 							name="linkedin"
 							id="linkedin"
-							{...register('linkedin', { required: true })}
+							{...register('linkedin', { required: false })}
 						/>
 					</label>
 					<label
@@ -169,11 +168,11 @@ function PersonalData() {
 						Дата рождения
 						<input
 							className="personal-data__input "
-							defaultValue={profile.birthday}
+							defaultValue={personalData.birthday}
 							type="text"
 							name="birthday"
 							id="birthday"
-							{...register('birthday', { required: true })}
+							{...register('birthday', { required: false })}
 						/>
 					</label>
 					<button
@@ -185,7 +184,7 @@ function PersonalData() {
 					<button
 						className="personal-data__submit-button personal-data__submit-button_dont-save"
 						type="button"
-						onClick={getInfo}
+						// onClick={getInfo}
 					>
 						Не сохранять
 					</button>
@@ -194,5 +193,12 @@ function PersonalData() {
 		</section>
 	);
 }
+
+PersonalData.propTypes = {
+	userData: PropTypes.node,
+};
+PersonalData.defaultProps = {
+	userData: null,
+};
 
 export default PersonalData;

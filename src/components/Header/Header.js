@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Header.scss';
 import photoProfile from '../../images/plug.svg';
-import { getUserData } from '../../utils/MainApi';
 
 function Header({
 	notificationsData,
 	handleOpenModalConfirm,
 	handleOpenPushesModal,
+	userData,
 	// handleOpenUploadModal, // временное решение
 }) {
-	const [userData, setUserData] = useState({
-		first_name: '',
-		last_name: '',
-		image: '',
-		reward_points_for_current_month: '0',
-		reward_points: '',
-		rating: '',
-	});
+	console.log(userData);
 	// const [pushes, setPushes] = useState([]);
 	const pushesCount = notificationsData.length;
 
@@ -40,21 +33,6 @@ function Header({
 				headerContainer.classList.remove('header_scrolling');
 			}
 		});
-	}, []);
-
-	useEffect(() => {
-		getUserData()
-			.then((data) => {
-				if (data.length > 0) {
-					setUserData(data[0]);
-					console.log(data[0]);
-				} else {
-					console.log('Ответ сервера не содержит данных пользователя.');
-				}
-			})
-			.catch((error) => {
-				console.log('Ошибка получения данных:', error);
-			});
 	}, []);
 
 	return (
@@ -125,6 +103,7 @@ function Header({
 export default Header;
 
 Header.propTypes = {
+	userData: PropTypes.node,
 	handleOpenModalConfirm: PropTypes.func.isRequired,
 	handleOpenPushesModal: PropTypes.func.isRequired,
 	// handleOpenUploadModal: PropTypes.func.isRequired,
@@ -137,4 +116,15 @@ Header.propTypes = {
 			user: PropTypes.number.isRequired,
 		})
 	).isRequired,
+};
+
+Header.defaultProps = {
+	userData: {
+		first_name: '',
+		last_name: '',
+		image: '',
+		reward_points_for_current_month: '0',
+		reward_points: '',
+		rating: '',
+	},
 };

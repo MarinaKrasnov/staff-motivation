@@ -72,7 +72,7 @@ function App() {
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/signup" element={<Register />} />
 				<Route path="/new-password" element={<NewPassword />} />
-				<Route path="/signin" element={<Login />} />
+				<Route path="/signin" element={<Login setLoggedIn={setLoggedIn} />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				<Route path="/server-error" element={<ServerError />} />
 				{/* роут для ошибки 404 */}
