@@ -1,7 +1,7 @@
 import { BASE_URL } from './constants';
 
-// const token = localStorage.getItem('token');
-const token = 'c0faa7cbff18fbd7a5c2bdb12ee732506405147d';
+const token = localStorage.getItem('token');
+// const token = 'c0faa7cbff18fbd7a5c2bdb12ee732506405147d';
 const checkResponse = (res) => {
 	if (res.ok) {
 		return res.json();
