@@ -23,16 +23,17 @@ function SideNavbar() {
 				<li className="side-navbar__navigation-item">
 					<Newspaper className="side-navbar__navigation-icon" />
 					<p className={`${setActiveLink} no-cursor`}>Новости</p>
+
 					{/* <NavLink className={setActiveLink} to="/news">
 						Новости
-	</NavLink> */}
+						</NavLink> */}
 				</li>
 				<li className="side-navbar__navigation-item">
 					<Users className="side-navbar__navigation-icon" />
 					<p className={`${setActiveLink} no-cursor`}>База данных</p>
 					{/* <NavLink className={setActiveLink} to="/database">
 						База данных
-</NavLink> */}
+						</NavLink> */}
 				</li>
 				<li className="side-navbar__navigation-item">
 					<Gear className="side-navbar__navigation-icon" />

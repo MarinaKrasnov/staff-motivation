@@ -1,7 +1,7 @@
 import { BASE_URL } from './constants';
 
-const token = localStorage.getItem('token');
-
+// const token = localStorage.getItem('token');
+const token = 'c0faa7cbff18fbd7a5c2bdb12ee732506405147d';
 const checkResponse = (res) => {
 	if (res.ok) {
 		return res.json();
@@ -27,25 +27,6 @@ export function signup(data) {
 		body: JSON.stringify(newData),
 	}).then(checkResponse);
 }
-// Андрей, запросы к api - логин, checkToken(если понадобится), getTocken(если понадобится) - начало
-/*
-function getToken() {
-  const token = localStorage.getItem("jwt");
-  return token;
-}
-
-export function checkToken(token) {
-	return fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${token}`, // не знаю используют ли джанго/пайтон беки Бирера
-		},
-	})
-	.then(checkResponse)
-}
-*/
-
 // вход/авторизация
 export function login(email, password) {
 	return fetch(`${BASE_URL}/api/token/login/`, {
@@ -63,7 +44,7 @@ export function changePassword(email) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: token,
+			Authorization: `Token ${token}`,
 		},
 		body: JSON.stringify(email),
 	}).then(checkResponse);
@@ -109,8 +90,11 @@ function request(url, options) {
 
 export function setPassword(data) {
 	const currentData = {
-		new_password: data.password,
-		current_password: data.confirmPassword,
+		first_name: data.firstName,
+		last_name: data.lastName,
+		password: data.password,
+		email: data.email,
+		password_confirmation: data.confirmPassword,
 	};
 	return request(`/api/users/set_password/`, {
 		method: 'POST',
@@ -130,6 +114,7 @@ export function getUsersProgress() {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Token ${token}`,
+			// Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
 		},
 	}).then(checkResponse);
 }
@@ -164,7 +149,63 @@ export function confirmTask(id, data) {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 			Authorization: `Token ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
 		body: JSON.stringify({ data }),
 	}).then(checkResponse);
 }
+
+// данные на странице профиля
+
+// Личные данные
+export function getUsersInfo() {
+	return fetch(`${BASE_URL}/api/users/me/`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+		},
+	}).then(checkResponse);
+}
+
+export function setUsersInfo(data) {
+	const currentData = [
+		{
+			contact_type: 'phone',
+			link: data.phone,
+		},
+		{
+			contact_type: 'linkedin',
+			link: data.linkedin,
+		},
+		{
+			contact_type: 'telegram',
+			link: data.telegram,
+		},
+		{
+			contact_type: 'phone',
+			link: '88125921628',
+		},
+	];
+	return fetch(`${BASE_URL}/api/users/me/`, {
+		method: 'PUTCH',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+		},
+		body: JSON.stringify({ currentData }),
+	}).then(checkResponse);
+}
+
+/*
+export function checkToken(token) {
+	return fetch(`${BASE_URL}/users/me`, {
+	method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`, // не знаю используют ли джанго/пайтон беки Бирера
+		},
+	})
+	.then(checkResponse)
+}
+*/

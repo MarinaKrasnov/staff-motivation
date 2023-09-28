@@ -1,21 +1,18 @@
-import './Main.scss';
+import './Profile.scss';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import SideNavbar from '../SideNavbar/SideNavbar';
-import MyTasks from '../MyTasks/MyTasks';
-import Achievements from '../Achievements/Achievements';
 import ModalConfirm from '../ModalConfirm/ModalConfirm';
 import ModalUpload from '../ModalUpload/ModalUpload';
 import Notifications from '../Notifications/Notifications';
-import DinamicWork from '../DinamicWork/DinamicWork';
-import {
-	getNotification,
-	getUsersProgress,
-	getUserData,
-} from '../../utils/MainApi';
+import PersonalData from '../PersonalData/PersonalData';
+import { getNotification, getUserData } from '../../utils/MainApi';
+import WorkExperience from '../WorkExperience/WorkExperience';
+import TrackRecordDiagram from '../TrackRecordDiagram/TrackRecordDiagram';
+import TrackRecord from '../TrackRecord/TrackRecord';
 
-function Main() {
+function Profile() {
 	const navigate = useNavigate();
 	// const [isOpen, setIsOpen] = useState(false);
 
@@ -23,10 +20,9 @@ function Main() {
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
 	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
+	const [profileData, setProfileData] = useState([]);
 
-	const [userProgressData, setUserProgressData] = useState([]);
-	const { department_progress, personal_progress, progress_for_deadline } =
-		userProgressData;
+	console.log(profileData);
 
 	const [userData, setUserData] = useState({
 		first_name: '',
@@ -44,10 +40,7 @@ function Main() {
 	};
 
 	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
-	const handleCloseModalConfirm = () => {
-		setIsOpenModalconfirm(false);
-		handleLogOut();
-	};
+	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
 	const handleOpenPushesModal = () => setIsPushesModal(true);
 	const handleClosePushesModal = () => setIsPushesModal(false);
 	const handleOpenUploadModal = () => setIsUploadModal(true);
@@ -58,7 +51,6 @@ function Main() {
 			try {
 				const data = await getNotification();
 				setNotificationsData(data);
-				console.log(data);
 			} catch (error) {
 				console.log('Ошибка получения данных:', error);
 			}
@@ -68,25 +60,11 @@ function Main() {
 	}, []);
 
 	useEffect(() => {
-		getUsersProgress()
-			.then((data) => {
-				setUserProgressData(data[0]);
-				console.log(data);
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				}
-				console.log(res);
-			});
-	}, [navigate]);
-
-	useEffect(() => {
 		getUserData()
 			.then((data) => {
 				if (data.length > 0) {
 					setUserData(data[0]);
-					console.log(data[0]);
+					setProfileData(data);
 				} else {
 					console.log('Ответ сервера не содержит данных пользователя.');
 				}
@@ -107,34 +85,32 @@ function Main() {
 				notificationsData={notificationsData}
 				userData={userData}
 				// onLogout={handleLogOut}
-				onExit={handleLogOut}
 			/>
 			<SideNavbar />
 			<section className="main-page__section">
-				<div className="main-page__block">
-					<Achievements progressForDeadline={progress_for_deadline} />
-					<DinamicWork
-						myDinamic={personal_progress}
-						departmentDinamic={department_progress}
-					/>
+				<div className="profile">
+					<div className="profile__data">
+						<PersonalData userData={userData} />
+						<div className="profile__sections">
+							<WorkExperience />
+							<TrackRecordDiagram />
+						</div>
+					</div>
+					<TrackRecord />
 				</div>
-				<MyTasks />
-				{isOpenModalConfirm && (
-					<ModalConfirm
-						onClose={handleCloseModalConfirm}
-						onExit={handleLogOut}
-					/>
-				)}
-				{isOpenPushesModal && (
-					<Notifications
-						onClose={handleClosePushesModal}
-						notificationsData={notificationsData}
-					/>
-				)}
-				{isUploadModal && <ModalUpload onClose={handleCloseUploadModal} />}
 			</section>
+			{isOpenModalConfirm && (
+				<ModalConfirm onClose={handleCloseModalConfirm} onExit={handleLogOut} />
+			)}
+			{isOpenPushesModal && (
+				<Notifications
+					onClose={handleClosePushesModal}
+					notificationsData={notificationsData}
+				/>
+			)}
+			{isUploadModal && <ModalUpload onClose={handleCloseUploadModal} />}
 		</main>
 	);
 }
 
-export default Main;
+export default Profile;

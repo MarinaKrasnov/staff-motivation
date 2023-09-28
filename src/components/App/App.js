@@ -6,6 +6,7 @@ import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import NewPassword from '../NewPassword/NewPassword';
 import Main from '../Main/Main';
+import Profile from '../Profile/Profile';
 import ServerError from '../ServerError/ServerError';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
@@ -60,17 +61,18 @@ function App() {
 					path="/"
 					element={
 						<ProtectedRoute
-							component={Main}
 							loggedIn={loggedIn}
 							isLoading={isLoading}
 							key={loggedIn}
-						/>
+						>
+							<Main />
+						</ProtectedRoute>
 					}
 				/>
-				{/* роут для страницы профиля */}
+				<Route path="/profile" element={<Profile />} />
 				<Route path="/signup" element={<Register />} />
 				<Route path="/new-password" element={<NewPassword />} />
-				<Route path="/signin" element={<Login />} />
+				<Route path="/signin" element={<Login setLoggedIn={setLoggedIn} />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				<Route path="/server-error" element={<ServerError />} />
 				{/* роут для ошибки 404 */}
