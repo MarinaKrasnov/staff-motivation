@@ -24,6 +24,12 @@ function Main() {
 	const { department_progress, personal_progress, progress_for_deadline } =
 		userProgressData;
 
+	const handleLogOut = () => {
+		setIsOpenModalconfirm(false);
+		localStorage.clear();
+		navigate('/signin');
+	};
+
 	const handleOpenModalConfirm = () => setIsOpenModalconfirm(true);
 	const handleCloseModalConfirm = () => setIsOpenModalconfirm(false);
 	const handleOpenPushesModal = () => setIsPushesModal(true);
@@ -59,12 +65,7 @@ function Main() {
 			});
 	}, [navigate]);
 
-	/* const handleLogOut = () => {
-		setIsOpen(true);
-		localStorage.clear();
-		navigate('/signin');
-	};
-	const handleClose = () => setIsOpen(false); */
+	// const handleClose = () => setIsOpen(false); */
 
 	return (
 		<main className="main-page">
@@ -73,7 +74,7 @@ function Main() {
 				handleOpenPushesModal={handleOpenPushesModal}
 				handleOpenUploadModal={handleOpenUploadModal}
 				notificationsData={notificationsData}
-				// onLogout={handleLogOut}
+				onExit={handleLogOut}
 			/>
 			<SideNavbar />
 			<section className="main-page__section">
@@ -86,7 +87,10 @@ function Main() {
 				</div>
 				<MyTasks />
 				{isOpenModalConfirm && (
-					<ModalConfirm onClose={handleCloseModalConfirm} />
+					<ModalConfirm
+						onClose={handleCloseModalConfirm}
+						onExit={handleLogOut}
+					/>
 				)}
 				{isOpenPushesModal && (
 					<Notifications
