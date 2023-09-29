@@ -37,6 +37,22 @@ function Main() {
 		rating: '',
 	});
 
+	useEffect(() => {
+		const isFirstVisit = localStorage.getItem('isFirstVisit');
+		if (!isFirstVisit) {
+			localStorage.setItem('isFirstVisit', 'true');
+			window.location.reload();
+		}
+	}, []);
+
+	useEffect(() => {
+		const isFirstVisit = localStorage.getItem('isFirstVisit');
+		if (!isFirstVisit) {
+			localStorage.setItem('isFirstVisit', 'true');
+			window.location.reload();
+		}
+	}, []);
+
 	const handleLogOut = () => {
 		setIsOpenModalconfirm(false);
 		localStorage.clear();

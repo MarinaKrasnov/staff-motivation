@@ -16,8 +16,8 @@ function TrackRecordDiagram() {
 					alt="диаграмма достижений"
 				/>
 				<div className="section__diagram-caption">
-					<p className="section__text">Заданий выполнено: 4</p>
-					<p className="section__text">Осталось до выполнения плана: 2</p>
+					<p className="section__text">Заданий выполнено: 23</p>
+					<p className="section__text">Осталось до выполнения плана: 27</p>
 				</div>
 			</div>
 		</section>

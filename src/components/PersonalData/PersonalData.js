@@ -11,6 +11,7 @@ function PersonalData({ userData }) {
 
 	const profile = {
 		level: 'Middle',
+		department: 'Определяется',
 	};
 
 	function getInfo() {
@@ -76,8 +77,12 @@ function PersonalData({ userData }) {
 					/>
 				)}
 				<h1 className="personal-data__name">{fullName}</h1>
-				<p className="personal-data__job">{userData.role}</p>
-				<p className="personal-data__department">{userData.department}</p>
+				<p className="personal-data__job">{userData.role || ' '}</p>
+				<p className="personal-data__department">
+					{userData.department === null
+						? userData.department
+						: profile.department}
+				</p>
 				<p className="personal-data__level">{`Уровень: ${
 					userData.position || profile.level
 				}`}</p>

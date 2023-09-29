@@ -1,6 +1,9 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { Route, Routes /* useLocation, useNavigate */ } from 'react-router-dom';
+import {
+	Route,
+	Routes /* useHistory, useLocation, useNavigate */,
+} from 'react-router-dom';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ResetPassword from '../ResetPassword/ResetPassword';
@@ -11,8 +14,11 @@ import ServerError from '../ServerError/ServerError';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
+	// const location = useLocation();
+
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+
 	// const [isCheckboxPressed, setCheckboxPressed] = useState(false)
 
 	/* function removeToken() {
@@ -28,7 +34,7 @@ function App() {
 		if (token) {
 			setLoggedIn(!!token);
 		}
-	}, [loggedIn, token, isLoading]);
+	}, [token]);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -37,22 +43,22 @@ function App() {
 	}, []);
 
 	/* проверка токена будет производиться сразу после загрузки приложения
-	useEffect(() => {
-		const jwt = localStorage.getItem('jwt');
-		if (jwt) {
-		  checkToken(jwt)
-			.then((res) => {
-			  if (res) {
-				setLoggedIn(true);
-			  }
-			  console.log('token is OK')
-			}).catch((res) => {
-			  setIsPopupErrorOpen(true)
-			  setPopupError('При проверке токена произошла ошибка')
-			  console.log('token is not OK ', res)
-			})
-		}
-	  }, [loggedIn]) */
+		useEffect(() => {
+			const jwt = localStorage.getItem('jwt');
+			if (jwt) {
+			  checkToken(jwt)
+				.then((res) => {
+				  if (res) {
+					setLoggedIn(true);
+				  }
+				  console.log('token is OK')
+				}).catch((res) => {
+				  setIsPopupErrorOpen(true)
+				  setPopupError('При проверке токена произошла ошибка')
+				  console.log('token is not OK ', res)
+				})
+			}
+		  }, [loggedIn]) */
 
 	return (
 		<div className="App">

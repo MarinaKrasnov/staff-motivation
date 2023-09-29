@@ -99,7 +99,6 @@ function Header({
 export default Header;
 
 Header.propTypes = {
-	userData: PropTypes.node,
 	handleOpenModalConfirm: PropTypes.func.isRequired,
 	handleOpenPushesModal: PropTypes.func.isRequired,
 	// handleOpenUploadModal: PropTypes.func.isRequired,
@@ -112,6 +111,7 @@ Header.propTypes = {
 			user: PropTypes.number.isRequired,
 		})
 	).isRequired,
+	userData: PropTypes.node,
 };
 
 Header.defaultProps = {
