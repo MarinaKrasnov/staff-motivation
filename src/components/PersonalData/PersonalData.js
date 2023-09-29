@@ -9,6 +9,8 @@ function PersonalData({ userData }) {
 	const [personalData, setPersonalData] = useState([]);
 	const [contacts, setContacts] = useState([]);
 
+	console.log(contacts);
+
 	const profile = {
 		level: 'Middle',
 		department: 'Определяется',
@@ -17,7 +19,7 @@ function PersonalData({ userData }) {
 	function getInfo() {
 		getUsersInfo()
 			.then((data) => {
-				setContacts(data.contacts);
+				setContacts(data);
 				setPersonalData(data);
 			})
 			.catch((err) => {
@@ -189,7 +191,7 @@ function PersonalData({ userData }) {
 					<button
 						className="personal-data__submit-button personal-data__submit-button_dont-save"
 						type="button"
-						// onClick={getInfo}
+						onClick={getInfo}
 					>
 						Не сохранять
 					</button>

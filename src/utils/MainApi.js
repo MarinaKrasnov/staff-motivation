@@ -143,6 +143,7 @@ export function getTaskInfo(id) {
 }
 
 export function confirmTask(id, data) {
+	console.log(data);
 	return fetch(`${BASE_URL}/api/tasks/${id}/send_for_review/`, {
 		method: 'POST',
 		headers: {

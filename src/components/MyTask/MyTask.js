@@ -24,7 +24,7 @@ function MyTask({ task, onClick }) {
 	}, [status]);
 
 	useEffect(() => {
-		if (status === 'is_overdue') {
+		if (status === 'Просрочена') {
 			setTitleClassName('mytask__title mytask__title-missed');
 			setStatusClassName('mytask__status mytask__status-missed');
 			setBallsClassName('mytask__score mytask__score-missed');
@@ -33,7 +33,7 @@ function MyTask({ task, onClick }) {
 	}, [status]);
 
 	useEffect(() => {
-		if (status === 'approve') {
+		if (status === 'Принята и выполнена') {
 			setStatusClassName('mytask__status mytask__status-prove');
 			setBallsClassName('mytask__score mytask__score-done');
 			setTitleClassName('mytask__title mytask__title-done');
@@ -56,7 +56,7 @@ function MyTask({ task, onClick }) {
 	}, [status]);
 
 	useEffect(() => {
-		if (status === 'rejected') {
+		if (status === 'reject') {
 			setStatusName('на доработке');
 		}
 	}, [status]);
