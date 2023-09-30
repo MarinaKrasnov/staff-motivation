@@ -10,7 +10,7 @@ export default function Achievements({ progressForDeadline }) {
 	const workScore = 30; // временно
 	const deadlineScore = 45;
 	const isLastDayOfMonth = new Date().getDate() === lastDayOfMonth;
-
+	console.log(progressForDeadline);
 	const [isAchieveDeadline, setAchieveDedline] = useState(false);
 
 	useEffect(() => {
@@ -58,9 +58,9 @@ export default function Achievements({ progressForDeadline }) {
 						) : null}
 						<p className="achievements__score">{`+${deadlineScore} Б`}</p>
 					</div>
-					{isAchieveDeadline ? (
+					{isAchieveDeadline && progressForDeadline > 0 ? (
 						<p className="achievements__completion">
-							Будет начислено в конце отчётного периода
+							Начислено в конце отчётного периода
 						</p>
 					) : (
 						<p className="achievements__completion">{`Выполнено на: ${progressForDeadline}%`}</p>
