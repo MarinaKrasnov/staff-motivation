@@ -49,7 +49,7 @@ export default function Achievements({ progressForDeadline }) {
 				<li className="achievements__achieve">
 					<p className="achievements__name">Соблюдение дедлайна</p>
 					<div className="achievements__score-container">
-						{isAchieveDeadline ? (
+						{isAchieveDeadline && progressForDeadline ? (
 							<img
 								className="achievements__logo"
 								src={achieveLogo}
