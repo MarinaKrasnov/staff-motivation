@@ -2,6 +2,7 @@ import { BASE_URL } from './constants';
 
 const token = localStorage.getItem('token');
 // const token = 'c0faa7cbff18fbd7a5c2bdb12ee732506405147d';
+
 const checkResponse = (res) => {
 	if (res.ok) {
 		return res.json();
@@ -9,47 +10,7 @@ const checkResponse = (res) => {
 	return Promise.reject(res.status);
 };
 
-// регистрация
-export function signup(data) {
-	const newData = {
-		first_name: data.firstName,
-		last_name: data.lastName,
-		password: data.password,
-		email: data.email,
-		password_confirmation: data.confirmPassword,
-	};
-	return fetch(`${BASE_URL}/api/users/`, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(newData),
-	}).then(checkResponse);
-}
-// вход/авторизация
-export function login(email, password) {
-	return fetch(`${BASE_URL}/api/token/login/`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({ email, password }),
-	}).then(checkResponse);
-}
-
-// запрос на смену пароля
-export function changePassword(email) {
-	return fetch(`${BASE_URL}/api/users/reset_password/`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Token ${token}`,
-		},
-		body: JSON.stringify(email),
-	}).then(checkResponse);
-}
-
+// Header
 export function getUserData() {
 	// const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/curent_user_info/`, {
@@ -76,38 +37,7 @@ export function getNotification() {
 	}).then(checkResponse);
 }
 
-// новый пароль
-const getResponseData = (response) => {
-	if (!response.ok) {
-		return Promise.reject(response.status);
-	}
-	return response.json();
-};
-
-function request(url, options) {
-	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
-}
-
-export function setPassword(data) {
-	const currentData = {
-		first_name: data.firstName,
-		last_name: data.lastName,
-		password: data.password,
-		email: data.email,
-		password_confirmation: data.confirmPassword,
-	};
-	return request(`/api/users/set_password/`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Token ${token}`,
-		},
-		body: JSON.stringify({ currentData }),
-	});
-}
-
 // Главная страница
-
 export function getUsersProgress() {
 	return fetch(`${BASE_URL}/api/progress/users/`, {
 		method: 'GET',
@@ -118,8 +48,8 @@ export function getUsersProgress() {
 		},
 	}).then(checkResponse);
 }
-// блок 'Мои задачи'
 
+// блок 'Мои задачи'
 export function getTasks() {
 	return fetch(`${BASE_URL}/api/tasks/`, {
 		method: 'GET',
@@ -155,7 +85,7 @@ export function confirmTask(id, data) {
 	}).then(checkResponse);
 }
 
-// данные на странице профиля
+// Profile
 
 // Личные данные
 export function getUsersInfo() {
@@ -195,6 +125,78 @@ export function setUsersInfo(data) {
 		},
 		body: JSON.stringify({ currentData }),
 	}).then(checkResponse);
+}
+
+// регистрация
+export function signup(data) {
+	const newData = {
+		first_name: data.firstName,
+		last_name: data.lastName,
+		password: data.password,
+		email: data.email,
+		password_confirmation: data.confirmPassword,
+	};
+	return fetch(`${BASE_URL}/api/users/`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(newData),
+	}).then(checkResponse);
+}
+
+// вход/авторизация
+export function login(email, password) {
+	return fetch(`${BASE_URL}/api/token/login/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ email, password }),
+	}).then(checkResponse);
+}
+
+// запрос на смену пароля
+export function changePassword(email) {
+	return fetch(`${BASE_URL}/api/users/reset_password/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+		},
+		body: JSON.stringify(email),
+	}).then(checkResponse);
+}
+
+// новый пароль
+const getResponseData = (response) => {
+	if (!response.ok) {
+		return Promise.reject(response.status);
+	}
+	return response.json();
+};
+
+function request(url, options) {
+	return fetch(`${BASE_URL}${url}`, options).then(getResponseData);
+}
+
+export function setPassword(data) {
+	const currentData = {
+		first_name: data.firstName,
+		last_name: data.lastName,
+		password: data.password,
+		email: data.email,
+		password_confirmation: data.confirmPassword,
+	};
+	return request(`/api/users/set_password/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+		},
+		body: JSON.stringify({ currentData }),
+	});
 }
 
 /*

@@ -1,43 +1,11 @@
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import './PersonalData.scss';
 import chagePhoto from '../../images/change-photo.svg';
 import { getUsersInfo, setUsersInfo } from '../../utils/MainApi';
 
-function PersonalData({ userData }) {
-	const [personalData, setPersonalData] = useState([]);
-	const [contacts, setContacts] = useState([]);
-
-	const profile = {
-		level: 'Middle',
-		department: 'Определяется',
-	};
-
-	function getInfo() {
-		getUsersInfo()
-			.then((data) => {
-				setContacts(data.contacts);
-				setPersonalData(data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
-
-	useEffect(() => {
-		getInfo();
-	}, []);
-
-	const firstNameInitial = userData.first_name
-		? userData.first_name.charAt(0).toUpperCase()
-		: '';
-	const lastNameInitial = userData.last_name
-		? userData.last_name.charAt(0).toUpperCase()
-		: '';
-	const initials = `${firstNameInitial}${lastNameInitial}`;
-	const fullName = `${userData.first_name} ${userData.last_name}`;
-
+function PersonalData() {
 	const {
 		register,
 		handleSubmit,
@@ -48,6 +16,38 @@ function PersonalData({ userData }) {
 		mode: 'onTouched',
 		// resolver: yupResolver(LoginSchema),
 	});
+
+	const navigate = useNavigate();
+
+	const [personalData, setPersonalData] = useState([]);
+	const [contacts, setContacts] = useState([]);
+
+	useEffect(() => {
+		getUsersInfo()
+			.then((data) => {
+				if (data.length > 0) {
+					setContacts(data.contacts);
+					setPersonalData(data);
+				} else {
+					console.log('Ответ сервера не содержит данных пользователя.');
+				}
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				}
+				console.log(res);
+			});
+	}, [navigate]);
+
+	const firstNameInitial = personalData.first_name
+		? personalData.first_name.charAt(0).toUpperCase()
+		: '';
+	const lastNameInitial = personalData.last_name
+		? personalData.last_name.charAt(0).toUpperCase()
+		: '';
+	const initials = `${firstNameInitial}${lastNameInitial}`;
+	const fullName = `${personalData.first_name} ${personalData.last_name}`;
 
 	function handlePersonalData(data) {
 		setUsersInfo(data)
@@ -67,25 +67,19 @@ function PersonalData({ userData }) {
 	return (
 		<section className="personal-data">
 			<div className="personal-data__photo-container">
-				{userData.image === null ? (
+				{personalData.image === null ? (
 					<div className="personal-data__plug">{initials}</div>
 				) : (
 					<img
 						className="personal-data__photo"
-						src={userData.photo || null}
+						src={personalData.photo || null}
 						alt="Фотография сотрудника"
 					/>
 				)}
 				<h1 className="personal-data__name">{fullName}</h1>
-				<p className="personal-data__job">{userData.role || ' '}</p>
-				<p className="personal-data__department">
-					{userData.department === null
-						? userData.department
-						: profile.department}
-				</p>
-				<p className="personal-data__level">{`Уровень: ${
-					userData.position || profile.level
-				}`}</p>
+				<p className="personal-data__job">{personalData.role || ' '}</p>
+				<p className="personal-data__department">{personalData.department}</p>
+				<p className="personal-data__level">{`Уровень: ${personalData.position}`}</p>
 				<button className="personal-data__change-photo-button" type="button">
 					<img
 						className="personal-data__change-photo-logo"
@@ -198,12 +192,5 @@ function PersonalData({ userData }) {
 		</section>
 	);
 }
-
-PersonalData.propTypes = {
-	userData: PropTypes.node,
-};
-PersonalData.defaultProps = {
-	userData: null,
-};
 
 export default PersonalData;

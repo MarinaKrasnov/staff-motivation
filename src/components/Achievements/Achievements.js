@@ -10,7 +10,6 @@ export default function Achievements({ progressForDeadline }) {
 	const workScore = 30; // временно
 	const deadlineScore = 45;
 	const isLastDayOfMonth = new Date().getDate() === lastDayOfMonth;
-	console.log(progressForDeadline);
 	const [isAchieveDeadline, setAchieveDedline] = useState(false);
 
 	useEffect(() => {
