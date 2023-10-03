@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../Modal/Modal';
+import Modal from '../App/Modal/Modal';
 import ClaudSlash from '../../images/CloudSlash.svg';
-import styles from '../Modal/Modal.module.scss';
+import styles from '../App/Modal/Modal.module.scss';
 
 function ServerError() {
 	return (

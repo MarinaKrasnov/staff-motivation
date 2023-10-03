@@ -2,8 +2,8 @@ import './MyTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyTask from '../MyTask/MyTask';
-import iconFilter from '../../images/SortAscending.png';
-import { getTasks, getTaskInfo, confirmTask } from '../../utils/MainApi';
+import iconFilter from '../../../images/SortAscending.png';
+import { getTasks, getTaskInfo, confirmTask } from '../../../utils/MainApi';
 
 function MyTasks() {
 	const navigate = useNavigate();

@@ -1,11 +1,11 @@
 import './TrackRecord.scss';
 import React from 'react';
-import master from '../../images/profile/image 25.jpg';
-import hands from '../../images/profile/image 26.jpg';
-import darts from '../../images/profile/Image.jpg';
-import rocket from '../../images/profile/image 32.svg';
-import list from '../../images/profile/image 31.jpg';
-import arrow from '../../images/profile/image 30.jpg';
+import master from '../../../images/profile/image 25.jpg';
+import hands from '../../../images/profile/image 26.jpg';
+import darts from '../../../images/profile/Image.jpg';
+import rocket from '../../../images/profile/image 32.svg';
+import list from '../../../images/profile/image 31.jpg';
+import arrow from '../../../images/profile/image 30.jpg';
 
 function TrackRecord() {
 	return (

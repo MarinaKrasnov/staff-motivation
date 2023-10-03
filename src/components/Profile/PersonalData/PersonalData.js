@@ -2,8 +2,9 @@ import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PersonalData.scss';
-import chagePhoto from '../../images/change-photo.svg';
-import { getUsersInfo, setUsersInfo } from '../../utils/MainApi';
+import chagePhoto from '../../../images/change-photo.svg';
+import { getUsersInfo, setUsersInfo } from '../../../utils/MainApi';
+// import photoProfile from '../../images/plug.svg';
 
 function PersonalData() {
 	const {
@@ -25,12 +26,8 @@ function PersonalData() {
 	useEffect(() => {
 		getUsersInfo()
 			.then((data) => {
-				if (data.length > 0) {
-					setContacts(data.contacts);
-					setPersonalData(data);
-				} else {
-					console.log('Ответ сервера не содержит данных пользователя.');
-				}
+				setContacts(data.contacts);
+				setPersonalData(data);
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -67,14 +64,14 @@ function PersonalData() {
 	return (
 		<section className="personal-data">
 			<div className="personal-data__photo-container">
-				{personalData.image === null ? (
-					<div className="personal-data__plug">{initials}</div>
-				) : (
+				{personalData.image ? (
 					<img
 						className="personal-data__photo"
-						src={personalData.photo || null}
+						src={personalData.image}
 						alt="Фотография сотрудника"
 					/>
+				) : (
+					<div className="personal-data__plug">{initials}</div>
 				)}
 				<h1 className="personal-data__name">{fullName}</h1>
 				<p className="personal-data__job">{personalData.role || ' '}</p>

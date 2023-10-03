@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import './ModalUpload.scss';
 import { React, useEffect } from 'react';
-import folder from '../../images/folder.svg';
+import folder from '../../../images/folder.svg';
 
 function ModalUpload({ onClose }) {
 	const handleEscClose = (event) => {

@@ -9,8 +9,8 @@ import { ERROR_MESSAGES } from '../../utils/Config';
 import logoActivation from '../../images/CircleWavyCheck.svg';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
-import Modal from '../Modal/Modal';
-import styles from '../Modal/Modal.module.scss';
+import Modal from '../App/Modal/Modal';
+import styles from '../App/Modal/Modal.module.scss';
 
 function Register() {
 	// поменяй  false на true, что бы посмтореть на модалку

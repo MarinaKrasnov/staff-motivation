@@ -1,7 +1,7 @@
 import './Achievements.scss';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import achieveLogo from '../../images/achieve-mark.svg';
+import achieveLogo from '../../../images/achieve-mark.svg';
 
 export default function Achievements({ progressForDeadline }) {
 	const currentMonth = new Date().getMonth();

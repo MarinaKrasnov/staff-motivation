@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Header.scss';
-import photoProfile from '../../images/plug.svg';
+import photoProfile from '../../../images/plug.svg';
 
 function Header({
 	notificationsData,
@@ -10,7 +10,6 @@ function Header({
 	userData,
 	// handleOpenUploadModal, // временное решение
 }) {
-	console.log(userData);
 	// const [pushes, setPushes] = useState([]);
 	const pushesCount = notificationsData.length;
 
@@ -22,7 +21,6 @@ function Header({
 		: '';
 	const initials = `${firstNameInitial}${lastNameInitial}`;
 	const fullName = `${userData.first_name} ${userData.last_name}`;
-
 	// анимация тени хедера при скролле
 	useEffect(() => {
 		const headerContainer = document.querySelector('.header');
@@ -47,7 +45,7 @@ function Header({
 					) : (
 						<img
 							className="header__photo"
-							src={userData.photo || photoProfile}
+							src={userData.image || photoProfile}
 							alt="Фотография сотрудника"
 						/>
 					)}
@@ -111,16 +109,25 @@ Header.propTypes = {
 			user: PropTypes.number.isRequired,
 		})
 	).isRequired,
-	userData: PropTypes.node,
+	userData: PropTypes.shape({
+		first_name: PropTypes.string,
+		last_name: PropTypes.string,
+		image: PropTypes.string,
+		department: PropTypes.string,
+		reward_points_for_current_month: PropTypes.number,
+		reward_points: PropTypes.number,
+		rating: PropTypes.number,
+	}),
 };
 
 Header.defaultProps = {
 	userData: {
-		first_name: '',
-		last_name: '',
-		image: '',
-		reward_points_for_current_month: '0',
-		reward_points: '',
-		rating: '',
+		first_name: 'Имя',
+		last_name: 'Фамилия',
+		image: { photoProfile },
+		department: 'Опредляется',
+		reward_points_for_current_month: 0,
+		reward_points: 0,
+		rating: 0,
 	},
 };

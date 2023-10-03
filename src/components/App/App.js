@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Register from '../Register/Register';
@@ -9,11 +9,12 @@ import Main from '../Main/Main';
 import Profile from '../Profile/Profile';
 import ServerError from '../ServerError/ServerError';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import Header from '../Header/Header';
-import SideNavbar from '../SideNavbar/SideNavbar';
-import ModalConfirm from '../ModalConfirm/ModalConfirm';
-import ModalUpload from '../ModalUpload/ModalUpload';
-import Notifications from '../Notifications/Notifications';
+import Header from './Header/Header';
+import SideNavbar from './SideNavbar/SideNavbar';
+import ModalConfirm from './ModalConfirm/ModalConfirm';
+import ModalUpload from './ModalUpload/ModalUpload';
+import Notifications from './Header/Notifications/Notifications';
+import Teamleader from '../Teamleader/TeamleadTasks/TeamleadTasks';
 import { getUserData, getNotification } from '../../utils/MainApi';
 
 function App() {
@@ -138,6 +139,27 @@ function App() {
 							/>
 							<SideNavbar />
 							<Profile />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/teamleader"
+					element={
+						<ProtectedRoute
+							loggedIn={loggedIn}
+							isLoading={isLoading}
+							key={loggedIn}
+						>
+							<Header
+								handleOpenModalConfirm={handleOpenModalConfirm}
+								handleOpenPushesModal={handleOpenPushesModal}
+								handleOpenUploadModal={handleOpenUploadModal}
+								notificationsData={notificationsData}
+								userData={userData}
+								onExit={handleLogOut}
+							/>
+							<SideNavbar />
+							<Teamleader />
 						</ProtectedRoute>
 					}
 				/>

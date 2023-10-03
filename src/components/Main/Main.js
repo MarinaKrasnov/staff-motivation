@@ -1,9 +1,9 @@
 import './Main.scss';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyTasks from '../MyTasks/MyTasks';
-import Achievements from '../Achievements/Achievements';
-import DinamicWork from '../DinamicWork/DinamicWork';
+import MyTasks from './MyTasks/MyTasks';
+import Achievements from './Achievements/Achievements';
+import DinamicWork from './DinamicWork/DinamicWork';
 import { getUsersProgress } from '../../utils/MainApi';
 
 function Main() {

@@ -1,9 +1,9 @@
 import './Profile.scss';
 import React from 'react';
-import PersonalData from '../PersonalData/PersonalData';
-import WorkExperience from '../WorkExperience/WorkExperience';
-import TrackRecordDiagram from '../TrackRecordDiagram/TrackRecordDiagram';
-import TrackRecord from '../TrackRecord/TrackRecord';
+import PersonalData from './PersonalData/PersonalData';
+import WorkExperience from './WorkExperience/WorkExperience';
+import TrackRecordDiagram from './TrackRecordDiagram/TrackRecordDiagram';
+import TrackRecord from './TrackRecord/TrackRecord';
 
 function Profile() {
 	return (

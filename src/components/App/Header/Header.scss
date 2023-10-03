@@ -56,7 +56,7 @@
 		&::before {
 			content: '';
 			position: absolute;
-			background-image: url('../../images/M-check.svg');
+			background-image: url('../../../images/M-check.svg');
 			background-repeat: no-repeat;
 			background-size: 28px 28px;
 			z-index: 3;
@@ -194,7 +194,7 @@
 	}
 
 	&__bell-btn {
-		background-image: url('../../images/bell-icon.svg');
+		background-image: url('../../../images/bell-icon.svg');
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 28px 28px;
@@ -230,7 +230,7 @@
 	}
 
 	&__exit-btn {
-		background-image: url('../../images/exit-icon.svg');
+		background-image: url('../../../images/exit-icon.svg');
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 28px 28px;

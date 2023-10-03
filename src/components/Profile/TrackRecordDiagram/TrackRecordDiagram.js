@@ -1,6 +1,6 @@
 import './TrackRecordDiagram.scss';
 import React from 'react';
-import diagram from '../../images/profile/Loader 8.png';
+import diagram from '../../../images/profile/Loader 8.png';
 
 function TrackRecordDiagram() {
 	return (

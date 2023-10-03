@@ -1,10 +1,11 @@
 import React from 'react';
 import './SideNavbar.scss';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as Newspaper } from '../../images/Newspaper.svg';
-import { ReactComponent as House } from '../../images/House.svg';
-import { ReactComponent as Users } from '../../images/Users.svg';
-import { ReactComponent as Gear } from '../../images/GearSix.svg';
+import { ReactComponent as Newspaper } from '../../../images/Newspaper.svg';
+import { ReactComponent as House } from '../../../images/House.svg';
+import { ReactComponent as Users } from '../../../images/Users.svg';
+import { ReactComponent as Gear } from '../../../images/GearSix.svg';
+import { ReactComponent as Tasks } from '../../../images/Tasks.svg';
 
 function SideNavbar() {
 	const setActiveLink = ({ isActive }) =>
@@ -34,6 +35,12 @@ function SideNavbar() {
 					{/* <NavLink className={setActiveLink} to="/database">
 						База данных
 						</NavLink> */}
+				</li>
+				<li className="side-navbar__navigation-item">
+					<Tasks className="side-navbar__navigation-icon" />
+					<NavLink className={setActiveLink} to="/teamleader">
+						Задачи
+					</NavLink>
 				</li>
 				<li className="side-navbar__navigation-item">
 					<Gear className="side-navbar__navigation-icon" />

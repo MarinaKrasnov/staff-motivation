@@ -9,9 +9,9 @@ import { ResetPasswordSchema } from '../../utils/ValidationSchemes';
 import { changePassword } from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
 import logo from '../../images/M-check.svg';
-import Modal from '../Modal/Modal';
+import Modal from '../App/Modal/Modal';
 import logo1 from '../../images/CircleWavyCheck.svg';
-import styles from '../Modal/Modal.module.scss';
+import styles from '../App/Modal/Modal.module.scss';
 
 export default function ResetPassword() {
 	// поменяй  false на true, что бы посмтореть на модалку
