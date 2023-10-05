@@ -7,12 +7,15 @@ import { tasksList } from '../../../utils/constants';
 
 // import CaretUp from '../../..';
 
-import { getTasks, getTaskInfo, confirmTask } from '../../../utils/MainApi';
+import {
+	/* getTasks, */ getTaskInfo,
+	confirmTask,
+} from '../../../utils/MainApi';
 
 function TeamleadTasks() {
 	const navigate = useNavigate();
 
-	const [tasksArray, setTasksArray] = useState([]);
+	const [tasksArray, setTasksArray] = useState(tasksList);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
 	const [activeTasksButton, setActiveTaskstButton] = useState(false);
@@ -40,20 +43,22 @@ function TeamleadTasks() {
 		options
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
-	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
+	// const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
-	const marketingItems = tasksList.filter(
+	const marketingItems = tasksArray.filter(
 		(item) => item.department === 'Маркетинг'
 	);
-	const backendItems = tasksList.filter((item) => item.department === 'Бэкенд');
-	const frontendItems = tasksList.filter(
+	const backendItems = tasksArray.filter(
+		(item) => item.department === 'Бэкенд'
+	);
+	const frontendItems = tasksArray.filter(
 		(item) => item.department === 'Фронтенд'
 	);
-	const designItems = tasksList.filter(
+	const designItems = tasksArray.filter(
 		(item) => item.department === 'UX/UI дизайн'
 	);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		getTasks()
 			.then((data) => {
 				const sort = data.tasks.sort(
@@ -69,7 +74,7 @@ function TeamleadTasks() {
 					setTasksArray([]);
 				}
 			});
-	}, [navigate]);
+	}, [navigate]); */
 
 	useEffect(() => {
 		if (status === 'created') {
@@ -94,7 +99,7 @@ function TeamleadTasks() {
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
-		setTasksArray(storagedArray);
+		setTasksArray(tasksList);
 	}
 
 	function handleActiveTasksSort() {
@@ -102,7 +107,7 @@ function TeamleadTasks() {
 		setActiveTaskstButton(true);
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
-		const filteredTasks = storagedArray.filter(
+		const filteredTasks = tasksList.filter(
 			(task) => task.status === 'created' || task.status === 'rejected'
 		);
 		setTasksArray(filteredTasks);
@@ -113,7 +118,7 @@ function TeamleadTasks() {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		setTimeOutTasksButton(false);
-		const filteredTasks = storagedArray.filter(
+		const filteredTasks = tasksList.filter(
 			(task) => task.status === 'sent_for_review'
 		);
 		setTasksArray(filteredTasks);
@@ -124,7 +129,7 @@ function TeamleadTasks() {
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
-		const filteredTasks = storagedArray.filter(
+		const filteredTasks = tasksList.filter(
 			(task) => task.status === 'is_overdue'
 		);
 		setTasksArray(filteredTasks);

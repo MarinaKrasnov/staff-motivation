@@ -39,23 +39,26 @@ function App() {
 	});
 
 	useEffect(() => {
-		getUserData()
-			.then((data) => {
-				if (data.length > 0) {
-					setUserData(data[0]);
-				} else {
-					console.log('Ответ сервера не содержит данных пользователя.');
-				}
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				}
-				console.log(res);
-			});
-	}, [navigate]);
+		if (loggedIn) {
+			getUserData()
+				.then((data) => {
+					if (data.length > 0) {
+						setUserData(data[0]);
+					} else {
+						console.log('Ответ сервера не содержит данных пользователя.');
+					}
+				})
+				.catch((res) => {
+					if (res === 500) {
+						navigate('/server-error');
+					}
+					console.log(res);
+				});
+		}
+	}, [navigate, loggedIn]);
 
 	const handleLogOut = () => {
+		setLoggedIn(false);
 		setIsOpenModalconfirm(false);
 		localStorage.clear();
 		navigate('/signin');
@@ -83,19 +86,21 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const data = await getNotification();
-				setNotificationsData(data);
-			} catch (res) {
-				if (res === 500) {
-					navigate('/server-error');
+		if (loggedIn) {
+			const fetchData = async () => {
+				try {
+					const data = await getNotification();
+					setNotificationsData(data);
+				} catch (res) {
+					if (res === 500) {
+						navigate('/server-error');
+					}
+					console.log(res);
 				}
-				console.log(res);
-			}
-		};
-		fetchData();
-	}, [navigate]);
+			};
+			fetchData();
+		}
+	}, [navigate, loggedIn]);
 
 	return (
 		<div className="App">
