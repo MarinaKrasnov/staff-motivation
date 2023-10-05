@@ -14,6 +14,14 @@ function Main() {
 		userProgressData;
 
 	useEffect(() => {
+		const isFirstVisit = localStorage.getItem('isFirstVisit');
+		if (!isFirstVisit) {
+			localStorage.setItem('isFirstVisit', 'true');
+			window.location.reload();
+		}
+	}, []);
+
+	useEffect(() => {
 		getUsersProgress()
 			.then((data) => {
 				setUserProgressData(data[0]);

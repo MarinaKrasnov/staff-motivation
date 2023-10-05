@@ -15,7 +15,6 @@ function DepartmentTask({ task, onClick }) {
 	const [statusClassName, setStatusClassName] = useState('mytask__status');
 	const [deadlineData, setDeadlieneData] = useState(formattedDate);
 	const [dataClass, setDataClass] = useState('mytask__data');
-	const [disablePopup, setDisablePopup] = useState(false);
 
 	useEffect(() => {
 		if (status === 'created') {
@@ -38,7 +37,6 @@ function DepartmentTask({ task, onClick }) {
 			setStatusName('подтверждено');
 			setDeadlieneData(`Выполнено`);
 			setDataClass('mytask__data mytask__data-done');
-			setDisablePopup(true);
 		}
 	}, [status]);
 
@@ -56,7 +54,6 @@ function DepartmentTask({ task, onClick }) {
 			);
 			setDeadlieneData(`Выполнено`);
 			setTitleClassName('mytask__title mytask__title-done');
-			setDisablePopup(true);
 		}
 	}, [status]);
 
@@ -68,8 +65,8 @@ function DepartmentTask({ task, onClick }) {
 
 	return (
 		<div
-			className={!disablePopup ? 'mytask' : 'mytask__no-hover'}
-			onClick={() => onClick(id, disablePopup)}
+			className="mytask department-task__no-hover"
+			onClick={() => onClick(id)}
 			role="button"
 			tabIndex={0}
 			onKeyDown={null}

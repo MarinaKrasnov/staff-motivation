@@ -6,4 +6,9 @@
 		margin: 0;
 		color: #525c76;
 	}
+	&__no-hover {
+		&:hover {
+			background-color: inherit;
+		}
+	}
 }
