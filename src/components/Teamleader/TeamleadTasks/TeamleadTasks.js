@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import iconFilter from '../../../images/SortAscending.png';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
+import { tasksList } from '../../../utils/constants';
+
 // import CaretUp from '../../..';
 
 import { getTasks, getTaskInfo, confirmTask } from '../../../utils/MainApi';
@@ -39,6 +41,17 @@ function TeamleadTasks() {
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
+
+	const marketingItems = tasksList.filter(
+		(item) => item.department === 'Маркетинг'
+	);
+	const backendItems = tasksList.filter((item) => item.department === 'Бэкенд');
+	const frontendItems = tasksList.filter(
+		(item) => item.department === 'Фронтенд'
+	);
+	const designItems = tasksList.filter(
+		(item) => item.department === 'UX/UI дизайн'
+	);
 
 	useEffect(() => {
 		getTasks()
@@ -195,7 +208,7 @@ function TeamleadTasks() {
 	return (
 		<section className="main-page__section">
 			<div className="teamlead-tasks">
-				<h2 className="tasks__title">Задания</h2>
+				<h2 className="tasks__title">Управление задачами</h2>
 				<nav className="tasks__nav">
 					<button
 						className={
@@ -238,26 +251,38 @@ function TeamleadTasks() {
 					>
 						Просроченные
 					</button>
+					<button className="tasks__filter" onClick={handleDeadlineSort}>
+						<div className="tasks__filter-title">
+							Сортировать по дате дедлайна
+						</div>
+						<img
+							className="tasks__filter-img"
+							src={iconFilter}
+							alt="значок сортировки"
+						/>
+					</button>
 				</nav>
 
-				<button className="tasks__filter" onClick={handleDeadlineSort}>
-					<div className="tasks__filter-title">
-						Сортировать по дате дедлайна
-					</div>
-					<img
-						className="tasks__filter-img"
-						src={iconFilter}
-						alt="значок сортировки"
-					/>
-				</button>
-
-				<DepartmentTasks handlePopupOpen={handlePopupOpen} />
-
-				<DepartmentTasks name="Фронтенд" />
-
-				<DepartmentTasks />
-
-				<DepartmentTasks />
+				<DepartmentTasks
+					name="Фронтенд"
+					array={frontendItems}
+					handlePopupOpen={handlePopupOpen}
+				/>
+				<DepartmentTasks
+					name="Бэкенд"
+					array={backendItems}
+					handlePopupOpen={handlePopupOpen}
+				/>
+				<DepartmentTasks
+					name="Маркетинг"
+					array={marketingItems}
+					handlePopupOpen={handlePopupOpen}
+				/>
+				<DepartmentTasks
+					name="UX/UI дизайн"
+					array={designItems}
+					handlePopupOpen={handlePopupOpen}
+				/>
 
 				{isPopupOpen ? (
 					<div

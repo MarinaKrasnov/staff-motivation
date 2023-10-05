@@ -59,6 +59,10 @@
 		&-missed {
 			color: #ff3236;
 		}
+		
+		&-department-task {
+			text-align: center;
+		}
 	}
 
 	&__data {
@@ -72,6 +76,7 @@
 		line-height: 160%;
 		color: #525c76;
 		margin: 0;
+
 		&-done {
 			color: #b2b7c2;
 		}
@@ -125,11 +130,27 @@
 		width: 15%;
 		margin: 0;
 		padding-bottom: 5px;
+
 		&-missed {
 			color: #b2b7c2;
 		}
+
 		&-done {
 			color: #44ac21;
+		}
+	}
+
+	&__realizer {
+		color: #525C76;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 160%;
+		align-self: self-end;
+		padding-bottom: 5px;
+		margin: 0;
+		&-done{
+			color: #B2B7C2;
 		}
 	}
 }

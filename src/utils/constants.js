@@ -1,5 +1,3 @@
-export const BASE_URL = 'http://185.41.163.109';
-
 export const tasksList = [
 	{
 		id: 101,
@@ -10,6 +8,7 @@ export const tasksList = [
 		created_at: '2023-09-23T12:26:38.755Z',
 		deadline: '2023-09-29T12:26:38.755Z',
 		assigned_to: 0,
+		department: 'Маркетинг',
 	},
 	{
 		id: 102,
@@ -20,16 +19,18 @@ export const tasksList = [
 		created_at: '2023-09-23T12:26:38.755Z',
 		deadline: '2023-09-29T12:26:38.755Z',
 		assigned_to: 0,
+		department: 'Бэкенд',
 	},
 	{
 		id: 103,
 		status: 'approve',
 		reward_points: 15,
-		title: 'string',
+		title: 'Добавить карусель изображений на главную страницу',
 		description: 'string',
 		created_at: '2023-09-23T12:26:38.755Z',
 		deadline: '2023-09-25T12:26:38.755Z',
 		assigned_to: 0,
+		department: 'Фронтенд',
 	},
 	{
 		id: 105,
@@ -40,6 +41,7 @@ export const tasksList = [
 		created_at: '2023-09-22T12:26:38.755Z',
 		deadline: '2023-09-30T12:26:38.755Z',
 		assigned_to: 0,
+		department: 'UX/UI дизайн',
 	},
 
 	{
@@ -52,5 +54,6 @@ export const tasksList = [
 		created_at: '2023-09-22T12:26:38.755Z',
 		deadline: '2023-09-22T12:26:38.755Z',
 		assigned_to: 0,
+		department: 'UX/UI дизайн',
 	},
 ];
