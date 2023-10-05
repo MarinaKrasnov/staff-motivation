@@ -71,10 +71,10 @@ function MyTasks() {
 		if (status === 'created') {
 			setStatusName('на выполнении');
 		}
-		if (status === 'is_overdue') {
+		if (status === 'Просрочена') {
 			setStatusName('истёк срок задачи');
 		}
-		if (status === 'approve') {
+		if (status === 'Принята и выполнена') {
 			setStatusName('подтверждено');
 		}
 		if (status === 'sent_for_review') {
@@ -99,7 +99,7 @@ function MyTasks() {
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		const filteredTasks = storagedArray.filter(
-			(task) => task.status === 'created' || task.status === 'rejected'
+			(task) => task.status === 'created' || task.status === 'reject'
 		);
 		setTasksArray(filteredTasks);
 	}
@@ -121,13 +121,13 @@ function MyTasks() {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		const filteredTasks = storagedArray.filter(
-			(task) => task.status === 'is_overdue'
+			(task) => task.status === 'Просрочена'
 		);
 		setTasksArray(filteredTasks);
 	}
 
 	function handleDeadlineSort() {
-		const notToSort = 'sent_for_review' || 'approve';
+		const notToSort = 'sent_for_review' || 'Принята и выполнена';
 
 		if (isDeadlineSort) {
 			setDeadlineSort(false);
@@ -198,6 +198,7 @@ function MyTasks() {
 				if (res === 500) {
 					navigate('/server-error');
 				}
+				setIsPopupOpen(false);
 			});
 	}
 

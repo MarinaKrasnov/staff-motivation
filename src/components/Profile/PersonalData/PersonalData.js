@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PersonalData.scss';
-import chagePhoto from '../../../images/change-photo.svg';
+import changePhoto from '../../../images/change-photo.svg';
 import { getUsersInfo, setUsersInfo } from '../../../utils/MainApi';
 // import photoProfile from '../../images/plug.svg';
 
@@ -80,7 +80,7 @@ function PersonalData() {
 				<button className="personal-data__change-photo-button" type="button">
 					<img
 						className="personal-data__change-photo-logo"
-						src={chagePhoto}
+						src={changePhoto}
 						alt="изменить фото"
 					/>
 				</button>
@@ -180,7 +180,6 @@ function PersonalData() {
 					<button
 						className="personal-data__submit-button personal-data__submit-button_dont-save"
 						type="button"
-						// onClick={getInfo}
 					>
 						Не сохранять
 					</button>
