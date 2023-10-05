@@ -18,6 +18,9 @@
 		border: none;
 		margin: 0 0 10px 0;
 		cursor: pointer;
+		&-open{
+			background-color: inherit;
+		}
 
 		&-title {
 			color: #525c76;

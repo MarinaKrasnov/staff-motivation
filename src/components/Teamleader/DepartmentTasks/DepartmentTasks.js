@@ -19,13 +19,17 @@ function DepartmentTasks({ name, array, handlePopupOpen }) {
 	return (
 		<ul className="department-tasks__departments">
 			<button
-				className="department-tasks__department"
+				className={
+					!isOpenTasksList
+						? 'department-tasks__department'
+						: 'department-tasks__department department-tasks__department-open'
+				}
 				onClick={handleTasksOpen}
 			>
 				<div className="department-tasks__department-title">{name}</div>
 				<img
 					className="department-tasks__department-caret"
-					src={isOpenTasksList ? CaretDown : CaretUp}
+					src={isOpenTasksList ? CaretUp : CaretDown}
 					alt="стрелочка открыть/закрыть"
 				/>
 			</button>
