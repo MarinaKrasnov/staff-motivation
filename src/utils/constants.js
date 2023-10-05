@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://185.41.163.109';
+// export const BASE_URL = 'http://185.41.163.109';
 
 export const tasksList = [
 	{

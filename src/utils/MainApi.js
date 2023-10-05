@@ -1,4 +1,5 @@
-import { BASE_URL } from './constants';
+// const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = 'https://31.129.110.130';
 
 const token = localStorage.getItem('token');
 // const token = 'c0faa7cbff18fbd7a5c2bdb12ee732506405147d';
