@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Preloader from '../Preloader/Preloader';
+import Preloader from './Preloader/Preloader';
 
 function ProtectedRoute({ isLoading, loggedIn, children }) {
 	useEffect(() => {}, [isLoading, loggedIn]);

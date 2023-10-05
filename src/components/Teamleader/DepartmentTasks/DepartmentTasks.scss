@@ -1,0 +1,45 @@
+.department-tasks {
+	&__departments {
+		margin: 0;
+		padding: 0;
+
+		&:first-of-type {
+			margin-top: 20px;
+		}
+	}
+
+	&__department {
+		padding: 7px 30px;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+		background-color: #fafafb;
+		border: none;
+		margin: 0 0 10px 0;
+		cursor: pointer;
+
+		&-title {
+			color: #525c76;
+			font-size: 18px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 160%;
+		}
+
+		&-caret {
+			align-self: center;
+		}
+	}
+	&__add-task {
+		padding-left: 32px;
+		border: none;
+		background-color: inherit;
+		cursor: pointer;
+		color: #8247e5;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 160%;
+	}
+}

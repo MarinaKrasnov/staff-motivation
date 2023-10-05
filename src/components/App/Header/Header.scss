@@ -1,0 +1,250 @@
+.header {
+	max-width: 1440px;
+	width: 100%;
+	left: 50%;
+	transform: translate(-50%, 0);
+	margin: 0 auto;
+	height: 108px;
+	position: fixed;
+	background-color: #ffffff;
+	z-index: 1;
+	display: flex;
+	box-sizing: border-box;
+	padding: 16px 0 12px;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.08);
+
+	@media (max-width: 1025px) {
+		width: 1024px;
+	}
+
+	&_scrolling {
+		box-shadow: 0px 12px 19px -5px rgba(0, 0, 0, 0.08);
+		transition: 0.2s linear;
+	}
+
+	&__container {
+		display: flex;
+		margin: 0 64px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		box-sizing: border-box;
+		z-index: 2;
+		height: 80px;
+		@media (min-width: 1024px) and (max-width: 1280px) {
+			margin: 0 44px;
+		}
+	}
+
+	&__logo {
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 22px;
+		color: #220d6d;
+		margin-right: 68px;
+		margin-left: 40px;
+		position: relative;
+		height: 32px;
+		align-items: center;
+		box-sizing: border-box;
+		padding: 5px 0 5px;
+
+		@media (max-width: 1025px) {
+			margin-right: 36px;
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			background-image: url('../../../images/M-check.svg');
+			background-repeat: no-repeat;
+			background-size: 28px 28px;
+			z-index: 3;
+			left: -40px;
+			width: 28px;
+			height: 28px;
+			top: 0;
+		}
+	}
+
+	&__user-info {
+		display: flex;
+		flex-direction: row;
+		gap: 16px;
+		align-items: center;
+		width: 340px;
+		margin-right: 60px;
+
+		@media (max-width: 1280px) {
+			width: 320px;
+			margin-right: 36px;
+		}
+
+		@media (max-width: 1025px) {
+			margin-right: 36px;
+			width: 320px;
+		}
+	}
+
+	&__photo {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+	}
+
+	&__plug {
+		background-color: #ff9783;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+	}
+
+	&__details {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+		flex: 1 0 0;
+	}
+
+	&__name {
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 160%;
+		color: #0f1d40;
+	}
+
+	&__position {
+		color: #525c76;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 22.4px;
+	}
+
+	&__user-points {
+		display: flex;
+		flex-direction: row;
+		gap: 56px;
+
+		@media (min-width: 1025px) and (max-width: 1280px) {
+			gap: 32px;
+		}
+
+		@media (max-width: 1025px) {
+			gap: 32px;
+		}
+	}
+
+	&__points {
+		font-size: 28px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 42px;
+		color: #0f1d40;
+
+		&_rating {
+			color: #6433c4;
+		}
+
+		&_place {
+			color: #6433c4;
+			text-align: left;
+		}
+	}
+
+	&__points-text {
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 22.4px;
+		color: #525c76;
+
+		&_rating {
+			text-align: right;
+		}
+
+		&_place {
+			text-align: left;
+		}
+	}
+
+	&__user-buttons {
+		display: flex;
+		gap: 24px;
+		margin-left: auto;
+		align-items: center;
+		@media (min-width: 768px) and (max-width: 1280px) {
+			// margin-left: auto;
+			gap: 16px;
+		}
+		// @media (min-width: 768px) and (max-width: 1024px) {
+		// 	gap: 16px;
+		// }
+	}
+
+	&__bell-container {
+		display: flex;
+		flex-direction: row;
+		position: relative;
+	}
+
+	&__bell-btn {
+		background-image: url('../../../images/bell-icon.svg');
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 28px 28px;
+		width: 40px;
+		height: 40px;
+		cursor: pointer;
+		border: none;
+		background-color: transparent;
+		position: relative;
+		opacity: 1;
+		transition: opacity 0.2s linear;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+
+	&__push-number {
+		width: 21px;
+		height: 21px;
+		background-color: #db2438;
+		border-radius: 50%;
+		position: absolute;
+		top: -2px;
+		right: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 19.2px;
+		color: white;
+	}
+
+	&__exit-btn {
+		background-image: url('../../../images/exit-icon.svg');
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 28px 28px;
+		width: 28px;
+		height: 28px;
+		cursor: pointer;
+		border: none;
+		background-color: transparent;
+		position: relative;
+		opacity: 1;
+		transition: opacity 0.2s linear;
+
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+}
