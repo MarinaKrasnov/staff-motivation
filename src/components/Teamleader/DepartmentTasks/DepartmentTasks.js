@@ -24,6 +24,7 @@ function DepartmentTasks({
 	return (
 		<ul className="department-tasks__departments">
 			<button
+				type="button"
 				className="department-tasks__department"
 				onClick={handleTasksOpen}
 			>

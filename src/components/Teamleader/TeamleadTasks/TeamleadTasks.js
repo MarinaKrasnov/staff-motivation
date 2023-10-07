@@ -5,6 +5,8 @@ import iconFilter from '../../../images/SortAscending.png';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
 import { tasksList } from '../../../utils/constants';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
+import PopupEditTask from './PopupEditTask/PopupEditTask';
+
 import {
 	/* getTasks, */ getTaskInfo,
 	confirmTask,
@@ -15,7 +17,8 @@ function TeamleadTasks() {
 
 	const [tasksArray, setTasksArray] = useState(tasksList);
 	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
-	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(true);
+	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(false);
+	const [isPopupEditTaskOpen, setPopupEditTaskOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
 	const [activeTasksButton, setActiveTaskstButton] = useState(false);
 	const [inApproveTasksButton, setInApproveTasksButton] = useState(false);
@@ -174,15 +177,15 @@ function TeamleadTasks() {
 				.catch((res) => {
 					if (res === 500) {
 						navigate('/server-error');
-					} else {
+					} /* else {
 						setTasksArray([]);
-					}
+					} */
 				});
 			if (statusPopup === 'approve') {
 				setPopupTaskOpen(true);
 				return;
 			}
-			setPopupTaskOpen(false);
+			setPopupEditTaskOpen(true);
 		},
 		[navigate]
 	);
@@ -335,6 +338,12 @@ function TeamleadTasks() {
 
 				{isPopupAddTaskOpen ? (
 					<PopupAddTask setPopupAddTaskOpen={setPopupAddTaskOpen} />
+				) : null}
+				{isPopupEditTaskOpen ? (
+					<PopupEditTask
+						setPopupEditTaskOpen={setPopupEditTaskOpen}
+						popupInfo={popupInfo}
+					/>
 				) : null}
 			</div>
 		</section>
