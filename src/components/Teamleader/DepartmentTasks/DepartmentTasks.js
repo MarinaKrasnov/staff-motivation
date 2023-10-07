@@ -5,7 +5,12 @@ import CaretDown from '../../../images/CaretDown.svg';
 import CaretUp from '../../../images/CaretUp.svg';
 import DepartmentTask from '../DepartmentTask/DepartmentTask';
 
-function DepartmentTasks({ name, array, handlePopupOpen }) {
+function DepartmentTasks({
+	name,
+	array,
+	handlePopupOpen,
+	handleAddTaskPopupOpen,
+}) {
 	const [isOpenTasksList, setOpenTasksList] = useState(false);
 
 	function handleTasksOpen() {
@@ -31,7 +36,10 @@ function DepartmentTasks({ name, array, handlePopupOpen }) {
 			</button>
 			{isOpenTasksList ? (
 				<>
-					<button className="department-tasks__add-task">
+					<button
+						className="department-tasks__add-task"
+						onClick={handleAddTaskPopupOpen}
+					>
 						Добавить задачу
 					</button>
 					<div className="tasks__list">
@@ -55,4 +63,5 @@ DepartmentTasks.propTypes = {
 	name: PropTypes.string.isRequired,
 	array: PropTypes.node.isRequired,
 	handlePopupOpen: PropTypes.func.isRequired,
+	handleAddTaskPopupOpen: PropTypes.func.isRequired,
 };

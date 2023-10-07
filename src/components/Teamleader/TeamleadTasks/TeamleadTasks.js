@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import iconFilter from '../../../images/SortAscending.png';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
 import { tasksList } from '../../../utils/constants';
-
-// import CaretUp from '../../..';
-
+import PopupAddTask from './PopupAddTask/PopupAddTask';
 import {
 	/* getTasks, */ getTaskInfo,
 	confirmTask,
@@ -16,7 +14,8 @@ function TeamleadTasks() {
 	const navigate = useNavigate();
 
 	const [tasksArray, setTasksArray] = useState(tasksList);
-	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
+	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(true);
 	const [allTasksButton, setAllTasksButton] = useState(true);
 	const [activeTasksButton, setActiveTaskstButton] = useState(false);
 	const [inApproveTasksButton, setInApproveTasksButton] = useState(false);
@@ -167,41 +166,43 @@ function TeamleadTasks() {
 	}
 
 	const handlePopupOpen = useCallback(
-		(idPopup, disablePopup) => {
-			if (!disablePopup) {
-				getTaskInfo(idPopup)
-					.then((data) => {
-						setPopupInfo(data);
-						setIsPopupOpen(true);
-					})
-					.catch((res) => {
-						if (res === 500) {
-							navigate('/server-error');
-						} else {
-							setTasksArray([]);
-						}
-					});
+		(idPopup, statusPopup) => {
+			getTaskInfo(idPopup)
+				.then((data) => {
+					setPopupInfo(data);
+				})
+				.catch((res) => {
+					if (res === 500) {
+						navigate('/server-error');
+					} else {
+						setTasksArray([]);
+					}
+				});
+			if (statusPopup === 'approve') {
+				setPopupTaskOpen(true);
 				return;
 			}
-			setIsPopupOpen(false);
+			setPopupTaskOpen(false);
 		},
 		[navigate]
 	);
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
-			setIsPopupOpen(false);
+			setPopupTaskOpen(false);
+			setPopupAddTaskOpen(false);
 		}
 	}
 
 	function closePopupButton() {
-		setIsPopupOpen(false);
+		setPopupTaskOpen(false);
+		setPopupAddTaskOpen(false);
 	}
 
 	function confirmTaskPopup() {
 		confirmTask(id, popupInfo)
 			.then(() => {
-				setIsPopupOpen(false);
+				setPopupTaskOpen(false);
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -209,6 +210,10 @@ function TeamleadTasks() {
 				}
 			});
 	}
+
+	const handleAddTaskPopupOpen = useCallback(() => {
+		setPopupAddTaskOpen(true);
+	}, []);
 
 	return (
 		<section className="main-page__section">
@@ -272,24 +277,28 @@ function TeamleadTasks() {
 					name="Фронтенд"
 					array={frontendItems}
 					handlePopupOpen={handlePopupOpen}
+					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 				/>
 				<DepartmentTasks
 					name="Бэкенд"
 					array={backendItems}
 					handlePopupOpen={handlePopupOpen}
+					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 				/>
 				<DepartmentTasks
 					name="Маркетинг"
 					array={marketingItems}
 					handlePopupOpen={handlePopupOpen}
+					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 				/>
 				<DepartmentTasks
 					name="UX/UI дизайн"
 					array={designItems}
 					handlePopupOpen={handlePopupOpen}
+					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 				/>
 
-				{isPopupOpen ? (
+				{isPopupTaskOpen ? (
 					<div
 						className="popup"
 						onClick={closePopupOverlay}
@@ -297,7 +306,7 @@ function TeamleadTasks() {
 						tabIndex={0}
 						onKeyDown={null}
 					>
-						<div className="popup__container">
+						<div className="popup-teamlead">
 							<div className="popup__header">
 								<h3 className="popup__title">{title}</h3>
 								<button
@@ -322,6 +331,10 @@ function TeamleadTasks() {
 							</button>
 						</div>
 					</div>
+				) : null}
+
+				{isPopupAddTaskOpen ? (
+					<PopupAddTask setPopupAddTaskOpen={setPopupAddTaskOpen} />
 				) : null}
 			</div>
 		</section>

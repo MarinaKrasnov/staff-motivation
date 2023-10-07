@@ -6,4 +6,22 @@
 	display: flex;
 	flex-direction: column;
 	padding-bottom: 25px;
+
+	&__popup{
+		top: 0;
+		margin: 0;
+	}
 }
+
+.popup-teamlead {
+	position: absolute;
+	margin: 0;
+	background: #ffffff;
+	border-radius: 6px;
+	border: 1px solid #e2e4e8;
+	padding: 10px 0;
+	width: 526px;
+	top: 0;
+	left: 59%;
+}
+

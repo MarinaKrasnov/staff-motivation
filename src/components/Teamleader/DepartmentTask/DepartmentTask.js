@@ -65,8 +65,8 @@ function DepartmentTask({ task, onClick }) {
 
 	return (
 		<div
-			className="mytask department-task__no-hover"
-			onClick={() => onClick(id)}
+			className="mytask"
+			onClick={() => onClick(id, status)}
 			role="button"
 			tabIndex={0}
 			onKeyDown={null}
