@@ -13,12 +13,11 @@ import eyeButton from '../../images/Icon-hidden-pass.svg';
 
 export default function Login({ setLoggedIn }) {
 	const navigate = useNavigate();
-	// react-hook-form useForm
 	const {
 		register,
 		handleSubmit,
 		// getValues,
-		watch, // для отслеживания input value
+		watch,
 		formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onTouched',
@@ -182,9 +181,4 @@ export default function Login({ setLoggedIn }) {
 }
 Login.propTypes = {
 	setLoggedIn: PropTypes.func.isRequired,
-	// removeToken: PropTypes.func.isRequired,
-	// handleIsRememberMePressed: PropTypes.func.isRequired,
-	// onSignIn: PropTypes.func.isRequired,
-	// isPasswordHidden: PropTypes.bool.isRequired,
-	// onHidePasswordClick: PropTypes.func.isRequired,
 };

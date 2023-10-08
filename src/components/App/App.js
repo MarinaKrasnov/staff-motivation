@@ -16,6 +16,7 @@ import ModalUpload from './ModalUpload/ModalUpload';
 import Notifications from './Header/Notifications/Notifications';
 import Teamleader from '../Teamleader/TeamleadTasks/TeamleadTasks';
 import { getUserData, getNotification } from '../../utils/MainApi';
+import DevelopingPage from './DevelopingPage/DevelopingPage';
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -165,6 +166,27 @@ function App() {
 							/>
 							<SideNavbar />
 							<Teamleader />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/developing-page"
+					element={
+						<ProtectedRoute
+							loggedIn={loggedIn}
+							isLoading={isLoading}
+							key={loggedIn}
+						>
+							<Header
+								handleOpenModalConfirm={handleOpenModalConfirm}
+								handleOpenPushesModal={handleOpenPushesModal}
+								handleOpenUploadModal={handleOpenUploadModal}
+								notificationsData={notificationsData}
+								userData={userData}
+								onExit={handleLogOut}
+							/>
+							<SideNavbar />
+							<DevelopingPage />
 						</ProtectedRoute>
 					}
 				/>
