@@ -13,14 +13,6 @@ function Main() {
 	const { department_progress, personal_progress, progress_for_deadline } =
 		userProgressData;
 
-	/* useEffect(() => {
-		const isFirstVisit = localStorage.getItem('isFirstVisit');
-		if (!isFirstVisit) {
-			localStorage.setItem('isFirstVisit', 'true');
-			window.location.reload();
-		}
-	}, []); */
-
 	useEffect(() => {
 		const isFirstVisit = localStorage.getItem('isFirstVisit');
 		if (!isFirstVisit) {
@@ -59,9 +51,9 @@ function Main() {
 export default Main;
 
 /* useEffect(() => {
-	const isFirstVisit = localStorage.getItem('isFirstVisit');
-	if (!isFirstVisit) {
-		localStorage.setItem('isFirstVisit', 'true');
-		window.location.reload();
-	}
-}, []); */
+		const isFirstVisit = localStorage.getItem('isFirstVisit');
+		if (!isFirstVisit) {
+			localStorage.setItem('isFirstVisit', 'true');
+			window.location.reload();
+		}
+	}, []); */
