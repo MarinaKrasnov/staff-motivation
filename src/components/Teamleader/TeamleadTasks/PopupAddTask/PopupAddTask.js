@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 function PopupAddTask({ setPopupAddTaskOpen }) {
 	const [executors, setExecutors] = useState([]);
+	const [isAreaBorder, setAreaBorder] = useState(false);
 	const names = [
 		'Иванов Иван',
 		'Петров Петр',
@@ -17,7 +18,7 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 		register,
 		handleSubmit,
 		// getValues,
-		// watch, // для отслеживания input value
+		watch,
 		// formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onTouched',
@@ -50,6 +51,10 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 		setExecutors(executors.filter((i) => i !== name));
 	}
 
+	function setAreaStyle() {
+		setAreaBorder(true);
+	}
+
 	return (
 		<div
 			className="popup"
@@ -70,20 +75,31 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 					<label className="popup-addtask__label" htmlFor="title">
 						Название задачи
 						<input
-							className="popup-addtask__input "
+							className={
+								watch('title')
+									? 'popup-addtask__input-filled'
+									: 'popup-addtask__input '
+							}
 							type="text"
 							name="title"
 							id="title"
 							{...register('title', { required: false })}
 						/>
 					</label>
-					<div className="popup-addtask__input-area">
+					<div
+						className={
+							isAreaBorder || watch('discription')
+								? 'popup-addtask__input-area-filled'
+								: 'popup-addtask__input-area'
+						}
+					>
 						<textarea
 							className="popup-addtask__input-text"
 							placeholder="Добавьте описание задачи"
 							type="text"
 							name="discription"
 							id="discription"
+							onFocus={setAreaStyle}
 							{...register('discription', { required: false })}
 						/>
 					</div>
@@ -125,7 +141,11 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 					<label className="popup-addtask__label-bottom" htmlFor="data">
 						Срок исполнения
 						<input
-							className="popup-addtask__input-bottom "
+							className={
+								watch('deadline')
+									? 'popup-addtask__input-bottom-filled'
+									: 'popup-addtask__input-bottom '
+							}
 							placeholder="дд.мм"
 							type="text"
 							name="dealine"
@@ -137,7 +157,11 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 					<label className="popup-addtask__label-bottom" htmlFor="balls">
 						Баллы за выполнение
 						<input
-							className="popup-addtask__input-bottom"
+							className={
+								watch('reward_points')
+									? 'popup-addtask__input-bottom-filled'
+									: 'popup-addtask__input-bottom '
+							}
 							type="text"
 							name="reward_points"
 							id="reward_points"

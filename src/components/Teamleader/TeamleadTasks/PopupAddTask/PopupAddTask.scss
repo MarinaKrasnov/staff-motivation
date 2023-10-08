@@ -40,7 +40,7 @@
 
 	&__input {
 		width: 80%;
-		color: #232324;
+		color: #525C76;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;
@@ -49,7 +49,23 @@
 		border-radius: 4px;
 		border: 1px solid #e2e4e8;
 		outline: none;
-		padding-left: 5px;
+		padding-left: 10px;
+		&:focus {
+			border: 1px solid #A4A9B6;
+		}
+		&-filled{
+			width: 80%;
+			color:  #525C76;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 160%;
+			min-height: 40px;
+			border-radius: 4px;
+			border: 1px solid #A4A9B6;
+			outline: none;
+			padding-left: 10px;
+		}
 
 		&-bottom {
 			margin-top: 2px;
@@ -64,10 +80,23 @@
 			border: 1px solid #e2e4e8;
 			outline: none;
 			padding-left: 10px;
-		}
-
-		&:focus {
-			border: 1px solid #a4a9b6;
+			&:focus {
+				border: 1px solid #A4A9B6;
+			}
+			&-filled{
+				margin-top: 2px;
+				width: 78%;
+				color: #525c76;
+				font-size: 14px;
+				font-style: normal;
+				font-weight: 500;
+				line-height: 160%;
+				min-height: 29px;
+				border-radius: 4px;
+				border: 1px solid #A4A9B6;
+				outline: none;
+				padding-left: 10px;
+			}
 		}
 
 		&-area {
@@ -79,7 +108,16 @@
 			display: block;
 			z-index: 2;
 			margin-bottom: 15px;
-
+			&-filled {
+				padding-top: 10px;
+				height: 76px;
+				width: 82%;
+				border-radius: 4px;
+				border: 1px solid #A4A9B6;
+				display: block;
+				z-index: 2;
+				margin-bottom: 15px;
+			}
 		}
 
 		&-text {
@@ -96,7 +134,7 @@
 			font-style: normal;
 			font-weight: 500;
 			line-height: 160%;
-			overflow-y: scroll;
+			overflow-y: auto;
 			overflow-x: hidden;
 
 			&::-webkit-scrollbar-thumb {
@@ -113,9 +151,9 @@
 				border-radius: 3px;
 			}
 
-			&:focus {
+			/* &:focus {
 				border: 1px solid #a4a9b6;
-			}
+			} */
 
 			&::placeholder {
 				font-family: PT Root UI;
@@ -151,7 +189,7 @@
 			display: block;
 			margin: 0 18px 0 8px;
 			border: none;
-			overflow-y: scroll;
+			overflow-y: auto;
 			overflow-x: hidden;
 			padding: 0;
 			width: 184px;
@@ -265,7 +303,7 @@
 	}
 
 	&__status {
-		color: #8C93A3;
+		color: #8c93a3;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;
@@ -274,7 +312,7 @@
 	}
 
 	&__created {
-		color: #8C93A3;
+		color: #8c93a3;
 		font-size: 14px;
 		font-style: normal;
 		font-weight: 500;

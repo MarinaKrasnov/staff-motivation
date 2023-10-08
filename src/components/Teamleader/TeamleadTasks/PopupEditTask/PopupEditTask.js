@@ -7,6 +7,8 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 	const { status, reward_points, title, description, created_at, deadline } =
 		popupInfo;
 	const [executors, setExecutors] = useState([]);
+	const [isAreaBorder, setAreaBorder] = useState(false);
+
 	const names = [
 		'Иванов Иван',
 		'Петров Петр',
@@ -19,7 +21,7 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 		register,
 		handleSubmit,
 		// getValues,
-		// watch, // для отслеживания input value
+		watch,
 		// formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onTouched',
@@ -61,6 +63,10 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 		setExecutors(executors.filter((i) => i !== name));
 	}
 
+	function setAreaStyle() {
+		setAreaBorder(true);
+	}
+
 	return (
 		<div
 			className="popup"
@@ -84,14 +90,21 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 				</div>
 
 				<form className="popup-addtask__form" onSubmit={handleSubmit(onSubmit)}>
-					<div className="popup-addtask__input-area">
+					<div
+						className={
+							isAreaBorder || watch('discription')
+								? 'popup-addtask__input-area-filled'
+								: 'popup-addtask__input-area'
+						}
+					>
 						<textarea
 							className="popup-addtask__input-text"
-							defaultValue={{ description } || ''}
+							defaultValue={description || ''}
 							placeholder="Добавьте описание задачи"
 							type="text"
 							name="discription"
 							id="discription"
+							onFocus={setAreaStyle}
 							{...register('discription', { required: false })}
 						/>
 					</div>
@@ -136,8 +149,12 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 					<label className="popup-addtask__label-bottom" htmlFor="data">
 						Срок исполнения
 						<input
-							className="popup-addtask__input-bottom "
-							defaultValue={{ formattedDateDeadline } || ''}
+							className={
+								watch('deadline')
+									? 'popup-addtask__input-bottom-filled'
+									: 'popup-addtask__input-bottom '
+							}
+							defaultValue={formattedDateDeadline || ''}
 							placeholder="дд.мм"
 							type="text"
 							name="deadline"
@@ -149,8 +166,12 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 					<label className="popup-addtask__label-bottom" htmlFor="balls">
 						Баллы за выполнение
 						<input
-							className="popup-addtask__input-bottom"
-							defaultValue={{ reward_points } || ''}
+							className={
+								watch('reward_points')
+									? 'popup-addtask__input-bottom-filled'
+									: 'popup-addtask__input-bottom '
+							}
+							defaultValue={reward_points || ''}
 							type="text"
 							name="reward_points"
 							id="reward_points"
