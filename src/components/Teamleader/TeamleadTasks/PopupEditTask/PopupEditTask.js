@@ -113,18 +113,15 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 						<p className="popup-addtask__executor">Исполнитель:&nbsp;</p>
 						{executors.map((executor) => (
 							<div className="popup-addtask__executor-block" key={executor}>
-								<p className="popup-addtask__executor-name" key={executor}>
-									{executor}
-								</p>
+								<p className="popup-addtask__executor-name">{executor}</p>
 								<button
-									key={executor}
 									type="button"
 									className="popup-addtask__executor-delete"
 									onClick={() => handleRemoveExecutor(executor)}
 								>
 									{}
 								</button>
-								<span key={executor}>,&nbsp;</span>
+								<span>,&nbsp;</span>
 							</div>
 						))}
 					</div>
@@ -132,11 +129,10 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 					<div className="popup-addtask__executors-element">
 						<ul className="popup-addtask__executors-list">
 							{names.map((name) => (
-								<li>
+								<li key={name}>
 									<button
 										type="button"
 										className="popup-addtask__executors-name"
-										key={name}
 										onClick={() => handleClick(name)}
 									>
 										{name}

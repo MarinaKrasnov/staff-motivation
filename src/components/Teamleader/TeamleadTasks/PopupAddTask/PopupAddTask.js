@@ -107,7 +107,7 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 					<div className="popup-addtask__executors">
 						<p className="popup-addtask__executor">Исполнитель:&nbsp;</p>
 						{executors.map((executor) => (
-							<div className="popup-addtask__executor-block">
+							<div className="popup-addtask__executor-block" key={executor}>
 								<p className="popup-addtask__executor-name">{executor}</p>
 								<button
 									type="button"
@@ -124,11 +124,10 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 					<div className="popup-addtask__executors-element">
 						<ul className="popup-addtask__executors-list">
 							{names.map((name) => (
-								<li>
+								<li key={name}>
 									<button
 										type="button"
 										className="popup-addtask__executors-name"
-										key={name}
 										onClick={() => handleClick(name)}
 									>
 										{name}
