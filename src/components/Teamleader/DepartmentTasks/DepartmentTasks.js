@@ -5,7 +5,12 @@ import CaretDown from '../../../images/CaretDown.svg';
 import CaretUp from '../../../images/CaretUp.svg';
 import DepartmentTask from '../DepartmentTask/DepartmentTask';
 
-function DepartmentTasks({ name, array, handlePopupOpen }) {
+function DepartmentTasks({
+	name,
+	array,
+	handlePopupOpen,
+	handleAddTaskPopupOpen,
+}) {
 	const [isOpenTasksList, setOpenTasksList] = useState(false);
 
 	function handleTasksOpen() {
@@ -19,6 +24,8 @@ function DepartmentTasks({ name, array, handlePopupOpen }) {
 	return (
 		<ul className="department-tasks__departments">
 			<button
+				type="button"
+				// className="department-tasks__department"
 				className={
 					!isOpenTasksList
 						? 'department-tasks__department'
@@ -35,7 +42,10 @@ function DepartmentTasks({ name, array, handlePopupOpen }) {
 			</button>
 			{isOpenTasksList ? (
 				<>
-					<button className="department-tasks__add-task">
+					<button
+						className="department-tasks__add-task"
+						onClick={handleAddTaskPopupOpen}
+					>
 						Добавить задачу
 					</button>
 					<div className="tasks__list">
@@ -57,6 +67,47 @@ export default DepartmentTasks;
 
 DepartmentTasks.propTypes = {
 	name: PropTypes.string.isRequired,
-	array: PropTypes.node.isRequired,
 	handlePopupOpen: PropTypes.func.isRequired,
+	handleAddTaskPopupOpen: PropTypes.func.isRequired,
+	array: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			status: PropTypes.string.isRequired,
+			reward_points: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			created_at: PropTypes.string.isRequired,
+			deadline: PropTypes.string.isRequired,
+			assigned_to: PropTypes.number.isRequired,
+			department: PropTypes.string.isRequired,
+		})
+	),
 };
+
+DepartmentTasks.defaultProps = {
+	array: {
+		id: 101,
+		status: 'created',
+		reward_points: 10,
+		title: 'Составить контент план',
+		description: 'Описание в разработке',
+		created_at: '2023-09-23T12:26:38.755Z',
+		deadline: '2023-09-29T12:26:38.755Z',
+		assigned_to: 0,
+		department: 'Маркетинг',
+	},
+};
+
+/* array: PropTypes.arrayOf(
+		  PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			status: PropTypes.string.isRequired,
+			reward_points: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			created_at: PropTypes.string.isRequired,
+			deadline: PropTypes.string.isRequired,
+			assigned_to: PropTypes.number.isRequired,
+			department: PropTypes.string.isRequired,
+		  })
+		) */
