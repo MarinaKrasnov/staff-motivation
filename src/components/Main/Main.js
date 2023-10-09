@@ -12,15 +12,6 @@ function Main() {
 
 	const { department_progress, personal_progress, progress_for_deadline } =
 		userProgressData;
-
-	useEffect(() => {
-		const isFirstVisit = localStorage.getItem('isFirstVisit');
-		if (!isFirstVisit) {
-			localStorage.setItem('isFirstVisit', 'true');
-			window.location.reload();
-		}
-	}, []);
-
 	useEffect(() => {
 		getUsersProgress()
 			.then((data) => {
