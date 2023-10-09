@@ -17,13 +17,23 @@
 		gap: 17px;
 		display: flex;
 		flex-direction: row;
+
 		&-image {
 			width: 126px;
 			height: 126px;
 		}
+
 		&-caption {
 			flex-direction: column;
 			margin-top: 40px;
+		}
+
+		&-progress {
+			width: 126px;
+			height: 126px;
+			border-radius: 70%;
+			border: 2px solid black;
+			box-sizing: border-box;
 		}
 	}
 }

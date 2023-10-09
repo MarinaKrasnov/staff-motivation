@@ -2,7 +2,7 @@ import './Profile.scss';
 import React from 'react';
 import PersonalData from './PersonalData/PersonalData';
 import WorkExperience from './WorkExperience/WorkExperience';
-import TrackRecordDiagram from './TrackRecordDiagram/TrackRecordDiagram';
+import ProgressDiagram from './ProgressDiagram/ProgressDiagram';
 import TrackRecord from './TrackRecord/TrackRecord';
 
 function Profile() {
@@ -14,7 +14,7 @@ function Profile() {
 						<PersonalData />
 						<div className="profile__sections">
 							<WorkExperience />
-							<TrackRecordDiagram />
+							<ProgressDiagram />
 						</div>
 					</div>
 					<TrackRecord />
