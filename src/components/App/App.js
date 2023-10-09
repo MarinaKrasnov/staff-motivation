@@ -25,11 +25,9 @@ function App() {
 	const [isOpenPushesModal, setIsPushesModal] = useState(false);
 	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
-
+	const [isCheckboxPressed, setCheckboxPressed] = useState(true);
 	const navigate = useNavigate();
-
 	const token = localStorage.getItem('token');
-
 	const [userData, setUserData] = useState({
 		first_name: '',
 		last_name: '',
@@ -38,6 +36,14 @@ function App() {
 		reward_points: '',
 		rating: '',
 	});
+
+	function removeToken() {
+		if (!isCheckboxPressed) {
+			localStorage.removeItem('token');
+		}
+		window.removeEventListener('beforeunload', removeToken);
+	}
+	window.addEventListener('beforeunload', removeToken);
 
 	useEffect(() => {
 		if (loggedIn) {
@@ -56,7 +62,7 @@ function App() {
 					console.log(res);
 				});
 		}
-	}, [navigate, loggedIn]);
+	}, [navigate, loggedIn, token]);
 
 	const handleLogOut = () => {
 		setLoggedIn(false);
@@ -192,7 +198,16 @@ function App() {
 				/>
 				<Route path="/signup" element={<Register />} />
 				<Route path="/new-password" element={<NewPassword />} />
-				<Route path="/signin" element={<Login setLoggedIn={setLoggedIn} />} />
+				<Route
+					path="/signin"
+					element={
+						<Login
+							setLoggedIn={setLoggedIn}
+							isCheckboxPressed={isCheckboxPressed}
+							setCheckboxPressed={setCheckboxPressed}
+						/>
+					}
+				/>
 				<Route path="/reset-password" element={<ResetPassword />} />
 				<Route path="/server-error" element={<ServerError />} />
 				{/* роут для ошибки 404 */}
@@ -212,11 +227,3 @@ function App() {
 }
 
 export default App;
-
-/* const [isCheckboxPressed, setCheckboxPressed] = useState(false)
- function removeToken() {
-	if(!isCheckboxPressed){
-	localStorage.removeItem('token');
-  }
-}
-  window.addEventListener('unload', removeToken) */

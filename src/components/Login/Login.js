@@ -11,7 +11,11 @@ import { ERROR_MESSAGES } from '../../utils/Config';
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 
-export default function Login({ setLoggedIn }) {
+export default function Login({
+	setLoggedIn,
+	isCheckboxPressed,
+	setCheckboxPressed,
+}) {
 	const navigate = useNavigate();
 	const {
 		register,
@@ -24,9 +28,8 @@ export default function Login({ setLoggedIn }) {
 		resolver: yupResolver(LoginSchema),
 	});
 	// чекбокс для "Запомнить меня"
-	const [isRememberMePressed, setIsRememberMePressed] = useState(false);
 	const handleIsRememberMePressed = () => {
-		setIsRememberMePressed(!isRememberMePressed);
+		setCheckboxPressed(!isCheckboxPressed);
 	};
 
 	// стейт скрытого пароля
@@ -149,7 +152,7 @@ export default function Login({ setLoggedIn }) {
 							>
 								<input
 									className="login__checkbox"
-									checked={isRememberMePressed}
+									checked={isCheckboxPressed}
 									onChange={handleRememberButton}
 									id="remember-checkbox"
 									type="checkbox"
@@ -181,4 +184,6 @@ export default function Login({ setLoggedIn }) {
 }
 Login.propTypes = {
 	setLoggedIn: PropTypes.func.isRequired,
+	isCheckboxPressed: PropTypes.bool.isRequired,
+	setCheckboxPressed: PropTypes.func.isRequired,
 };
