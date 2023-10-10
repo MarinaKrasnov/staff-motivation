@@ -7,10 +7,7 @@ import { tasksList } from '../../../utils/constants';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
 
-import {
-	/* getTasks, */ getTaskInfo,
-	confirmTask,
-} from '../../../utils/MainApi';
+import { getTasks, getTaskInfo, reviewTask } from '../../../utils/MainApi';
 
 function TeamleadTasks() {
 	const navigate = useNavigate();
@@ -27,15 +24,10 @@ function TeamleadTasks() {
 	const [statusName, setStatusName] = useState('');
 	const [isDeadlineSort, setDeadlineSort] = useState(false);
 
-	const {
-		status,
-		reward_points,
-		title,
-		description,
-		created_at,
-		deadline,
-		id,
-	} = popupInfo;
+	const { reward_points, title, description, created_at, deadline, id } =
+		popupInfo;
+
+	let { status } = popupInfo;
 
 	const dateDeadline = new Date(deadline);
 	const dateCreated = new Date(created_at);
@@ -45,7 +37,7 @@ function TeamleadTasks() {
 		options
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
-	// const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
+	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
 	const marketingItems = tasksArray.filter(
 		(item) => item.department === 'Маркетинг'
@@ -60,7 +52,7 @@ function TeamleadTasks() {
 		(item) => item.department === 'UX/UI дизайн'
 	);
 
-	/* useEffect(() => {
+	useEffect(() => {
 		getTasks()
 			.then((data) => {
 				const sort = data.tasks.sort(
@@ -76,7 +68,7 @@ function TeamleadTasks() {
 					setTasksArray([]);
 				}
 			});
-	}, [navigate]); */
+	}, [navigate]);
 
 	useEffect(() => {
 		if (status === 'created') {
@@ -101,7 +93,7 @@ function TeamleadTasks() {
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
-		setTasksArray(tasksList);
+		setTasksArray(storagedArray);
 	}
 
 	function handleActiveTasksSort() {
@@ -177,9 +169,9 @@ function TeamleadTasks() {
 				.catch((res) => {
 					if (res === 500) {
 						navigate('/server-error');
-					} /* else {
+					} else {
 						setTasksArray([]);
-					} */
+					}
 				});
 			if (statusPopup === 'approve') {
 				setPopupTaskOpen(true);
@@ -202,14 +194,21 @@ function TeamleadTasks() {
 		setPopupAddTaskOpen(false);
 	}
 
+	function EditTaskPopup() {
+		setPopupTaskOpen(false);
+	}
+
 	function confirmTaskPopup() {
-		confirmTask(id, popupInfo)
+		reviewTask(id, popupInfo)
 			.then(() => {
+				status = 'approve';
 				setPopupTaskOpen(false);
 			})
 			.catch((res) => {
 				if (res === 500) {
 					navigate('/server-error');
+				} else {
+					console.log(res);
 				}
 			});
 	}
@@ -331,6 +330,9 @@ function TeamleadTasks() {
 							</p>
 							<button className="popup__button" onClick={confirmTaskPopup}>
 								Подтвердить выполнение
+							</button>
+							<button className="popup__button" onClick={EditTaskPopup}>
+								Отправить на доработку
 							</button>
 						</div>
 					</div>

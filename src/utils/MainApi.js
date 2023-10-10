@@ -89,6 +89,63 @@ export function confirmTask(id, data) {
 	}).then(checkResponse);
 }
 
+export function reviewTask(id, data) {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/tasks/${id}/review_task/`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}
+
+export function rejectTask(id, data) {
+	// изменить статус в теле запроса
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/tasks/${id}`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}
+
+export function addTask(data) {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/tasks/`, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}
+
+export function editTask(id, data) {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/tasks/${id}`, {
+		method: 'PATCH',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+		},
+		body: JSON.stringify({ data }),
+	}).then(checkResponse);
+}
+
 /*  Profile */
 
 // Личные данные

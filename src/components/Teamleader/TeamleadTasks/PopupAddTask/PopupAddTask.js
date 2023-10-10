@@ -2,8 +2,12 @@ import './PopupAddTask.scss';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { addTask } from '../../../../utils/MainApi';
 
 function PopupAddTask({ setPopupAddTaskOpen }) {
+	const navigate = useNavigate();
+
 	const [executors, setExecutors] = useState([]);
 	const [isAreaBorder, setAreaBorder] = useState(false);
 	const names = [
@@ -34,9 +38,20 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 		setPopupAddTaskOpen(false);
 	}
 
-	function onSubmit(/* data, */ evt) {
+	function onSubmit(data, evt) {
 		evt.preventDefault();
 		setPopupAddTaskOpen(false);
+		addTask(data)
+			.then(() => {
+				setPopupAddTaskOpen(false);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				} else {
+					console.log(res);
+				}
+			});
 	}
 
 	const handleClick = (name) => {

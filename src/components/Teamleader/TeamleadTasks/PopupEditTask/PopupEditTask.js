@@ -1,11 +1,22 @@
 import './PopupEditTask.scss';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
+import { editTask } from '../../../../utils/MainApi';
 
 function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
-	const { status, reward_points, title, description, created_at, deadline } =
-		popupInfo;
+	const navigate = useNavigate();
+
+	const {
+		status,
+		reward_points,
+		title,
+		description,
+		created_at,
+		deadline,
+		id,
+	} = popupInfo;
 	const [executors, setExecutors] = useState([]);
 	const [isAreaBorder, setAreaBorder] = useState(false);
 
@@ -47,11 +58,6 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 		setPopupEditTaskOpen(false);
 	}
 
-	function onSubmit(/* data, */ evt) {
-		evt.preventDefault();
-		setPopupEditTaskOpen(false);
-	}
-
 	const handleClick = (name) => {
 		if (!executors.includes(name)) {
 			// setExecutors(executors.filter(executor => executor !== name));
@@ -65,6 +71,21 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 
 	function setAreaStyle() {
 		setAreaBorder(true);
+	}
+
+	function onSubmit(data, evt) {
+		evt.preventDefault();
+		editTask(id, data)
+			.then(() => {
+				setPopupEditTaskOpen(false);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				} else {
+					console.log(res);
+				}
+			});
 	}
 
 	return (
@@ -190,7 +211,7 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 					</label>
 
 					<button className="popup-addtask__button" type="submit">
-						Добавить задачу
+						Сохранить изменения
 					</button>
 				</form>
 			</div>
