@@ -7,7 +7,10 @@ import { tasksList } from '../../../utils/constants';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
 
-import { getTasks, getTaskInfo, reviewTask } from '../../../utils/MainApi';
+import {
+	/* getTasks, */ getTaskInfo,
+	reviewTask,
+} from '../../../utils/MainApi';
 
 function TeamleadTasks() {
 	const navigate = useNavigate();
@@ -52,7 +55,7 @@ function TeamleadTasks() {
 		(item) => item.department === 'UX/UI дизайн'
 	);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		getTasks()
 			.then((data) => {
 				const sort = data.tasks.sort(
@@ -68,7 +71,7 @@ function TeamleadTasks() {
 					setTasksArray([]);
 				}
 			});
-	}, [navigate]);
+	}, [navigate]); */
 
 	useEffect(() => {
 		if (status === 'created') {

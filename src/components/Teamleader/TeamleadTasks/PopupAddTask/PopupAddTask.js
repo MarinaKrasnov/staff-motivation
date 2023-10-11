@@ -1,15 +1,18 @@
 import './PopupAddTask.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { addTask } from '../../../../utils/MainApi';
+import { addTask, getUsers } from '../../../../utils/MainApi';
 
 function PopupAddTask({ setPopupAddTaskOpen }) {
 	const navigate = useNavigate();
-
-	const [executors, setExecutors] = useState([]);
+	const [users, setUsers] = useState([]);
+	const [executor, setExecutor] = useState('');
 	const [isAreaBorder, setAreaBorder] = useState(false);
+
+	console.log(users);
+
 	const names = [
 		'Иванов Иван',
 		'Петров Петр',
@@ -17,6 +20,7 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 		'Андреев Андрей',
 		'Кирилов Кирил',
 	];
+
 	const {
 		register,
 		handleSubmit,
@@ -27,6 +31,18 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 		mode: 'onTouched',
 		// resolver: yupResolver(LoginSchema),
 	});
+
+	useEffect(() => {
+		getUsers()
+			.then((data) => {
+				setUsers(data);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				}
+			});
+	}, [navigate]);
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
@@ -41,7 +57,16 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 	function onSubmit(data, evt) {
 		evt.preventDefault();
 		setPopupAddTaskOpen(false);
-		addTask(data)
+		const newData = {
+			deadline: data.deadline,
+			description: data.description,
+			title: data.title,
+			reward_points: data.reward_points,
+			department: 'frontend',
+			assigned_to: executor,
+		};
+		console.log(newData);
+		addTask(newData)
 			.then(() => {
 				setPopupAddTaskOpen(false);
 			})
@@ -55,14 +80,11 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 	}
 
 	const handleClick = (name) => {
-		if (!executors.includes(name)) {
-			// setExecutors(executors.filter(executor => executor !== name));
-			setExecutors([...executors, name]);
-		}
+		setExecutor(name);
 	};
 
-	function handleRemoveExecutor(name) {
-		setExecutors(executors.filter((i) => i !== name));
+	function handleRemoveExecutor() {
+		setExecutor(null);
 	}
 
 	function setAreaStyle() {
@@ -111,18 +133,18 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 							className="popup-addtask__input-text"
 							placeholder="Добавьте описание задачи"
 							type="text"
-							name="discription"
-							id="discription"
+							name="description"
+							id="description"
 							onFocus={setAreaStyle}
-							{...register('discription', { required: false })}
+							{...register('description', { required: false })}
 						/>
 					</div>
 
 					<div className="popup-addtask__executors">
 						<p className="popup-addtask__executor">Исполнитель:&nbsp;</p>
-						{executors.map((executor) => (
-							<div className="popup-addtask__executor-block" key={executor}>
-								<p className="popup-addtask__executor-name">{executor}</p>
+						<div className="popup-addtask__executor-block">
+							<p className="popup-addtask__executor-name">{executor}</p>
+							{executor ? (
 								<button
 									type="button"
 									className="popup-addtask__executor-delete"
@@ -130,9 +152,8 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 								>
 									{}
 								</button>
-								<span>,&nbsp;</span>
-							</div>
-						))}
+							) : null}
+						</div>
 					</div>
 
 					<div className="popup-addtask__executors-element">

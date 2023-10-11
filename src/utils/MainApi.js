@@ -51,6 +51,19 @@ export function getUsersProgress() {
 }
 
 // блок 'Мои задачи'
+
+export function getUsers() {
+	const token = localStorage.getItem('token');
+	return fetch(`${BASE_URL}/api/users/`, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+		},
+	}).then(checkResponse);
+}
+
 export function getTasks() {
 	const token = localStorage.getItem('token');
 	return fetch(`${BASE_URL}/api/tasks/`, {
