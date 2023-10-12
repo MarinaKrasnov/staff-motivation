@@ -3,7 +3,8 @@ import React from 'react';
 // import diagram from '../../../images/profile/Loader 8.png';
 
 function ProgressDiagram() {
-	const progress = 47;
+	const progress = 46;
+	const proggressReflex = 100 - progress;
 	const today = new Date();
 	const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 	const formattedLastDayOfMonth = lastDayOfMonth.toLocaleDateString('ru-RU', {
@@ -27,12 +28,36 @@ function ProgressDiagram() {
 				</p>
 			</div>
 			<div className="section__diagram">
-				<div className="section__diagram-progress">{progress} %</div>
-				{/* <img
-					className="section__diagram-image"
-					src={diagram}
-					alt="диаграмма достижений"
-	/> */}
+				<div className="progress">
+					<svg
+						className="progress-circle"
+						id="progress-circle"
+						width="120"
+						height="120"
+					>
+						<circle
+							className="progress-bar"
+							r="57"
+							cx="60"
+							cy="60"
+							style={{
+								strokeDashoffset:
+									proggressReflex * 2 * Math.PI -
+									(50 / 100) * (proggressReflex * 2 * Math.PI),
+							}}
+						/>
+					</svg>
+					<p className="number">{progress}%</p>
+				</div>
+
+				{/* <div className="percent">
+					<svg className="progress">
+						<circle cx="70" cy="70" r="70" />
+						<circle cx="70" cy="70" r="70" />
+					</svg>
+
+				</div> */}
+
 				<div className="section__diagram-caption">
 					<p className="section__text">Заданий выполнено: 23</p>
 					<p className="section__text">Осталось до выполнения плана: 27</p>

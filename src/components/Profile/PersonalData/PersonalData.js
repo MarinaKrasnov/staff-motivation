@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React /* , { useEffect, useState } */ from 'react';
+import PropTypes from 'prop-types';
 import './PersonalData.scss';
 import changePhoto from '../../../images/change-photo.svg';
-import { getUsersInfo, setUsersInfo } from '../../../utils/MainApi';
+import { setUsersInfo } from '../../../utils/MainApi';
 // import photoProfile from '../../images/plug.svg';
 
-function PersonalData() {
+function PersonalData({ personalData, contacts }) {
 	const {
 		register,
 		handleSubmit,
@@ -17,25 +17,6 @@ function PersonalData() {
 		mode: 'onTouched',
 		// resolver: yupResolver(LoginSchema),
 	});
-
-	const navigate = useNavigate();
-
-	const [personalData, setPersonalData] = useState([]);
-	const [contacts, setContacts] = useState([]);
-
-	useEffect(() => {
-		getUsersInfo()
-			.then((data) => {
-				setContacts(data.contacts);
-				setPersonalData(data);
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				}
-				console.log(res);
-			});
-	}, [navigate]);
 
 	const firstNameInitial = personalData.first_name
 		? personalData.first_name.charAt(0).toUpperCase()
@@ -95,7 +76,7 @@ function PersonalData() {
 						<input
 							className="personal-data__input "
 							defaultValue={contacts.phone || ''}
-							type="text"
+							type="number"
 							name="phone"
 							id="phone"
 							{...register('phone', { required: false })}
@@ -190,3 +171,53 @@ function PersonalData() {
 }
 
 export default PersonalData;
+
+PersonalData.propTypes = {
+	contacts: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+
+	personalData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+};
+
+PersonalData.defaultProps = {
+	personalData: {
+		first_name: 'Имя',
+		last_name: 'Фамилия',
+		image: '',
+		department: 'Опредляется',
+		reward_points_for_current_month: 0,
+		reward_points: 0,
+		rating: 0,
+		birthday: '',
+		email: '',
+		role: '',
+		position: '',
+	},
+
+	contacts: {
+		linkedin: '',
+		github: '',
+		telegram: '',
+		phone: '',
+	},
+};
+
+/* contacts: PropTypes.shape({
+linkedin: PropTypes.string,
+github: PropTypes.string,
+telegram: PropTypes.string,
+phone: PropTypes.number,
+}), */
+/* personalData:
+PropTypes.shape({
+	first_name: PropTypes.string.isRequired,
+	last_name: PropTypes.string.isRequired,
+	image: PropTypes.string,
+	department: PropTypes.string,
+	reward_points_for_current_month: PropTypes.number,
+	reward_points: PropTypes.number,
+	rating: PropTypes.number,
+	birthday: PropTypes.number,
+	email: PropTypes.string,
+	role: PropTypes.string,
+	position: PropTypes.string,
+}), */
