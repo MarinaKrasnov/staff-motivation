@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../utils/ValidationSchemes';
 import * as MainApi from '../../utils/MainApi';
 import { ERROR_MESSAGES } from '../../utils/Config';
-// логотипы должны быть в самом низу
 import logo from '../../images/M-check.svg';
 import eyeButton from '../../images/Icon-hidden-pass.svg';
 

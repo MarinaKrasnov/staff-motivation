@@ -200,24 +200,3 @@ PersonalData.defaultProps = {
 		phone: '',
 	},
 };
-
-/* contacts: PropTypes.shape({
-linkedin: PropTypes.string,
-github: PropTypes.string,
-telegram: PropTypes.string,
-phone: PropTypes.number,
-}), */
-/* personalData:
-PropTypes.shape({
-	first_name: PropTypes.string.isRequired,
-	last_name: PropTypes.string.isRequired,
-	image: PropTypes.string,
-	department: PropTypes.string,
-	reward_points_for_current_month: PropTypes.number,
-	reward_points: PropTypes.number,
-	rating: PropTypes.number,
-	birthday: PropTypes.number,
-	email: PropTypes.string,
-	role: PropTypes.string,
-	position: PropTypes.string,
-}), */

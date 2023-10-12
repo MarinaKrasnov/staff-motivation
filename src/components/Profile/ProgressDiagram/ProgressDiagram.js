@@ -1,6 +1,5 @@
 import './ProgressDiagram.scss';
 import React from 'react';
-// import diagram from '../../../images/profile/Loader 8.png';
 
 function ProgressDiagram() {
 	const progress = 46;
@@ -28,15 +27,15 @@ function ProgressDiagram() {
 				</p>
 			</div>
 			<div className="section__diagram">
-				<div className="progress">
+				<div className="section__progress">
 					<svg
-						className="progress-circle"
+						className="section__progress-circle"
 						id="progress-circle"
 						width="120"
 						height="120"
 					>
 						<circle
-							className="progress-bar"
+							className="section__progress-bar"
 							r="57"
 							cx="60"
 							cy="60"
@@ -47,16 +46,8 @@ function ProgressDiagram() {
 							}}
 						/>
 					</svg>
-					<p className="number">{progress}%</p>
+					<p className="section__progress-number">{progress}%</p>
 				</div>
-
-				{/* <div className="percent">
-					<svg className="progress">
-						<circle cx="70" cy="70" r="70" />
-						<circle cx="70" cy="70" r="70" />
-					</svg>
-
-				</div> */}
 
 				<div className="section__diagram-caption">
 					<p className="section__text">Заданий выполнено: 23</p>

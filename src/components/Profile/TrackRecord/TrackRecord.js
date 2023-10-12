@@ -1,7 +1,6 @@
 import './TrackRecord.scss';
 import React, { useState } from 'react';
 import { trackRecordsList } from '../../../utils/constants';
-// import image from '../../../images/profile/image 26.jpg'
 
 function TrackRecord() {
 	const [tracksArray, setTracksArray] = useState(trackRecordsList);
