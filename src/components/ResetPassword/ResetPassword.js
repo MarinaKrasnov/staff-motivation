@@ -1,7 +1,6 @@
 import './ResetPassword.scss';
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPasswordSchema } from '../../utils/ValidationSchemes';
