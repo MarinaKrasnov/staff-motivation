@@ -214,7 +214,6 @@
 }
 
 @media (max-width: 1240px) {
-
 	.tasks__sort-button {
 		margin-right: 7px;
 	}
@@ -222,7 +221,7 @@
 	.tasks__sort-button-active {
 		margin-right: 8px;
 	}
-	.tasks__nav{
+	.tasks__nav {
 		margin-left: 20px;
 		width: 100%;
 	}
@@ -242,17 +241,17 @@
 			width: 80%;
 			padding-bottom: 3px;
 		}
-	
+
 		&__description-title {
 			width: 80%;
 			padding-top: 12px;
 		}
-	
+
 		&__description-text {
 			width: 80%;
 			padding-bottom: 10px;
 		}
-	
+
 		&__description {
 			width: 80%;
 			padding-top: 5px;
@@ -264,7 +263,6 @@
 		}
 	}
 }
-
 
 @media (max-width: 1024px) {
 	.tasks {

@@ -27,7 +27,6 @@ $background-color_7: #ffad0d;
 	background-color: $background-color_1;
 	border-radius: 24px;
 	padding: 24px 32px 21px;
-
 }
 
 .toptext {
@@ -71,10 +70,8 @@ $background-color_7: #ffad0d;
 	height: 8px;
 	border-radius: 5px;
 	overflow: hidden;
-	background-color: #D3E5FE;
+	background-color: #d3e5fe;
 }
-
-
 
 .progressFill {
 	height: 100%;
@@ -104,7 +101,6 @@ $background-color_7: #ffad0d;
 	padding-top: 4px;
 }
 
-
 @media (max-width: 1240px) {
 	.main {
 		margin: 0 35px;
@@ -126,9 +122,9 @@ $background-color_7: #ffad0d;
 	.progressBarDepartment {
 		width: 404px;
 	}
-	
+
 	.text {
 		font-size: 14px;
 		padding: 0;
 	}
-	}
+}

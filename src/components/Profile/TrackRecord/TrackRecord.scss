@@ -1,5 +1,5 @@
 .trackrecord {
-	margin: 37px 0 30px;
+	margin: 37px 20px 30px 0;
 	max-width: 1087px;
 	background-color: inherit;
 	display: flex;
@@ -30,10 +30,11 @@
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 20px;
+		
 	}
 
 	&__item {
-		width: 498px;
+		max-width: 498px;
 		border-radius: 24px;
 		margin: 0;
 		padding: 25px 30px;
@@ -99,7 +100,7 @@
 	}
 
 	&__bar {
-		width: 395px;
+		max-width: 395px;
 		height: 8px;
 		border-radius: 5px;
 		overflow: hidden;
