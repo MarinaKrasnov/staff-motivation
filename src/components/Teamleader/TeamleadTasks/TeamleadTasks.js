@@ -231,7 +231,7 @@ function TeamleadTasks() {
 						}
 						onClick={handleAllTasksSort}
 					>
-						Все задачи
+						Все&nbsp;задачи
 					</button>
 					<button
 						className={
