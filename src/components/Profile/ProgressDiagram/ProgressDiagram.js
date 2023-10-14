@@ -1,5 +1,5 @@
 import './ProgressDiagram.scss';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function ProgressDiagram() {
 	const progress = 46;
@@ -17,6 +17,18 @@ function ProgressDiagram() {
 		month: '2-digit',
 		year: 'numeric',
 	});
+
+	const [desktopWidth, setDesktopWidth] = useState(false);
+
+	useEffect(() => {
+		function handleResize() {
+			setDesktopWidth(window.innerWidth > 1100);
+		}
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
 
 	return (
 		<section className="section">
@@ -36,9 +48,9 @@ function ProgressDiagram() {
 					>
 						<circle
 							className="section__progress-bar"
-							r="57"
-							cx="60"
-							cy="60"
+							r={desktopWidth ? '57' : '47'}
+							cx={desktopWidth ? '60' : '50'}
+							cy={desktopWidth ? '60' : '50'}
 							style={{
 								strokeDashoffset:
 									proggressReflex * 2 * Math.PI -
@@ -50,8 +62,10 @@ function ProgressDiagram() {
 				</div>
 
 				<div className="section__diagram-caption">
-					<p className="section__text">Заданий выполнено: 23</p>
-					<p className="section__text">Осталось до выполнения плана: 27</p>
+					<p className="section__diagram-text">Заданий выполнено: 23</p>
+					<p className="section__diagram-text">
+						Осталось до&nbsp;выполнения&nbsp;плана:&nbsp;27
+					</p>
 				</div>
 			</div>
 		</section>
