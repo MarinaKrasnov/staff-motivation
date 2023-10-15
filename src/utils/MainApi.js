@@ -50,7 +50,7 @@ export function getUsersProgress() {
 	}).then(checkResponse);
 }
 
-// блок 'Мои задачи'
+/* блок Тимлида */
 
 export function getUsers() {
 	const token = localStorage.getItem('token');

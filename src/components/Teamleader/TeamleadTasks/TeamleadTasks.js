@@ -3,19 +3,19 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import iconFilter from '../../../images/SortAscending.png';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
-import { tasksList } from '../../../utils/constants';
+// import { tasksList } from '../../../utils/constants';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
 
 import {
-	/* getTasks, */ getTaskInfo,
+	/* getTasks,  getUsers */ getTaskInfo,
 	reviewTask,
 } from '../../../utils/MainApi';
 
 function TeamleadTasks() {
 	const navigate = useNavigate();
 
-	const [tasksArray, setTasksArray] = useState(tasksList);
+	const [tasksArray, setTasksArray] = useState([]);
 	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
 	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(false);
 	const [isPopupEditTaskOpen, setPopupEditTaskOpen] = useState(false);
@@ -56,9 +56,23 @@ function TeamleadTasks() {
 	);
 
 	/* useEffect(() => {
+		getUsers()
+			.then((data) => {
+				console.log(data)
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				} else {
+					setTasksArray([]);
+				}
+			});
+	}, [navigate]); */
+
+	/* useEffect(() => {
 		getTasks()
 			.then((data) => {
-				const sort = data.tasks.sort(
+				const sort = data.sort(
 					(a, b) => new Date(a.created_at) - new Date(b.created_at)
 				);
 				setTasksArray(sort);
@@ -104,7 +118,7 @@ function TeamleadTasks() {
 		setActiveTaskstButton(true);
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
-		const filteredTasks = tasksList.filter(
+		const filteredTasks = storagedArray.filter(
 			(task) => task.status === 'created' || task.status === 'rejected'
 		);
 		setTasksArray(filteredTasks);
@@ -115,7 +129,7 @@ function TeamleadTasks() {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		setTimeOutTasksButton(false);
-		const filteredTasks = tasksList.filter(
+		const filteredTasks = storagedArray.filter(
 			(task) => task.status === 'sent_for_review'
 		);
 		setTasksArray(filteredTasks);
@@ -126,7 +140,7 @@ function TeamleadTasks() {
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
-		const filteredTasks = tasksList.filter(
+		const filteredTasks = storagedArray.filter(
 			(task) => task.status === 'is_overdue'
 		);
 		setTasksArray(filteredTasks);
