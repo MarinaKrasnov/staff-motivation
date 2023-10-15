@@ -128,7 +128,7 @@
 			padding-bottom: 30px;
 
 			&::-webkit-scrollbar-thumb {
-				background-color: #CACDD5;
+				background-color: #cacdd5;
 				border-radius: 4px;
 			}
 
@@ -145,16 +145,15 @@
 		&__item {
 			min-width: 343px;
 			padding: 0 20px 20px;
-
 		}
-		 &__title {
+		&__title {
 			margin: 40px 0 0;
 			padding: 0;
-		 }
+		}
 		&__info {
 			margin-left: 5px;
 		}
-	
+
 		&__subtitle {
 			margin-top: -7px;
 			overflow: hidden;
@@ -169,11 +168,10 @@
 
 		&__bar {
 			max-width: 395px;
-		} 
+		}
 
 		&__image {
-margin-top: 27px;
+			margin-top: 27px;
 		}
-	
 	}
 }
