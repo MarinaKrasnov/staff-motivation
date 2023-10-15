@@ -32,7 +32,7 @@ function MyTask({ task, onClick }) {
 	}, []);
 
 	useEffect(() => {
-		if (windowWidth < 1024) {
+		if (windowWidth <= 1024) {
 			setDesktopWidth(false);
 		}
 	}, [windowWidth]);

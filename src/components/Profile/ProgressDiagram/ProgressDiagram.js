@@ -18,17 +18,26 @@ function ProgressDiagram() {
 		year: 'numeric',
 	});
 
-	const [desktopWidth, setDesktopWidth] = useState(false);
+	const [desktopWidth, setDesktopWidth] = useState(true);
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
 	useEffect(() => {
-		function handleResize() {
-			setDesktopWidth(window.innerWidth > 1100);
-		}
+		const handleResize = () => {
+			setWindowWidth(window.innerWidth);
+		};
+
 		window.addEventListener('resize', handleResize);
+
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (windowWidth <= 1100) {
+			setDesktopWidth(false);
+		}
+	}, [windowWidth]);
 
 	return (
 		<section className="section">
@@ -40,24 +49,35 @@ function ProgressDiagram() {
 			</div>
 			<div className="section__diagram">
 				<div className="section__progress">
-					<svg
-						className="section__progress-circle"
-						id="progress-circle"
-						width="120"
-						height="120"
-					>
-						<circle
-							className="section__progress-bar"
-							r={desktopWidth ? '57' : '47'}
-							cx={desktopWidth ? '60' : '50'}
-							cy={desktopWidth ? '60' : '50'}
-							style={{
-								strokeDashoffset:
-									proggressReflex * 2 * Math.PI -
-									(50 / 100) * (proggressReflex * 2 * Math.PI),
-							}}
-						/>
-					</svg>
+					{desktopWidth ? (
+						<svg className="section__progress-circle" id="progress-circle">
+							<circle
+								className="section__progress-bar"
+								r="57"
+								cx="60"
+								cy="60"
+								style={{
+									strokeDashoffset:
+										proggressReflex * 2 * Math.PI -
+										(50 / 100) * (proggressReflex * 2 * Math.PI),
+								}}
+							/>
+						</svg>
+					) : (
+						<svg className="section__progress-circle-mini" id="progress-circle">
+							<circle
+								className="section__progress-bar"
+								r="47"
+								cx="50"
+								cy="50"
+								style={{
+									strokeDashoffset:
+										proggressReflex * 2 * Math.PI -
+										(50 / 100) * (proggressReflex * 2 * Math.PI),
+								}}
+							/>
+						</svg>
+					)}
 					<p className="section__progress-number">{progress}%</p>
 				</div>
 

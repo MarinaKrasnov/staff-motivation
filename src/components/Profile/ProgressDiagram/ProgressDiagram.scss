@@ -58,6 +58,17 @@
 			width: 120px;
 			height: 120px;
 			align-self: center;
+			display: block;
+		}
+
+		&-circle-mini {
+			transform: rotate(-90deg);
+			background-color: #fff5ce;
+			border-radius: 50%;
+			width: 100px;
+			height: 100px;
+			align-self: center;
+			display: none;
 		}
 
 		&-bar {
@@ -113,8 +124,11 @@
 
 		&__progress {
 			&-circle {
-				width: 100px;
-				height: 100px;
+				display: none;
+			}
+
+			&-circle-mini {
+				display: block;
 			}
 
 			&-bar {

@@ -3,17 +3,27 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function WorkExperience({ hardSkills }) {
-	const [desktopWidth, setDesktopWidth] = useState(false);
+	const [desktopWidth, setDesktopWidth] = useState(true);
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
 	useEffect(() => {
-		function handleResize() {
-			setDesktopWidth(window.innerWidth > 1100);
-		}
+		const handleResize = () => {
+			setWindowWidth(window.innerWidth);
+		};
+
 		window.addEventListener('resize', handleResize);
+
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (windowWidth <= 1024) {
+			setDesktopWidth(false);
+		}
+	}, [windowWidth]);
+
 	return (
 		<>
 			<section className="section">
