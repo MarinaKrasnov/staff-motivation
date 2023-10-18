@@ -43,7 +43,7 @@ function DepartmentTasks({
 				<>
 					<button
 						className="department-tasks__add-task"
-						onClick={handleAddTaskPopupOpen}
+						onClick={() => handleAddTaskPopupOpen(name)}
 					>
 						Добавить задачу
 					</button>

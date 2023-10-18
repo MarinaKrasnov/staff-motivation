@@ -11,11 +11,7 @@ export const LoginSchema = yup.object().shape({
 			const RegEx = emailRegex;
 			return RegEx.test(String(value).toLowerCase()); // регулярное выражение для валидации е-мейла
 		}),
-	password: yup
-		.string()
-		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
-		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG)
-		.required(ERROR_MESSAGES.PASSWORD.EMPTY),
+	password: yup.string().required(ERROR_MESSAGES.PASSWORD.EMPTY),
 });
 
 export const ResetPasswordSchema = yup.object().shape({
@@ -49,7 +45,7 @@ export const RegisterSchema = yup.object().shape({
 	password: yup
 		.string()
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
-		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
+		.min(8, ERROR_MESSAGES.PASSWORD.TO_SHORT)
 		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
 
 	confirmPassword: yup
@@ -65,7 +61,7 @@ export const NewPasswordSchema = yup.object().shape({
 	password: yup
 		.string()
 		.required(ERROR_MESSAGES.PASSWORD.EMPTY)
-		.min(4, ERROR_MESSAGES.PASSWORD.TO_SHORT)
+		.min(8, ERROR_MESSAGES.PASSWORD.TO_SHORT)
 		.max(30, ERROR_MESSAGES.PASSWORD.TO_LONG),
 
 	confirmPassword: yup

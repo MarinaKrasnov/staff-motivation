@@ -3,12 +3,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import iconFilter from '../../../images/SortAscending.png';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
-// import { tasksList } from '../../../utils/constants';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
 
 import {
-	/* getTasks,  getUsers */ getTaskInfo,
+	getTasks,
+	getUsers,
+	getTaskInfo,
 	reviewTask,
 } from '../../../utils/MainApi';
 
@@ -26,10 +27,11 @@ function TeamleadTasks() {
 	const [popupInfo, setPopupInfo] = useState([]);
 	const [statusName, setStatusName] = useState('');
 	const [isDeadlineSort, setDeadlineSort] = useState(false);
+	const [users, setUsers] = useState([]);
+	const [department, setDepartmentName] = useState('');
 
 	const { reward_points, title, description, created_at, deadline, id } =
 		popupInfo;
-
 	let { status } = popupInfo;
 
 	const dateDeadline = new Date(deadline);
@@ -42,23 +44,19 @@ function TeamleadTasks() {
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
-	const marketingItems = tasksArray.filter(
-		(item) => item.department === 'Маркетинг'
-	);
+	const QAItems = tasksArray.filter((item) => item.department === 'QA');
 	const backendItems = tasksArray.filter(
-		(item) => item.department === 'Бэкенд'
+		(item) => item.department === 'Backend'
 	);
 	const frontendItems = tasksArray.filter(
-		(item) => item.department === 'Фронтенд'
+		(item) => item.department === 'Frontend'
 	);
-	const designItems = tasksArray.filter(
-		(item) => item.department === 'UX/UI дизайн'
-	);
+	const designItems = tasksArray.filter((item) => item.department === 'UX_UI');
 
-	/* useEffect(() => {
+	useEffect(() => {
 		getUsers()
 			.then((data) => {
-				console.log(data)
+				setUsers(data);
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -67,9 +65,9 @@ function TeamleadTasks() {
 					setTasksArray([]);
 				}
 			});
-	}, [navigate]); */
+	}, [navigate]);
 
-	/* useEffect(() => {
+	useEffect(() => {
 		getTasks()
 			.then((data) => {
 				const sort = data.sort(
@@ -85,7 +83,7 @@ function TeamleadTasks() {
 					setTasksArray([]);
 				}
 			});
-	}, [navigate]); */
+	}, [navigate]);
 
 	useEffect(() => {
 		if (status === 'created') {
@@ -230,7 +228,8 @@ function TeamleadTasks() {
 			});
 	}
 
-	const handleAddTaskPopupOpen = useCallback(() => {
+	const handleAddTaskPopupOpen = useCallback((departmentName) => {
+		setDepartmentName(departmentName);
 		setPopupAddTaskOpen(true);
 	}, []);
 
@@ -308,8 +307,8 @@ function TeamleadTasks() {
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 				/>
 				<DepartmentTasks
-					name="Маркетинг"
-					array={marketingItems}
+					name="Quality Assurance"
+					array={QAItems}
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 				/>
@@ -359,12 +358,17 @@ function TeamleadTasks() {
 				) : null}
 
 				{isPopupAddTaskOpen ? (
-					<PopupAddTask setPopupAddTaskOpen={setPopupAddTaskOpen} />
+					<PopupAddTask
+						setPopupAddTaskOpen={setPopupAddTaskOpen}
+						users={users}
+						departmentName={department}
+					/>
 				) : null}
 				{isPopupEditTaskOpen ? (
 					<PopupEditTask
 						setPopupEditTaskOpen={setPopupEditTaskOpen}
 						popupInfo={popupInfo}
+						users={users}
 					/>
 				) : null}
 			</div>

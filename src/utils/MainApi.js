@@ -132,16 +132,17 @@ export function rejectTask(id, data) {
 }
 
 export function addTask(data) {
-	const token = localStorage.getItem('token');
+	// const token = localStorage.getItem('token');
+	// console.log(token)
 	return fetch(`${BASE_URL}/api/tasks/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Token ${token}`,
-			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
+			// Authorization: `Token ${token}`,
+			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
 		},
-		body: JSON.stringify({ data }),
+		body: JSON.stringify(data),
 	}).then(checkResponse);
 }
 

@@ -3,23 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { addTask, getUsers } from '../../../../utils/MainApi';
+import { addTask } from '../../../../utils/MainApi';
 
-function PopupAddTask({ setPopupAddTaskOpen }) {
+function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 	const navigate = useNavigate();
-	const [users, setUsers] = useState([]);
 	const [executor, setExecutor] = useState('');
 	const [isAreaBorder, setAreaBorder] = useState(false);
+	const [selectedUserId, setSelectedUserId] = useState();
+	const [departmentData, setDepartmentData] = useState('');
 
-	console.log(users);
-
-	const names = [
-		'Иванов Иван',
-		'Петров Петр',
-		'Сергеев Сергей',
-		'Андреев Андрей',
-		'Кирилов Кирил',
-	];
+	console.log(selectedUserId);
+	console.log(departmentData);
 
 	const {
 		register,
@@ -33,16 +27,18 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 	});
 
 	useEffect(() => {
-		getUsers()
-			.then((data) => {
-				setUsers(data);
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				}
-			});
-	}, [navigate]);
+		if (departmentName === 'Фронтенд') {
+			setDepartmentData('frontend');
+		} else if (departmentName === 'Бэкенд') {
+			setDepartmentData('backend');
+		} else if (departmentName === 'Quality Assurance') {
+			setDepartmentData('QA');
+		} else if (departmentName === 'UX/UI дизайн') {
+			setDepartmentData('UX_UI');
+		} else {
+			setDepartmentData('other');
+		}
+	}, [departmentName]);
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
@@ -55,15 +51,18 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 	}
 
 	function onSubmit(data, evt) {
+		const date = new Date(data.deadline);
+		const formattedDate = date.toISOString();
 		evt.preventDefault();
 		setPopupAddTaskOpen(false);
 		const newData = {
-			deadline: data.deadline,
+			status: 'created',
+			deadline: formattedDate,
 			description: data.description,
 			title: data.title,
 			reward_points: data.reward_points,
-			department: 'frontend',
-			assigned_to: executor,
+			department: departmentData,
+			assigned_to: 6 /* selectedUserId */,
 		};
 		console.log(newData);
 		addTask(newData)
@@ -79,7 +78,8 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 			});
 	}
 
-	const handleClick = (name) => {
+	const handleClick = (name, id) => {
+		setSelectedUserId(id);
 		setExecutor(name);
 	};
 
@@ -158,14 +158,19 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 
 					<div className="popup-addtask__executors-element">
 						<ul className="popup-addtask__executors-list">
-							{names.map((name) => (
-								<li key={name}>
+							{users.map((name) => (
+								<li key={name.id}>
 									<button
 										type="button"
 										className="popup-addtask__executors-name"
-										onClick={() => handleClick(name)}
+										onClick={() =>
+											handleClick(
+												`${name.last_name} ${name.first_name}`,
+												name.id
+											)
+										}
 									>
-										{name}
+										{name.last_name} {name.first_name}
 									</button>
 								</li>
 							))}
@@ -181,7 +186,7 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 									: 'popup-addtask__input-bottom '
 							}
 							placeholder="дд.мм"
-							type="text"
+							type="date"
 							name="dealine"
 							id="deadline"
 							{...register('deadline', { required: false })}
@@ -196,7 +201,7 @@ function PopupAddTask({ setPopupAddTaskOpen }) {
 									? 'popup-addtask__input-bottom-filled'
 									: 'popup-addtask__input-bottom '
 							}
-							type="text"
+							type="number"
 							name="reward_points"
 							id="reward_points"
 							{...register('reward_points', { required: false })}
@@ -215,4 +220,12 @@ export default PopupAddTask;
 
 PopupAddTask.propTypes = {
 	setPopupAddTaskOpen: PropTypes.func.isRequired,
+	departmentName: PropTypes.string.isRequired,
+	users: PropTypes.arrayOf(
+		PropTypes.shape({
+			first_name: PropTypes.string,
+			last_name: PropTypes.string,
+			id: PropTypes.number,
+		})
+	).isRequired,
 };
