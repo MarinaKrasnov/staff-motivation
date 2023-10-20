@@ -1,14 +1,15 @@
 import './PopupEditTask.scss';
-import React, { useState } from 'react';
+import React, { useState /* useEffect */ } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { editTask } from '../../../../utils/MainApi';
 
-function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
+function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 	const navigate = useNavigate();
 
 	const {
+		assigned_to,
 		status,
 		reward_points,
 		title,
@@ -17,16 +18,19 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 		deadline,
 		id,
 	} = popupInfo;
-	const [executors, setExecutors] = useState([]);
-	const [isAreaBorder, setAreaBorder] = useState(false);
 
-	const names = [
-		'Иванов Иван',
-		'Петров Петр',
-		'Сергеев Сергей',
-		'Андреев Андрей',
-		'Кирилов Кирил',
-	];
+	function findUserById(userId) {
+		const userName = users.find((user) => user.id === userId);
+		return userName ? `${userName.last_name} ${userName.first_name}` : null;
+	}
+
+	const userName = findUserById(assigned_to);
+
+	const [executor, setExecutor] = useState(userName);
+	const [isAreaBorder, setAreaBorder] = useState(false);
+	const [selectedUserId, setSelectedUserId] = useState();
+
+	console.log(selectedUserId);
 
 	const {
 		register,
@@ -58,16 +62,10 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 		setPopupEditTaskOpen(false);
 	}
 
-	const handleClick = (name) => {
-		if (!executors.includes(name)) {
-			// setExecutors(executors.filter(executor => executor !== name));
-			setExecutors([...executors, name]);
-		}
+	const handleClick = (name, userId) => {
+		setSelectedUserId(userId);
+		setExecutor(name);
 	};
-
-	function handleRemoveExecutor(name) {
-		setExecutors(executors.filter((i) => i !== name));
-	}
 
 	function setAreaStyle() {
 		setAreaBorder(true);
@@ -132,31 +130,26 @@ function PopupEditTask({ setPopupEditTaskOpen, popupInfo }) {
 
 					<div className="popup-addtask__executors">
 						<p className="popup-addtask__executor">Исполнитель:&nbsp;</p>
-						{executors.map((executor) => (
-							<div className="popup-addtask__executor-block" key={executor}>
-								<p className="popup-addtask__executor-name">{executor}</p>
-								<button
-									type="button"
-									className="popup-addtask__executor-delete"
-									onClick={() => handleRemoveExecutor(executor)}
-								>
-									{}
-								</button>
-								<span>,&nbsp;</span>
-							</div>
-						))}
+						<div className="popup-addtask__executor-block">
+							<p className="popup-addtask__executor-name">{executor}</p>
+						</div>
 					</div>
 
 					<div className="popup-addtask__executors-element">
 						<ul className="popup-addtask__executors-list">
-							{names.map((name) => (
-								<li key={name}>
+							{users.map((name) => (
+								<li key={name.id}>
 									<button
 										type="button"
 										className="popup-addtask__executors-name"
-										onClick={() => handleClick(name)}
+										onClick={() =>
+											handleClick(
+												`${name.last_name} ${name.first_name}`,
+												name.id
+											)
+										}
 									>
-										{name}
+										{name.last_name} {name.first_name}
 									</button>
 								</li>
 							))}
@@ -235,6 +228,13 @@ PopupEditTask.propTypes = {
 			department: PropTypes.string.isRequired,
 		})
 	),
+	users: PropTypes.arrayOf(
+		PropTypes.shape({
+			first_name: PropTypes.string,
+			last_name: PropTypes.string,
+			id: PropTypes.number,
+		})
+	).isRequired,
 };
 
 PopupEditTask.defaultProps = {

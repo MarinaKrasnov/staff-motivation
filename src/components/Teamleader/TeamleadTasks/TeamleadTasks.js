@@ -1,22 +1,20 @@
 import './TeamleadTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import iconFilter from '../../../images/SortAscending.png';
+import PropTypes from 'prop-types';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
+import iconFilter from '../../../images/SortAscending.png';
 
-import {
-	getTasks,
-	getUsers,
-	getTaskInfo,
-	reviewTask,
-} from '../../../utils/MainApi';
+import { getUsers, getTaskInfo, reviewTask } from '../../../utils/MainApi';
 
-function TeamleadTasks() {
+function TeamleadTasks({ taskArray }) {
 	const navigate = useNavigate();
 
-	const [tasksArray, setTasksArray] = useState([]);
+	const tasksFromTeamlead = taskArray.filter((task) => task.assigned_to !== 27);
+
+	const [tasksArray, setTasksArray] = useState(tasksFromTeamlead);
 	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
 	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(false);
 	const [isPopupEditTaskOpen, setPopupEditTaskOpen] = useState(false);
@@ -44,37 +42,19 @@ function TeamleadTasks() {
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
-	const QAItems = tasksArray.filter((item) => item.department === 'QA');
+	const QAItems = tasksArray.filter((item) => item.department === 'qa');
 	const backendItems = tasksArray.filter(
-		(item) => item.department === 'Backend'
+		(item) => item.department === 'backend'
 	);
 	const frontendItems = tasksArray.filter(
-		(item) => item.department === 'Frontend'
+		(item) => item.department === 'frontend'
 	);
-	const designItems = tasksArray.filter((item) => item.department === 'UX_UI');
+	const designItems = tasksArray.filter((item) => item.department === 'ux_ui');
 
 	useEffect(() => {
 		getUsers()
 			.then((data) => {
 				setUsers(data);
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				} else {
-					setTasksArray([]);
-				}
-			});
-	}, [navigate]);
-
-	useEffect(() => {
-		getTasks()
-			.then((data) => {
-				const sort = data.sort(
-					(a, b) => new Date(a.created_at) - new Date(b.created_at)
-				);
-				setTasksArray(sort);
-				localStorage.setItem('myTasks', JSON.stringify(sort));
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -377,3 +357,19 @@ function TeamleadTasks() {
 }
 
 export default TeamleadTasks;
+
+TeamleadTasks.propTypes = {
+	taskArray: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			status: PropTypes.string.isRequired,
+			reward_points: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			created_at: PropTypes.string.isRequired,
+			deadline: PropTypes.string.isRequired,
+			assigned_to: PropTypes.number.isRequired,
+			department: PropTypes.string.isRequired,
+		})
+	).isRequired,
+};

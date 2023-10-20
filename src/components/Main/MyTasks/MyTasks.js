@@ -1,14 +1,19 @@
 import './MyTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import MyTask from '../MyTask/MyTask';
 import iconFilter from '../../../images/SortAscending.png';
-import { getTasks, getTaskInfo, confirmTask } from '../../../utils/MainApi';
+import {
+	/* getTasks, */ getTaskInfo,
+	confirmTask,
+} from '../../../utils/MainApi';
 
-function MyTasks() {
+function MyTasks({ tasksToTeamlead }) {
 	const navigate = useNavigate();
 
-	const [tasksArray, setTasksArray] = useState([]);
+	const [tasksArray, setTasksArray] = useState(tasksToTeamlead);
 	const [isArray, setArray] = useState(true);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
@@ -20,7 +25,7 @@ function MyTasks() {
 	const [isDeadlineSort, setDeadlineSort] = useState(false);
 
 	const {
-		status,
+		approved,
 		reward_points,
 		title,
 		description,
@@ -28,6 +33,8 @@ function MyTasks() {
 		deadline,
 		id,
 	} = popupInfo;
+
+	const { status } = popupInfo;
 
 	const dateDeadline = new Date(deadline);
 	const dateCreated = new Date(created_at);
@@ -39,7 +46,7 @@ function MyTasks() {
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
-	useEffect(() => {
+	/* useEffect(() => {
 		getTasks()
 			.then((data) => {
 				const sort = data.sort(
@@ -55,7 +62,9 @@ function MyTasks() {
 					setTasksArray([]);
 				}
 			});
-	}, [navigate]);
+	}, [navigate]); */
+
+	console.log(tasksArray);
 
 	useEffect(() => {
 		if (tasksArray.length === 0 || null) {
@@ -71,19 +80,19 @@ function MyTasks() {
 		if (status === 'created') {
 			setStatusName('на выполнении');
 		}
-		if (status === 'Просрочена') {
+		if (status === 'created' && approved === true) {
 			setStatusName('истёк срок задачи');
 		}
-		if (status === 'Принята и выполнена') {
+		if (status === 'approved') {
 			setStatusName('подтверждено');
 		}
 		if (status === 'sent_for_review') {
 			setStatusName('на подтверждении');
 		}
-		if (status === 'rejected') {
+		if (status === 'returned_for_revision') {
 			setStatusName('на доработке');
 		}
-	}, [status]);
+	}, [status, approved]);
 
 	function handleAllTasksSort() {
 		setAllTasksButton(true);
@@ -102,7 +111,8 @@ function MyTasks() {
 		setInApproveTasksButton(false);
 		if (storagedArray) {
 			const filteredTasks = storagedArray.filter(
-				(task) => task.status === 'created' || task.status === 'reject'
+				(task) =>
+					task.status === 'created' || task.status === 'returned_for_revision'
 			);
 			setTasksArray(filteredTasks);
 		}
@@ -128,14 +138,14 @@ function MyTasks() {
 		setAllTasksButton(false);
 		if (storagedArray) {
 			const filteredTasks = storagedArray.filter(
-				(task) => task.status === 'Просрочена'
+				(task) => task.status === 'created' && task.approved === true
 			);
 			setTasksArray(filteredTasks);
 		}
 	}
 
 	function handleDeadlineSort() {
-		const notToSort = 'sent_for_review' || 'Принята и выполнена';
+		const notToSort = 'sent_for_review' || 'approved';
 
 		if (isDeadlineSort) {
 			setDeadlineSort(false);
@@ -199,8 +209,10 @@ function MyTasks() {
 
 	function confirmTaskPopup() {
 		confirmTask(id, popupInfo)
-			.then(() => {
+			.then((data) => {
+				console.log(data);
 				setIsPopupOpen(false);
+				// setTasksArray(data);
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -314,3 +326,19 @@ function MyTasks() {
 	);
 }
 export default MyTasks;
+
+MyTasks.propTypes = {
+	tasksToTeamlead: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			status: PropTypes.string.isRequired,
+			reward_points: PropTypes.number.isRequired,
+			title: PropTypes.string.isRequired,
+			description: PropTypes.string.isRequired,
+			created_at: PropTypes.string.isRequired,
+			deadline: PropTypes.string.isRequired,
+			assigned_to: PropTypes.number.isRequired,
+			department: PropTypes.string.isRequired,
+		})
+	).isRequired,
+};

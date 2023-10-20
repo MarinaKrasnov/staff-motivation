@@ -15,7 +15,7 @@ import ModalConfirm from './ModalConfirm/ModalConfirm';
 import ModalUpload from './ModalUpload/ModalUpload';
 import Notifications from './Header/Notifications/Notifications';
 import Teamleader from '../Teamleader/TeamleadTasks/TeamleadTasks';
-import { getUserData, getNotification } from '../../utils/MainApi';
+import { getUserData, getNotification, getTasks } from '../../utils/MainApi';
 import DevelopingPage from './DevelopingPage/DevelopingPage';
 
 function App() {
@@ -35,7 +35,9 @@ function App() {
 		reward_points_for_current_month: '0',
 		reward_points: '',
 		rating: '',
+		id: '',
 	});
+	const [tasksArray, setTasksArray] = useState([]);
 
 	function removeToken() {
 		if (!isCheckboxPressed) {
@@ -47,19 +49,26 @@ function App() {
 
 	useEffect(() => {
 		if (loggedIn) {
-			getUserData()
-				.then((data) => {
-					if (data.length > 0) {
-						setUserData(data[0]);
+			Promise.all([getUserData(), getTasks(), getNotification()])
+				.then(([userInfo, tasksArrayData, notification]) => {
+					if (userInfo.length > 0) {
+						setUserData(userInfo[0]);
 					} else {
 						console.log('Ответ сервера не содержит данных пользователя.');
 					}
+					const sort = tasksArrayData.sort(
+						(a, b) => new Date(a.created_at) - new Date(b.created_at)
+					);
+					setTasksArray(tasksArrayData);
+					localStorage.setItem('myTasks', JSON.stringify(sort));
+					setNotificationsData(notification);
 				})
 				.catch((res) => {
 					if (res === 500) {
 						navigate('/server-error');
 					}
 					console.log(res);
+					setTasksArray([]);
 				});
 		}
 	}, [navigate, loggedIn, token]);
@@ -92,23 +101,6 @@ function App() {
 		}, 50);
 	}, []);
 
-	useEffect(() => {
-		if (loggedIn) {
-			const fetchData = async () => {
-				try {
-					const data = await getNotification();
-					setNotificationsData(data);
-				} catch (res) {
-					if (res === 500) {
-						navigate('/server-error');
-					}
-					console.log(res);
-				}
-			};
-			fetchData();
-		}
-	}, [navigate, loggedIn]);
-
 	return (
 		<div className="App">
 			<Routes>
@@ -129,7 +121,7 @@ function App() {
 								onExit={handleLogOut}
 							/>
 							<SideNavbar />
-							<Main />
+							<Main taskArray={tasksArray} />
 						</ProtectedRoute>
 					}
 				/>
@@ -171,7 +163,7 @@ function App() {
 								onExit={handleLogOut}
 							/>
 							<SideNavbar />
-							<Teamleader />
+							<Teamleader taskArray={tasksArray} />
 						</ProtectedRoute>
 					}
 				/>

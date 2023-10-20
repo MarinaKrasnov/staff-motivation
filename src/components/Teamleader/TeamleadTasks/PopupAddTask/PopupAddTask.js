@@ -11,10 +11,6 @@ function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 	const [isAreaBorder, setAreaBorder] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState();
 	const [departmentData, setDepartmentData] = useState('');
-
-	console.log(selectedUserId);
-	console.log(departmentData);
-
 	const {
 		register,
 		handleSubmit,
@@ -32,9 +28,9 @@ function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 		} else if (departmentName === 'Бэкенд') {
 			setDepartmentData('backend');
 		} else if (departmentName === 'Quality Assurance') {
-			setDepartmentData('QA');
+			setDepartmentData('qa');
 		} else if (departmentName === 'UX/UI дизайн') {
-			setDepartmentData('UX_UI');
+			setDepartmentData('ux_ui');
 		} else {
 			setDepartmentData('other');
 		}
@@ -62,9 +58,8 @@ function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 			title: data.title,
 			reward_points: data.reward_points,
 			department: departmentData,
-			assigned_to: 6 /* selectedUserId */,
+			assigned_to: selectedUserId,
 		};
-		console.log(newData);
 		addTask(newData)
 			.then(() => {
 				setPopupAddTaskOpen(false);
