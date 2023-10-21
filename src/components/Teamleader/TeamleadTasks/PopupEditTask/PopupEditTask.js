@@ -1,5 +1,5 @@
 import './PopupEditTask.scss';
-import React, { useState /* useEffect */ } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
@@ -7,8 +7,8 @@ import { editTask } from '../../../../utils/MainApi';
 
 function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 	const navigate = useNavigate();
-
 	const {
+		is_overdue,
 		assigned_to,
 		status,
 		reward_points,
@@ -19,18 +19,17 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 		id,
 	} = popupInfo;
 
-	function findUserById(userId) {
-		const userName = users.find((user) => user.id === userId);
-		return userName ? `${userName.last_name} ${userName.first_name}` : null;
-	}
-
-	const userName = findUserById(assigned_to);
-
-	const [executor, setExecutor] = useState(userName);
+	const [executor, setExecutor] = useState();
 	const [isAreaBorder, setAreaBorder] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState();
+	const [statusName, setStatusName] = useState('');
 
-	console.log(selectedUserId);
+	useEffect(() => {
+		const userName = users.find((user) => user.id === assigned_to);
+		const firstName = userName ? userName.first_name : '';
+		const lastName = userName ? userName.last_name : '';
+		setExecutor(`${firstName} ${lastName}`);
+	}, [users, assigned_to]);
 
 	const {
 		register,
@@ -42,15 +41,38 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 		mode: 'onTouched',
 		// resolver: yupResolver(LoginSchema),
 	});
+	/* useEffect(() => {
+		const dateDeadline = new Date(deadline);
+		const options = { day: 'numeric', month: 'numeric' };
+		const formattedDateDeadline = dateDeadline.toLocaleDateString('ru-RU', options);
+		setDeadlineDate(formattedDateDeadline)
 
-	const dateDeadline = new Date(deadline);
-	const dateCreated = new Date(created_at);
+	}, [deadline]) */
 	const options = { day: 'numeric', month: 'numeric' };
-	const formattedDateDeadline = dateDeadline.toLocaleDateString(
-		'ru-RU',
-		options
-	);
-	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
+	const formattedDateDeadline = new Date(deadline).toLocaleDateString();
+
+	console.log(formattedDateDeadline);
+
+	const dateCreated = new Date(created_at);
+	const formattedDateCreated = dateCreated.toLocaleDateString('en-EN', options);
+
+	useEffect(() => {
+		if (status === 'created') {
+			setStatusName('на выполнении');
+		}
+		if (status === 'created' && is_overdue) {
+			setStatusName('истёк срок задачи');
+		}
+		if (status === 'approve') {
+			setStatusName('подтверждено');
+		}
+		if (status === 'sent_for_review') {
+			setStatusName('на подтверждении');
+		}
+		if (status === 'rejected') {
+			setStatusName('на доработке');
+		}
+	}, [status, is_overdue]);
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
@@ -73,7 +95,21 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 
 	function onSubmit(data, evt) {
 		evt.preventDefault();
-		editTask(id, data)
+		const date = new Date(data.deadline);
+		const newDeadline = date.toISOString();
+		const newData = {
+			id: popupInfo.id,
+			status: 'created',
+			reward_points: data.reward_points || reward_points,
+			department: popupInfo.department,
+			title: data.title || title,
+			description: data.description || description,
+			created_at: popupInfo.created_at,
+			deadline: newDeadline || deadline,
+			is_overdue: popupInfo.is_overdue,
+			assigned_to: selectedUserId,
+		};
+		editTask(id, newData)
 			.then(() => {
 				setPopupEditTaskOpen(false);
 			})
@@ -105,7 +141,7 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 					<p className="popup-addtask__created">
 						Создана {formattedDateCreated}
 					</p>
-					<p className="popup-addtask__status">Статус: {status}</p>
+					<p className="popup-addtask__status">Статус: {statusName}</p>
 				</div>
 
 				<form className="popup-addtask__form" onSubmit={handleSubmit(onSubmit)}>
@@ -129,10 +165,9 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 					</div>
 
 					<div className="popup-addtask__executors">
-						<p className="popup-addtask__executor">Исполнитель:&nbsp;</p>
-						<div className="popup-addtask__executor-block">
-							<p className="popup-addtask__executor-name">{executor}</p>
-						</div>
+						<p className="popup-addtask__executor">
+							Исполнитель:&nbsp;{executor}
+						</p>
 					</div>
 
 					<div className="popup-addtask__executors-element">
@@ -166,7 +201,7 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 							}
 							defaultValue={formattedDateDeadline || ''}
 							placeholder="дд.мм"
-							type="text"
+							type="date"
 							name="deadline"
 							id="deadline"
 							{...register('deadline', { required: false })}
@@ -217,6 +252,7 @@ PopupEditTask.propTypes = {
 	setPopupEditTaskOpen: PropTypes.func.isRequired,
 	popupInfo: PropTypes.arrayOf(
 		PropTypes.shape({
+			is_overdue: PropTypes.bool.isRequired,
 			id: PropTypes.number.isRequired,
 			status: PropTypes.string.isRequired,
 			reward_points: PropTypes.number.isRequired,
@@ -238,15 +274,18 @@ PopupEditTask.propTypes = {
 };
 
 PopupEditTask.defaultProps = {
-	popupInfo: {
-		id: 101,
-		status: 'created',
-		reward_points: 10,
-		title: 'Составить контент план',
-		description: 'Описание в разработке',
-		created_at: '2023-09-23T12:26:38.755Z',
-		deadline: '2023-09-29T12:26:38.755Z',
-		assigned_to: 0,
-		department: 'Маркетинг',
-	},
+	popupInfo: PropTypes.arrayOf(
+		PropTypes.shape({
+			is_overdue: true,
+			id: '',
+			status: '',
+			reward_points: 0,
+			title: '',
+			description: '',
+			created_at: '',
+			deadline: '',
+			assigned_to: 0,
+			department: '',
+		})
+	),
 };

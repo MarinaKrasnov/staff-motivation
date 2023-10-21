@@ -2,19 +2,18 @@ import './Main.scss';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import MyTasks from './MyTasks/MyTasks';
 import Achievements from './Achievements/Achievements';
 import DinamicWork from './DinamicWork/DinamicWork';
 import { getUsersProgress } from '../../utils/MainApi';
 
-function Main({ taskArray }) {
+function Main({ tasksArray }) {
 	const navigate = useNavigate();
 	const [userProgressData, setUserProgressData] = useState([]);
 
 	const { department_progress, personal_progress, progress_for_deadline } =
 		userProgressData;
-
-	const tasksToTeamlead = taskArray.filter((task) => task.assigned_to === 27);
 
 	useEffect(() => {
 		getUsersProgress()
@@ -38,7 +37,7 @@ function Main({ taskArray }) {
 					departmentDinamic={department_progress}
 				/>
 			</div>
-			<MyTasks tasksToTeamlead={tasksToTeamlead} />
+			<MyTasks tasksArrayData={tasksArray} />
 		</section>
 	);
 }
@@ -46,17 +45,13 @@ function Main({ taskArray }) {
 export default Main;
 
 Main.propTypes = {
-	taskArray: PropTypes.arrayOf(
+	tasksArray: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			status: PropTypes.string.isRequired,
-			reward_points: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
-			created_at: PropTypes.string.isRequired,
-			deadline: PropTypes.string.isRequired,
-			assigned_to: PropTypes.number.isRequired,
-			department: PropTypes.string.isRequired,
+			title: PropTypes.string,
+			status: PropTypes.string,
+			reward_points: PropTypes.number,
+			deadline: PropTypes.string,
+			id: PropTypes.number,
 		})
 	).isRequired,
 };

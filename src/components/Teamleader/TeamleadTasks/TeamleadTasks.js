@@ -1,7 +1,6 @@
 import './TeamleadTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
@@ -9,10 +8,14 @@ import iconFilter from '../../../images/SortAscending.png';
 
 import { getUsers, getTaskInfo, reviewTask } from '../../../utils/MainApi';
 
-function TeamleadTasks({ taskArray }) {
+function TeamleadTasks() {
 	const navigate = useNavigate();
+	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
-	const tasksFromTeamlead = taskArray.filter((task) => task.assigned_to !== 27);
+	const [firstTasksArray, setfirstTasksArray] = useState(storagedArray);
+	const tasksFromTeamlead = firstTasksArray.filter(
+		(task) => task.assigned_to !== 27
+	);
 
 	const [tasksArray, setTasksArray] = useState(tasksFromTeamlead);
 	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
@@ -28,8 +31,15 @@ function TeamleadTasks({ taskArray }) {
 	const [users, setUsers] = useState([]);
 	const [department, setDepartmentName] = useState('');
 
-	const { reward_points, title, description, created_at, deadline, id } =
-		popupInfo;
+	const {
+		is_overdue,
+		reward_points,
+		title,
+		description,
+		created_at,
+		deadline,
+		id,
+	} = popupInfo;
 	let { status } = popupInfo;
 
 	const dateDeadline = new Date(deadline);
@@ -40,7 +50,6 @@ function TeamleadTasks({ taskArray }) {
 		options
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
-	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
 	const QAItems = tasksArray.filter((item) => item.department === 'qa');
 	const backendItems = tasksArray.filter(
@@ -69,7 +78,7 @@ function TeamleadTasks({ taskArray }) {
 		if (status === 'created') {
 			setStatusName('на выполнении');
 		}
-		if (status === 'is_overdue') {
+		if (status === 'created' && is_overdue) {
 			setStatusName('истёк срок задачи');
 		}
 		if (status === 'approve') {
@@ -81,14 +90,14 @@ function TeamleadTasks({ taskArray }) {
 		if (status === 'rejected') {
 			setStatusName('на доработке');
 		}
-	}, [status]);
+	}, [status, is_overdue]);
 
 	function handleAllTasksSort() {
 		setAllTasksButton(true);
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
-		setTasksArray(storagedArray);
+		setTasksArray(tasksFromTeamlead);
 	}
 
 	function handleActiveTasksSort() {
@@ -96,7 +105,7 @@ function TeamleadTasks({ taskArray }) {
 		setActiveTaskstButton(true);
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
-		const filteredTasks = storagedArray.filter(
+		const filteredTasks = tasksFromTeamlead.filter(
 			(task) => task.status === 'created' || task.status === 'rejected'
 		);
 		setTasksArray(filteredTasks);
@@ -107,7 +116,7 @@ function TeamleadTasks({ taskArray }) {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		setTimeOutTasksButton(false);
-		const filteredTasks = storagedArray.filter(
+		const filteredTasks = tasksFromTeamlead.filter(
 			(task) => task.status === 'sent_for_review'
 		);
 		setTasksArray(filteredTasks);
@@ -118,7 +127,7 @@ function TeamleadTasks({ taskArray }) {
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
-		const filteredTasks = storagedArray.filter(
+		const filteredTasks = tasksFromTeamlead.filter(
 			(task) => task.status === 'is_overdue'
 		);
 		setTasksArray(filteredTasks);
@@ -279,24 +288,28 @@ function TeamleadTasks({ taskArray }) {
 					array={frontendItems}
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
+					users={users}
 				/>
 				<DepartmentTasks
 					name="Бэкенд"
 					array={backendItems}
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
+					users={users}
 				/>
 				<DepartmentTasks
 					name="Quality Assurance"
 					array={QAItems}
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
+					users={users}
 				/>
 				<DepartmentTasks
 					name="UX/UI дизайн"
 					array={designItems}
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
+					users={users}
 				/>
 
 				{isPopupTaskOpen ? (
@@ -342,6 +355,7 @@ function TeamleadTasks({ taskArray }) {
 						setPopupAddTaskOpen={setPopupAddTaskOpen}
 						users={users}
 						departmentName={department}
+						setfirstTasksArray={setfirstTasksArray}
 					/>
 				) : null}
 				{isPopupEditTaskOpen ? (
@@ -357,19 +371,3 @@ function TeamleadTasks({ taskArray }) {
 }
 
 export default TeamleadTasks;
-
-TeamleadTasks.propTypes = {
-	taskArray: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			status: PropTypes.string.isRequired,
-			reward_points: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
-			created_at: PropTypes.string.isRequired,
-			deadline: PropTypes.string.isRequired,
-			assigned_to: PropTypes.number.isRequired,
-			department: PropTypes.string.isRequired,
-		})
-	).isRequired,
-};

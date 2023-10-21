@@ -10,6 +10,7 @@ function DepartmentTasks({
 	array,
 	handlePopupOpen,
 	handleAddTaskPopupOpen,
+	users,
 }) {
 	const [isOpenTasksList, setOpenTasksList] = useState(false);
 
@@ -53,6 +54,7 @@ function DepartmentTasks({
 								onClick={handlePopupOpen}
 								task={task}
 								key={task.id}
+								users={users}
 							/>
 						))}
 					</div>
@@ -81,6 +83,13 @@ DepartmentTasks.propTypes = {
 			department: PropTypes.string.isRequired,
 		})
 	),
+	users: PropTypes.arrayOf(
+		PropTypes.shape({
+			first_name: PropTypes.string,
+			last_name: PropTypes.string,
+			id: PropTypes.number,
+		})
+	).isRequired,
 };
 
 DepartmentTasks.defaultProps = {

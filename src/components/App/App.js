@@ -26,6 +26,7 @@ function App() {
 	const [isUploadModal, setIsUploadModal] = useState(false);
 	const [notificationsData, setNotificationsData] = useState([]);
 	const [isCheckboxPressed, setCheckboxPressed] = useState(true);
+	const [tasksArray, setTasksArray] = useState([]);
 	const navigate = useNavigate();
 	const token = localStorage.getItem('token');
 	const [userData, setUserData] = useState({
@@ -37,7 +38,6 @@ function App() {
 		rating: '',
 		id: '',
 	});
-	const [tasksArray, setTasksArray] = useState([]);
 
 	function removeToken() {
 		if (!isCheckboxPressed) {
@@ -53,22 +53,22 @@ function App() {
 				.then(([userInfo, tasksArrayData, notification]) => {
 					if (userInfo.length > 0) {
 						setUserData(userInfo[0]);
+						console.log(userInfo);
 					} else {
 						console.log('Ответ сервера не содержит данных пользователя.');
 					}
 					const sort = tasksArrayData.sort(
 						(a, b) => new Date(a.created_at) - new Date(b.created_at)
 					);
-					setTasksArray(tasksArrayData);
 					localStorage.setItem('myTasks', JSON.stringify(sort));
 					setNotificationsData(notification);
+					setTasksArray(tasksArrayData);
 				})
 				.catch((res) => {
 					if (res === 500) {
 						navigate('/server-error');
 					}
 					console.log(res);
-					setTasksArray([]);
 				});
 		}
 	}, [navigate, loggedIn, token]);
@@ -121,7 +121,7 @@ function App() {
 								onExit={handleLogOut}
 							/>
 							<SideNavbar />
-							<Main taskArray={tasksArray} />
+							<Main tasksArray={tasksArray} />
 						</ProtectedRoute>
 					}
 				/>
@@ -163,7 +163,7 @@ function App() {
 								onExit={handleLogOut}
 							/>
 							<SideNavbar />
-							<Teamleader taskArray={tasksArray} />
+							<Teamleader />
 						</ProtectedRoute>
 					}
 				/>

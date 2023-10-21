@@ -156,7 +156,7 @@ export function editTask(id, data) {
 			Authorization: `Token ${token}`,
 			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
-		body: JSON.stringify({ data }),
+		body: JSON.stringify(data),
 	}).then(checkResponse);
 }
 

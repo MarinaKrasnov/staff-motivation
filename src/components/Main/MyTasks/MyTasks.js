@@ -2,16 +2,18 @@ import './MyTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import MyTask from '../MyTask/MyTask';
 import iconFilter from '../../../images/SortAscending.png';
-import {
-	/* getTasks, */ getTaskInfo,
-	confirmTask,
-} from '../../../utils/MainApi';
 
-function MyTasks({ tasksToTeamlead }) {
+import { getTaskInfo, confirmTask } from '../../../utils/MainApi';
+
+function MyTasks({ tasksArrayData }) {
 	const navigate = useNavigate();
+
+	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
+	const tasksToTeamlead = storagedArray
+		? storagedArray.filter((task) => task.assigned_to === 27)
+		: tasksArrayData.filter((task) => task.assigned_to === 27);
 
 	const [tasksArray, setTasksArray] = useState(tasksToTeamlead);
 	const [isArray, setArray] = useState(true);
@@ -25,7 +27,8 @@ function MyTasks({ tasksToTeamlead }) {
 	const [isDeadlineSort, setDeadlineSort] = useState(false);
 
 	const {
-		approved,
+		status,
+		is_overdue,
 		reward_points,
 		title,
 		description,
@@ -33,8 +36,6 @@ function MyTasks({ tasksToTeamlead }) {
 		deadline,
 		id,
 	} = popupInfo;
-
-	const { status } = popupInfo;
 
 	const dateDeadline = new Date(deadline);
 	const dateCreated = new Date(created_at);
@@ -44,27 +45,6 @@ function MyTasks({ tasksToTeamlead }) {
 		options
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
-	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
-
-	/* useEffect(() => {
-		getTasks()
-			.then((data) => {
-				const sort = data.sort(
-					(a, b) => new Date(a.created_at) - new Date(b.created_at)
-				);
-				setTasksArray(sort);
-				localStorage.setItem('myTasks', JSON.stringify(sort));
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				} else {
-					setTasksArray([]);
-				}
-			});
-	}, [navigate]); */
-
-	console.log(tasksArray);
 
 	useEffect(() => {
 		if (tasksArray.length === 0 || null) {
@@ -80,7 +60,7 @@ function MyTasks({ tasksToTeamlead }) {
 		if (status === 'created') {
 			setStatusName('на выполнении');
 		}
-		if (status === 'created' && approved === true) {
+		if (status === 'created' && is_overdue) {
 			setStatusName('истёк срок задачи');
 		}
 		if (status === 'approved') {
@@ -92,7 +72,7 @@ function MyTasks({ tasksToTeamlead }) {
 		if (status === 'returned_for_revision') {
 			setStatusName('на доработке');
 		}
-	}, [status, approved]);
+	}, [status, is_overdue]);
 
 	function handleAllTasksSort() {
 		setAllTasksButton(true);
@@ -138,7 +118,7 @@ function MyTasks({ tasksToTeamlead }) {
 		setAllTasksButton(false);
 		if (storagedArray) {
 			const filteredTasks = storagedArray.filter(
-				(task) => task.status === 'created' && task.approved === true
+				(task) => task.status === 'created' && task.is_overdue
 			);
 			setTasksArray(filteredTasks);
 		}
@@ -209,10 +189,8 @@ function MyTasks({ tasksToTeamlead }) {
 
 	function confirmTaskPopup() {
 		confirmTask(id, popupInfo)
-			.then((data) => {
-				console.log(data);
+			.then(() => {
 				setIsPopupOpen(false);
-				// setTasksArray(data);
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -328,17 +306,13 @@ function MyTasks({ tasksToTeamlead }) {
 export default MyTasks;
 
 MyTasks.propTypes = {
-	tasksToTeamlead: PropTypes.arrayOf(
+	tasksArrayData: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			status: PropTypes.string.isRequired,
-			reward_points: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
-			created_at: PropTypes.string.isRequired,
-			deadline: PropTypes.string.isRequired,
-			assigned_to: PropTypes.number.isRequired,
-			department: PropTypes.string.isRequired,
+			title: PropTypes.string,
+			status: PropTypes.string,
+			reward_points: PropTypes.number,
+			deadline: PropTypes.string,
+			id: PropTypes.number,
 		})
 	).isRequired,
 };

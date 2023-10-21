@@ -3,9 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { addTask } from '../../../../utils/MainApi';
+import { addTask, getTasks } from '../../../../utils/MainApi';
 
-function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
+function PopupAddTask({
+	setPopupAddTaskOpen,
+	users,
+	departmentName,
+	setfirstTasksArray,
+}) {
 	const navigate = useNavigate();
 	const [executor, setExecutor] = useState('');
 	const [isAreaBorder, setAreaBorder] = useState(false);
@@ -36,6 +41,20 @@ function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 		}
 	}, [departmentName]);
 
+	function getNewTasks() {
+		getTasks()
+			.then((data) => {
+				console.log('new array');
+				setfirstTasksArray(data);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				}
+				console.log(res);
+			});
+	}
+
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
 			setPopupAddTaskOpen(false);
@@ -63,6 +82,7 @@ function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 		addTask(newData)
 			.then(() => {
 				setPopupAddTaskOpen(false);
+				getNewTasks();
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -214,6 +234,7 @@ function PopupAddTask({ setPopupAddTaskOpen, users, departmentName }) {
 export default PopupAddTask;
 
 PopupAddTask.propTypes = {
+	setfirstTasksArray: PropTypes.func.isRequired,
 	setPopupAddTaskOpen: PropTypes.func.isRequired,
 	departmentName: PropTypes.string.isRequired,
 	users: PropTypes.arrayOf(
