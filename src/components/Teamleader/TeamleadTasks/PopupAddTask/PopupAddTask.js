@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { addTask, getTasks } from '../../../../utils/MainApi';
+import { addTask /* getTasks */ } from '../../../../utils/MainApi';
 
 function PopupAddTask({
 	setPopupAddTaskOpen,
@@ -12,10 +12,6 @@ function PopupAddTask({
 	setfirstTasksArray,
 }) {
 	const navigate = useNavigate();
-	const [executor, setExecutor] = useState('');
-	const [isAreaBorder, setAreaBorder] = useState(false);
-	const [selectedUserId, setSelectedUserId] = useState();
-	const [departmentData, setDepartmentData] = useState('');
 	const {
 		register,
 		handleSubmit,
@@ -26,6 +22,11 @@ function PopupAddTask({
 		mode: 'onTouched',
 		// resolver: yupResolver(LoginSchema),
 	});
+
+	const [executor, setExecutor] = useState('');
+	const [isAreaBorder, setAreaBorder] = useState(false);
+	const [selectedUserId, setSelectedUserId] = useState();
+	const [departmentData, setDepartmentData] = useState('');
 
 	useEffect(() => {
 		if (departmentName === 'Фронтенд') {
@@ -41,10 +42,10 @@ function PopupAddTask({
 		}
 	}, [departmentName]);
 
-	function getNewTasks() {
+	/* function getNewTasks() {
 		getTasks()
 			.then((data) => {
-				console.log('new array');
+				console.log(data)
 				setfirstTasksArray(data);
 			})
 			.catch((res) => {
@@ -53,7 +54,7 @@ function PopupAddTask({
 				}
 				console.log(res);
 			});
-	}
+	} */
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
@@ -82,7 +83,7 @@ function PopupAddTask({
 		addTask(newData)
 			.then(() => {
 				setPopupAddTaskOpen(false);
-				getNewTasks();
+				setfirstTasksArray([...newData]);
 			})
 			.catch((res) => {
 				if (res === 500) {

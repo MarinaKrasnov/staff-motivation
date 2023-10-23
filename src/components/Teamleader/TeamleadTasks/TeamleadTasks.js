@@ -1,6 +1,8 @@
 import './TeamleadTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
@@ -8,15 +10,12 @@ import iconFilter from '../../../images/SortAscending.png';
 
 import { getUsers, getTaskInfo, reviewTask } from '../../../utils/MainApi';
 
-function TeamleadTasks() {
+function TeamleadTasks({ userId }) {
 	const navigate = useNavigate();
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
 	const [firstTasksArray, setfirstTasksArray] = useState(storagedArray);
-	const tasksFromTeamlead = firstTasksArray.filter(
-		(task) => task.assigned_to !== 27
-	);
-
+	const [tasksFromTeamlead, setTasksFromTeamlead] = useState([]);
 	const [tasksArray, setTasksArray] = useState(tasksFromTeamlead);
 	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
 	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(false);
@@ -59,6 +58,15 @@ function TeamleadTasks() {
 		(item) => item.department === 'frontend'
 	);
 	const designItems = tasksArray.filter((item) => item.department === 'ux_ui');
+
+	useEffect(() => {
+		const tasks = firstTasksArray.filter((task) => task.assigned_to !== userId);
+		setTasksFromTeamlead(tasks);
+	}, [firstTasksArray, userId]);
+
+	useEffect(() => {
+		setTasksArray(tasksFromTeamlead);
+	}, [tasksFromTeamlead]);
 
 	useEffect(() => {
 		getUsers()
@@ -371,3 +379,10 @@ function TeamleadTasks() {
 }
 
 export default TeamleadTasks;
+
+TeamleadTasks.propTypes = {
+	userId: PropTypes.number,
+};
+TeamleadTasks.defaultProps = {
+	userId: 0,
+};

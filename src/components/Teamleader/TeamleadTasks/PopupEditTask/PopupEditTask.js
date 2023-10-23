@@ -7,6 +7,18 @@ import { editTask } from '../../../../utils/MainApi';
 
 function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 	const navigate = useNavigate();
+
+	const {
+		register,
+		handleSubmit,
+		// getValues,
+		watch,
+		// formState: { errors, isValid, isDirty },
+	} = useForm({
+		mode: 'onTouched',
+		// resolver: yupResolver(LoginSchema),
+	});
+
 	const {
 		is_overdue,
 		assigned_to,
@@ -23,6 +35,13 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 	const [isAreaBorder, setAreaBorder] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState();
 	const [statusName, setStatusName] = useState('');
+	const [deadlineDate, setDeadlineDate] = useState();
+
+	const dateCreated = new Date(created_at);
+	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', {
+		day: 'numeric',
+		month: 'numeric',
+	});
 
 	useEffect(() => {
 		const userName = users.find((user) => user.id === assigned_to);
@@ -31,30 +50,14 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 		setExecutor(`${firstName} ${lastName}`);
 	}, [users, assigned_to]);
 
-	const {
-		register,
-		handleSubmit,
-		// getValues,
-		watch,
-		// formState: { errors, isValid, isDirty },
-	} = useForm({
-		mode: 'onTouched',
-		// resolver: yupResolver(LoginSchema),
-	});
-	/* useEffect(() => {
+	useEffect(() => {
 		const dateDeadline = new Date(deadline);
-		const options = { day: 'numeric', month: 'numeric' };
-		const formattedDateDeadline = dateDeadline.toLocaleDateString('ru-RU', options);
-		setDeadlineDate(formattedDateDeadline)
-
-	}, [deadline]) */
-	const options = { day: 'numeric', month: 'numeric' };
-	const formattedDateDeadline = new Date(deadline).toLocaleDateString();
-
-	console.log(formattedDateDeadline);
-
-	const dateCreated = new Date(created_at);
-	const formattedDateCreated = dateCreated.toLocaleDateString('en-EN', options);
+		const formattedDateDeadline = dateDeadline.toLocaleDateString('ru-RU', {
+			day: 'numeric',
+			month: 'numeric',
+		});
+		setDeadlineDate(formattedDateDeadline);
+	}, [deadline]);
 
 	useEffect(() => {
 		if (status === 'created') {
@@ -199,9 +202,9 @@ function PopupEditTask({ setPopupEditTaskOpen, users, popupInfo }) {
 									? 'popup-addtask__input-bottom-filled'
 									: 'popup-addtask__input-bottom '
 							}
-							defaultValue={formattedDateDeadline || ''}
+							defaultValue={deadlineDate || ''}
 							placeholder="дд.мм"
-							type="date"
+							type={watch('deadline') ? 'date' : 'text'}
 							name="deadline"
 							id="deadline"
 							{...register('deadline', { required: false })}

@@ -132,15 +132,15 @@ export function rejectTask(id, data) {
 }
 
 export function addTask(data) {
-	// const token = localStorage.getItem('token');
+	const token = localStorage.getItem('token');
 	// console.log(token)
 	return fetch(`${BASE_URL}/api/tasks/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			// Authorization: `Token ${token}`,
-			Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
+			Authorization: `Token ${token}`,
+			// Authorization: `Token c0faa7cbff18fbd7a5c2bdb12ee732506405147d`,
 		},
 		body: JSON.stringify(data),
 	}).then(checkResponse);
@@ -221,6 +221,16 @@ export function signup(data) {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify(newData),
+	}).then(checkResponse);
+}
+
+export function activateRegister(uid, token) {
+	return fetch(`${BASE_URL}/api/token/login/`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(uid, token),
 	}).then(checkResponse);
 }
 

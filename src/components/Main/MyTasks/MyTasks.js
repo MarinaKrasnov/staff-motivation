@@ -7,15 +7,24 @@ import iconFilter from '../../../images/SortAscending.png';
 
 import { getTaskInfo, confirmTask } from '../../../utils/MainApi';
 
-function MyTasks({ tasksArrayData }) {
+function MyTasks({ tasksArrayData, userId }) {
 	const navigate = useNavigate();
 
-	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
-	const tasksToTeamlead = storagedArray
-		? storagedArray.filter((task) => task.assigned_to === 27)
-		: tasksArrayData.filter((task) => task.assigned_to === 27);
+	console.log(tasksArrayData, userId);
 
-	const [tasksArray, setTasksArray] = useState(tasksToTeamlead);
+	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
+
+	const storegedTasksToTeamlead = storagedArray
+		? storagedArray.filter((task) => task.assigned_to === userId)
+		: null;
+
+	const [tasksArray, setTasksArray] = useState([]);
+
+	useEffect(() => {
+		const tasks = tasksArrayData.filter((task) => task.assigned_to === userId);
+		setTasksArray(tasks);
+	}, [tasksArrayData, userId]);
+
 	const [isArray, setArray] = useState(true);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
@@ -79,8 +88,8 @@ function MyTasks({ tasksArrayData }) {
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
-		if (storagedArray) {
-			setTasksArray(storagedArray);
+		if (storegedTasksToTeamlead) {
+			setTasksArray(storegedTasksToTeamlead);
 		}
 	}
 
@@ -89,8 +98,8 @@ function MyTasks({ tasksArrayData }) {
 		setActiveTaskstButton(true);
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
-		if (storagedArray) {
-			const filteredTasks = storagedArray.filter(
+		if (storegedTasksToTeamlead) {
+			const filteredTasks = storegedTasksToTeamlead.filter(
 				(task) =>
 					task.status === 'created' || task.status === 'returned_for_revision'
 			);
@@ -103,8 +112,8 @@ function MyTasks({ tasksArrayData }) {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		setTimeOutTasksButton(false);
-		if (storagedArray) {
-			const filteredTasks = storagedArray.filter(
+		if (storegedTasksToTeamlead) {
+			const filteredTasks = storegedTasksToTeamlead.filter(
 				(task) => task.status === 'sent_for_review'
 			);
 			setTasksArray(filteredTasks);
@@ -116,8 +125,8 @@ function MyTasks({ tasksArrayData }) {
 		setInApproveTasksButton(false);
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
-		if (storagedArray) {
-			const filteredTasks = storagedArray.filter(
+		if (storegedTasksToTeamlead) {
+			const filteredTasks = storegedTasksToTeamlead.filter(
 				(task) => task.status === 'created' && task.is_overdue
 			);
 			setTasksArray(filteredTasks);
@@ -315,4 +324,5 @@ MyTasks.propTypes = {
 			id: PropTypes.number,
 		})
 	).isRequired,
+	userId: PropTypes.number.isRequired,
 };

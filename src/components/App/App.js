@@ -17,6 +17,7 @@ import Notifications from './Header/Notifications/Notifications';
 import Teamleader from '../Teamleader/TeamleadTasks/TeamleadTasks';
 import { getUserData, getNotification, getTasks } from '../../utils/MainApi';
 import DevelopingPage from './DevelopingPage/DevelopingPage';
+import ActivateProfile from './ActivateProfile/ActivateProfile';
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -27,6 +28,7 @@ function App() {
 	const [notificationsData, setNotificationsData] = useState([]);
 	const [isCheckboxPressed, setCheckboxPressed] = useState(true);
 	const [tasksArray, setTasksArray] = useState([]);
+	const [userId, setUserId] = useState();
 	const navigate = useNavigate();
 	const token = localStorage.getItem('token');
 	const [userData, setUserData] = useState({
@@ -38,7 +40,6 @@ function App() {
 		rating: '',
 		id: '',
 	});
-
 	function removeToken() {
 		if (!isCheckboxPressed) {
 			localStorage.removeItem('token');
@@ -53,7 +54,7 @@ function App() {
 				.then(([userInfo, tasksArrayData, notification]) => {
 					if (userInfo.length > 0) {
 						setUserData(userInfo[0]);
-						console.log(userInfo);
+						setUserId(userInfo[0].id);
 					} else {
 						console.log('Ответ сервера не содержит данных пользователя.');
 					}
@@ -121,7 +122,7 @@ function App() {
 								onExit={handleLogOut}
 							/>
 							<SideNavbar />
-							<Main tasksArray={tasksArray} />
+							<Main tasksArray={tasksArray} userId={userId} />
 						</ProtectedRoute>
 					}
 				/>
@@ -163,7 +164,7 @@ function App() {
 								onExit={handleLogOut}
 							/>
 							<SideNavbar />
-							<Teamleader />
+							<Teamleader userId={userId} />
 						</ProtectedRoute>
 					}
 				/>
@@ -202,6 +203,8 @@ function App() {
 				/>
 				<Route path="/reset-password" element={<ResetPassword />} />
 				<Route path="/server-error" element={<ServerError />} />
+				<Route path="/activate/:uid/:token" element={<ActivateProfile />} />
+
 				{/* роут для ошибки 404 */}
 			</Routes>
 			{isOpenModalConfirm && (

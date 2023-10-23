@@ -8,7 +8,7 @@ import Achievements from './Achievements/Achievements';
 import DinamicWork from './DinamicWork/DinamicWork';
 import { getUsersProgress } from '../../utils/MainApi';
 
-function Main({ tasksArray }) {
+function Main({ tasksArray, userId }) {
 	const navigate = useNavigate();
 	const [userProgressData, setUserProgressData] = useState([]);
 
@@ -37,7 +37,7 @@ function Main({ tasksArray }) {
 					departmentDinamic={department_progress}
 				/>
 			</div>
-			<MyTasks tasksArrayData={tasksArray} />
+			<MyTasks tasksArrayData={tasksArray} userId={userId} />
 		</section>
 	);
 }
@@ -54,4 +54,9 @@ Main.propTypes = {
 			id: PropTypes.number,
 		})
 	).isRequired,
+	userId: PropTypes.number,
+};
+
+Main.defaultProps = {
+	userId: 0,
 };
