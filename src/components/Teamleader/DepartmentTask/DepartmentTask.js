@@ -36,7 +36,7 @@ function DepartmentTask({ task, onClick, users }) {
 			);
 			setStatusClassName('mytask__status mytask__status-missed');
 			setStatusName('истёк срок задачи');
-		} else if (status === 'rejected' && is_overdue) {
+		} else if (status === 'returned_for_revision' && is_overdue) {
 			setTitleClassName(
 				'mytask__title department-task__task-title mytask__title-missed'
 			);
@@ -46,7 +46,7 @@ function DepartmentTask({ task, onClick, users }) {
 	}, [status, is_overdue]);
 
 	useEffect(() => {
-		if (status === 'approve') {
+		if (status === 'approved') {
 			setStatusClassName('mytask__status mytask__status-prove');
 			setTitleClassName(
 				'mytask__title department-task__task-title mytask__title-done'
@@ -77,7 +77,7 @@ function DepartmentTask({ task, onClick, users }) {
 	}, [status]);
 
 	useEffect(() => {
-		if (status === 'rejected' && !is_overdue) {
+		if (status === 'returned_for_revision' && !is_overdue) {
 			setStatusName('на доработке');
 		}
 	}, [status, is_overdue]);

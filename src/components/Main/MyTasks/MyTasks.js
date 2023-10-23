@@ -4,14 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MyTask from '../MyTask/MyTask';
 import iconFilter from '../../../images/SortAscending.png';
-
 import { getTaskInfo, confirmTask } from '../../../utils/MainApi';
 
 function MyTasks({ tasksArrayData, userId }) {
 	const navigate = useNavigate();
-
-	console.log(tasksArrayData, userId);
-
 	const storagedArray = JSON.parse(localStorage.getItem('myTasks'));
 
 	const storegedTasksToTeamlead = storagedArray
@@ -19,12 +15,6 @@ function MyTasks({ tasksArrayData, userId }) {
 		: null;
 
 	const [tasksArray, setTasksArray] = useState([]);
-
-	useEffect(() => {
-		const tasks = tasksArrayData.filter((task) => task.assigned_to === userId);
-		setTasksArray(tasks);
-	}, [tasksArrayData, userId]);
-
 	const [isArray, setArray] = useState(true);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
@@ -34,6 +24,8 @@ function MyTasks({ tasksArrayData, userId }) {
 	const [popupInfo, setPopupInfo] = useState([]);
 	const [statusName, setStatusName] = useState('');
 	const [isDeadlineSort, setDeadlineSort] = useState(false);
+	const [taskStatus, setTaskStatus] = useState('');
+	const [taskId, setTaskId] = useState();
 
 	const {
 		status,
@@ -54,6 +46,11 @@ function MyTasks({ tasksArrayData, userId }) {
 		options
 	);
 	const formattedDateCreated = dateCreated.toLocaleDateString('ru-RU', options);
+
+	useEffect(() => {
+		const tasks = tasksArrayData.filter((task) => task.assigned_to === userId);
+		setTasksArray(tasks);
+	}, [tasksArrayData, userId]);
 
 	useEffect(() => {
 		if (tasksArray.length === 0 || null) {
@@ -200,12 +197,13 @@ function MyTasks({ tasksArrayData, userId }) {
 		confirmTask(id, popupInfo)
 			.then(() => {
 				setIsPopupOpen(false);
+				setTaskId(id);
+				setTaskStatus('sent_for_review');
 			})
 			.catch((res) => {
 				if (res === 500) {
 					navigate('/server-error');
 				}
-				setIsPopupOpen(false);
 			});
 	}
 
@@ -269,7 +267,13 @@ function MyTasks({ tasksArrayData, userId }) {
 			{isArray ? (
 				<div className="tasks__list">
 					{tasksArray.map((task) => (
-						<MyTask onClick={handlePopupOpen} task={task} key={task.id} />
+						<MyTask
+							onClick={handlePopupOpen}
+							task={task}
+							key={task.id}
+							taskStatus={taskStatus}
+							taskId={taskId}
+						/>
 					))}
 				</div>
 			) : (

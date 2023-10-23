@@ -18,6 +18,7 @@ import Teamleader from '../Teamleader/TeamleadTasks/TeamleadTasks';
 import { getUserData, getNotification, getTasks } from '../../utils/MainApi';
 import DevelopingPage from './DevelopingPage/DevelopingPage';
 import ActivateProfile from './ActivateProfile/ActivateProfile';
+import ApprovingRegisterPage from '../Register/ApprovingRegisterPage/ApprovingRegisterPage';
 
 function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -201,6 +202,7 @@ function App() {
 						/>
 					}
 				/>
+				<Route path="/approving-register" element={<ApprovingRegisterPage />} />
 				<Route path="/reset-password" element={<ResetPassword />} />
 				<Route path="/server-error" element={<ServerError />} />
 				<Route path="/activate/:uid/:token" element={<ActivateProfile />} />
