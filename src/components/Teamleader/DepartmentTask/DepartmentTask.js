@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import WarningCircle from '../../../images/WarningCircle.svg';
 
-function DepartmentTask({ task, onClick, users }) {
+function DepartmentTask({ task, onClick, users, taskStatus, taskId }) {
 	const { status, title, deadline, id, assigned_to, is_overdue } = task;
 	const date = new Date(deadline);
 	const options = { day: 'numeric', month: 'long' };
@@ -17,6 +17,13 @@ function DepartmentTask({ task, onClick, users }) {
 	const [deadlineData, setDeadlieneData] = useState(formattedDate);
 	const [dataClass, setDataClass] = useState('mytask__data');
 	const [executor, setExecutor] = useState('');
+	const [currentTaskStatus, setCurrentTaskStatus] = useState(status);
+
+	useEffect(() => {
+		if (taskStatus && taskId === id) {
+			setCurrentTaskStatus(taskStatus);
+		}
+	}, [taskId, taskStatus, id]);
 
 	useEffect(() => {
 		const userName = users.find((user) => user.id === assigned_to);
@@ -24,29 +31,29 @@ function DepartmentTask({ task, onClick, users }) {
 	}, [users, assigned_to]);
 
 	useEffect(() => {
-		if (status === 'created' && !is_overdue) {
+		if (currentTaskStatus === 'created' && !is_overdue) {
 			setStatusName('на выполнении');
 		}
-	}, [status, is_overdue]);
+	}, [currentTaskStatus, is_overdue]);
 
 	useEffect(() => {
-		if (status === 'created' && is_overdue) {
+		if (currentTaskStatus === 'created' && is_overdue) {
 			setTitleClassName(
 				'mytask__title department-task__task-title mytask__title-missed'
 			);
 			setStatusClassName('mytask__status mytask__status-missed');
 			setStatusName('истёк срок задачи');
-		} else if (status === 'returned_for_revision' && is_overdue) {
+		} else if (currentTaskStatus === 'returned_for_revision' && is_overdue) {
 			setTitleClassName(
 				'mytask__title department-task__task-title mytask__title-missed'
 			);
 			setStatusClassName('mytask__status mytask__status-missed');
 			setStatusName('истёк срок задачи');
 		}
-	}, [status, is_overdue]);
+	}, [currentTaskStatus, is_overdue]);
 
 	useEffect(() => {
-		if (status === 'approved') {
+		if (currentTaskStatus === 'approved') {
 			setStatusClassName('mytask__status mytask__status-prove');
 			setTitleClassName(
 				'mytask__title department-task__task-title mytask__title-done'
@@ -55,10 +62,10 @@ function DepartmentTask({ task, onClick, users }) {
 			setDeadlieneData(`Выполнено`);
 			setDataClass('mytask__data mytask__data-done');
 		}
-	}, [status]);
+	}, [currentTaskStatus]);
 
 	useEffect(() => {
-		if (status === 'sent_for_review') {
+		if (currentTaskStatus === 'sent_for_review') {
 			setStatusName(
 				<div className="department-task">
 					<img
@@ -74,13 +81,13 @@ function DepartmentTask({ task, onClick, users }) {
 				'mytask__title department-task__task-title mytask__title-done'
 			);
 		}
-	}, [status]);
+	}, [currentTaskStatus]);
 
 	useEffect(() => {
-		if (status === 'returned_for_revision' && !is_overdue) {
+		if (currentTaskStatus === 'returned_for_revision' && !is_overdue) {
 			setStatusName('на доработке');
 		}
-	}, [status, is_overdue]);
+	}, [currentTaskStatus, is_overdue]);
 
 	return (
 		<div
@@ -119,4 +126,11 @@ DepartmentTask.propTypes = {
 			id: PropTypes.number,
 		})
 	).isRequired,
+	taskStatus: PropTypes.string,
+	taskId: PropTypes.number,
+};
+
+DepartmentTask.defaultProps = {
+	taskStatus: '',
+	taskId: 0,
 };

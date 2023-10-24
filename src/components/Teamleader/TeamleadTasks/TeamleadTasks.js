@@ -2,13 +2,16 @@ import './TeamleadTasks.scss';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import DepartmentTasks from '../DepartmentTasks/DepartmentTasks';
 import PopupAddTask from './PopupAddTask/PopupAddTask';
 import PopupEditTask from './PopupEditTask/PopupEditTask';
 import iconFilter from '../../../images/SortAscending.png';
-
-import { getUsers, getTaskInfo, reviewTask } from '../../../utils/MainApi';
+import {
+	getUsers,
+	getTaskInfo,
+	reviewTask,
+	rejectTask,
+} from '../../../utils/MainApi';
 
 function TeamleadTasks({ userId }) {
 	const navigate = useNavigate();
@@ -17,7 +20,7 @@ function TeamleadTasks({ userId }) {
 	const [firstTasksArray, setfirstTasksArray] = useState(storagedArray);
 	const [tasksFromTeamlead, setTasksFromTeamlead] = useState([]);
 	const [tasksArray, setTasksArray] = useState(tasksFromTeamlead);
-	const [isPopupTaskOpen, setPopupTaskOpen] = useState(false);
+	const [isPopupInfoTaskOpen, setPopupInfoTaskOpen] = useState(false);
 	const [isPopupAddTaskOpen, setPopupAddTaskOpen] = useState(false);
 	const [isPopupEditTaskOpen, setPopupEditTaskOpen] = useState(false);
 	const [allTasksButton, setAllTasksButton] = useState(true);
@@ -29,8 +32,8 @@ function TeamleadTasks({ userId }) {
 	const [isDeadlineSort, setDeadlineSort] = useState(false);
 	const [users, setUsers] = useState([]);
 	const [department, setDepartmentName] = useState('');
-
 	const {
+		status,
 		is_overdue,
 		reward_points,
 		title,
@@ -39,7 +42,9 @@ function TeamleadTasks({ userId }) {
 		deadline,
 		id,
 	} = popupInfo;
-	let { status } = popupInfo;
+
+	const [taskStatus, setTaskStatus] = useState(status);
+	const [taskId, setTaskId] = useState(id);
 
 	const dateDeadline = new Date(deadline);
 	const dateCreated = new Date(created_at);
@@ -89,13 +94,13 @@ function TeamleadTasks({ userId }) {
 		if (status === 'created' && is_overdue) {
 			setStatusName('истёк срок задачи');
 		}
-		if (status === 'approve') {
+		if (status === 'approved') {
 			setStatusName('подтверждено');
 		}
 		if (status === 'sent_for_review') {
 			setStatusName('на подтверждении');
 		}
-		if (status === 'rejected') {
+		if (status === 'returned_for_revision') {
 			setStatusName('на доработке');
 		}
 	}, [status, is_overdue]);
@@ -114,7 +119,8 @@ function TeamleadTasks({ userId }) {
 		setTimeOutTasksButton(false);
 		setInApproveTasksButton(false);
 		const filteredTasks = tasksFromTeamlead.filter(
-			(task) => task.status === 'created' || task.status === 'rejected'
+			(task) =>
+				task.status === 'created' || task.status === 'returned_for_revision'
 		);
 		setTasksArray(filteredTasks);
 	}
@@ -136,13 +142,13 @@ function TeamleadTasks({ userId }) {
 		setActiveTaskstButton(false);
 		setAllTasksButton(false);
 		const filteredTasks = tasksFromTeamlead.filter(
-			(task) => task.status === 'is_overdue'
+			(task) => task.is_overdue === true
 		);
 		setTasksArray(filteredTasks);
 	}
 
 	function handleDeadlineSort() {
-		const notToSort = 'sent_for_review' || 'approve';
+		const notToSort = 'sent_for_review' || 'approved';
 
 		if (isDeadlineSort) {
 			setDeadlineSort(false);
@@ -185,8 +191,12 @@ function TeamleadTasks({ userId }) {
 						setTasksArray([]);
 					}
 				});
-			if (statusPopup === 'approve') {
-				setPopupTaskOpen(true);
+			if (statusPopup === 'sent_for_review') {
+				setPopupInfoTaskOpen(true);
+				return;
+			}
+			if (statusPopup === 'approved') {
+				setPopupInfoTaskOpen(true);
 				return;
 			}
 			setPopupEditTaskOpen(true);
@@ -196,25 +206,38 @@ function TeamleadTasks({ userId }) {
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
-			setPopupTaskOpen(false);
+			setPopupInfoTaskOpen(false);
 			setPopupAddTaskOpen(false);
 		}
 	}
 
 	function closePopupButton() {
-		setPopupTaskOpen(false);
+		setPopupInfoTaskOpen(false);
 		setPopupAddTaskOpen(false);
 	}
 
-	function EditTaskPopup() {
-		setPopupTaskOpen(false);
+	function EditTask() {
+		rejectTask(id, popupInfo)
+			.then(() => {
+				setPopupInfoTaskOpen(false);
+				setTaskStatus('sent_for_review');
+				setTaskId(id);
+			})
+			.catch((res) => {
+				if (res === 500) {
+					navigate('/server-error');
+				} else {
+					console.log(res);
+				}
+			});
 	}
 
 	function confirmTaskPopup() {
 		reviewTask(id, popupInfo)
 			.then(() => {
-				status = 'approve';
-				setPopupTaskOpen(false);
+				setTaskStatus('approved');
+				setTaskId(id);
+				setPopupInfoTaskOpen(false);
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -297,6 +320,8 @@ function TeamleadTasks({ userId }) {
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 					users={users}
+					taskStatus={taskStatus}
+					taskId={taskId}
 				/>
 				<DepartmentTasks
 					name="Бэкенд"
@@ -304,6 +329,8 @@ function TeamleadTasks({ userId }) {
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 					users={users}
+					taskStatus={taskStatus}
+					taskId={taskId}
 				/>
 				<DepartmentTasks
 					name="Quality Assurance"
@@ -311,6 +338,8 @@ function TeamleadTasks({ userId }) {
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 					users={users}
+					taskStatus={taskStatus}
+					taskId={taskId}
 				/>
 				<DepartmentTasks
 					name="UX/UI дизайн"
@@ -318,9 +347,11 @@ function TeamleadTasks({ userId }) {
 					handlePopupOpen={handlePopupOpen}
 					handleAddTaskPopupOpen={handleAddTaskPopupOpen}
 					users={users}
+					taskStatus={taskStatus}
+					taskId={taskId}
 				/>
 
-				{isPopupTaskOpen ? (
+				{isPopupInfoTaskOpen ? (
 					<div
 						className="popup"
 						onClick={closePopupOverlay}
@@ -351,7 +382,7 @@ function TeamleadTasks({ userId }) {
 							<button className="popup__button" onClick={confirmTaskPopup}>
 								Подтвердить выполнение
 							</button>
-							<button className="popup__button" onClick={EditTaskPopup}>
+							<button className="popup__button-reject" onClick={EditTask}>
 								Отправить на доработку
 							</button>
 						</div>
@@ -364,6 +395,7 @@ function TeamleadTasks({ userId }) {
 						users={users}
 						departmentName={department}
 						setfirstTasksArray={setfirstTasksArray}
+						setTasksArray={setTasksArray}
 					/>
 				) : null}
 				{isPopupEditTaskOpen ? (

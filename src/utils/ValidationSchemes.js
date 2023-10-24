@@ -72,3 +72,17 @@ export const NewPasswordSchema = yup.object().shape({
 			ERROR_MESSAGES.CONFIRM_PASSWORD.MUST_MATCH
 		),
 });
+
+export const PopupAddTaskSchema = yup.object().shape({
+	title: yup.string().required(ERROR_MESSAGES.POPUP),
+	description: yup.string().required(ERROR_MESSAGES.POPUP),
+	deadline: yup
+		.date()
+		.required(ERROR_MESSAGES.POPUP)
+		.min(new Date(), ERROR_MESSAGES.POPUP),
+	reward_points: yup
+		.number(ERROR_MESSAGES.POPUP)
+		.integer(ERROR_MESSAGES.POPUP)
+		.positive(ERROR_MESSAGES.POPUP)
+		.required(ERROR_MESSAGES.POPUP),
+});

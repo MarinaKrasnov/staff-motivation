@@ -6,6 +6,8 @@ import CaretUp from '../../../images/CaretUp.svg';
 import DepartmentTask from '../DepartmentTask/DepartmentTask';
 
 function DepartmentTasks({
+	taskStatus,
+	taskId,
 	name,
 	array,
 	handlePopupOpen,
@@ -55,6 +57,8 @@ function DepartmentTasks({
 								task={task}
 								key={task.id}
 								users={users}
+								taskStatus={taskStatus}
+								taskId={taskId}
 							/>
 						))}
 					</div>
@@ -90,6 +94,8 @@ DepartmentTasks.propTypes = {
 			id: PropTypes.number,
 		})
 	).isRequired,
+	taskStatus: PropTypes.string,
+	taskId: PropTypes.number,
 };
 
 DepartmentTasks.defaultProps = {
@@ -104,4 +110,6 @@ DepartmentTasks.defaultProps = {
 		assigned_to: 0,
 		department: 'Маркетинг',
 	},
+	taskStatus: '',
+	taskId: 0,
 };

@@ -102,24 +102,37 @@ export function confirmTask(id, data) {
 	}).then(checkResponse);
 }
 
-export function reviewTask(id, data) {
+export function reviewTask(id) {
 	const token = localStorage.getItem('token');
+	const data = {
+		review_status: 'approved',
+	};
 	return fetch(`${BASE_URL}/api/tasks/${id}/review_task/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
 			Authorization: `Token ${token}`,
-			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
-		body: JSON.stringify({ data }),
+		body: JSON.stringify(data),
 	}).then(checkResponse);
 }
 
 export function rejectTask(id, data) {
-	// изменить статус в теле запроса
+	const newData = {
+		status: 'returned_for_revision',
+		assigned_to: data.assigned_to,
+		created_at: data.created_at,
+		deadline: data.deadline,
+		department: data.department,
+		description: data.description,
+		id: data.id,
+		is_overdue: data.is_overdue,
+		reward_points: data.reward_points,
+		title: data.title,
+	};
 	const token = localStorage.getItem('token');
-	return fetch(`${BASE_URL}/api/tasks/${id}`, {
+	return fetch(`${BASE_URL}/api/tasks/${id}/`, {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
@@ -127,13 +140,12 @@ export function rejectTask(id, data) {
 			Authorization: `Token ${token}`,
 			// Authorization: `Token cccee5de88c1aae699e77440edfc7e93373ab3d4`,
 		},
-		body: JSON.stringify({ data }),
+		body: JSON.stringify(newData),
 	}).then(checkResponse);
 }
 
 export function addTask(data) {
 	const token = localStorage.getItem('token');
-	// console.log(token)
 	return fetch(`${BASE_URL}/api/tasks/`, {
 		method: 'POST',
 		headers: {

@@ -2,8 +2,10 @@ import './PopupAddTask.scss';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import { addTask /* getTasks */ } from '../../../../utils/MainApi';
+import { addTask, getTasks } from '../../../../utils/MainApi';
+import { PopupAddTaskSchema } from '../../../../utils/ValidationSchemes';
 
 function PopupAddTask({
 	setPopupAddTaskOpen,
@@ -15,18 +17,39 @@ function PopupAddTask({
 	const {
 		register,
 		handleSubmit,
-		// getValues,
 		watch,
-		// formState: { errors, isValid, isDirty },
+		formState: { errors, isValid, isDirty },
 	} = useForm({
 		mode: 'onTouched',
-		// resolver: yupResolver(LoginSchema),
+		resolver: yupResolver(PopupAddTaskSchema),
 	});
 
 	const [executor, setExecutor] = useState('');
 	const [isAreaBorder, setAreaBorder] = useState(false);
 	const [selectedUserId, setSelectedUserId] = useState();
 	const [departmentData, setDepartmentData] = useState('');
+	const [errorSpan, setErrorSpan] = useState(false);
+
+	useEffect(() => {
+		if (
+			errors.deadline ||
+			errors.description ||
+			errors.title ||
+			errors.reward_points
+		) {
+			setErrorSpan(true);
+		} else {
+			setErrorSpan(false);
+		}
+	}, [
+		errors.deadline,
+		errors.description,
+		errors.title,
+		errors.reward_points,
+		executor,
+		isValid,
+		isDirty,
+	]);
 
 	useEffect(() => {
 		if (departmentName === 'Фронтенд') {
@@ -42,10 +65,10 @@ function PopupAddTask({
 		}
 	}, [departmentName]);
 
-	/* function getNewTasks() {
+	function getNewTasks() {
 		getTasks()
 			.then((data) => {
-				console.log(data)
+				localStorage.setItem('myTasks', JSON.stringify(data));
 				setfirstTasksArray(data);
 			})
 			.catch((res) => {
@@ -54,7 +77,7 @@ function PopupAddTask({
 				}
 				console.log(res);
 			});
-	} */
+	}
 
 	function closePopupOverlay(event) {
 		if (event.target.classList.contains('popup')) {
@@ -67,41 +90,40 @@ function PopupAddTask({
 	}
 
 	function onSubmit(data, evt) {
-		const date = new Date(data.deadline);
-		const formattedDate = date.toISOString();
-		evt.preventDefault();
-		setPopupAddTaskOpen(false);
-		const newData = {
-			status: 'created',
-			deadline: formattedDate,
-			description: data.description,
-			title: data.title,
-			reward_points: data.reward_points,
-			department: departmentData,
-			assigned_to: selectedUserId,
-		};
-		addTask(newData)
-			.then(() => {
-				setPopupAddTaskOpen(false);
-				setfirstTasksArray([...newData]);
-			})
-			.catch((res) => {
-				if (res === 500) {
-					navigate('/server-error');
-				} else {
-					console.log(res);
-				}
-			});
+		if (isValid && executor) {
+			const date = new Date(data.deadline);
+			const formattedDate = date.toISOString();
+			evt.preventDefault();
+			setPopupAddTaskOpen(false);
+			const newData = {
+				status: 'created',
+				deadline: formattedDate,
+				description: data.description,
+				title: data.title,
+				reward_points: data.reward_points,
+				department: departmentData,
+				assigned_to: selectedUserId,
+			};
+			addTask(newData)
+				.then(() => {
+					setPopupAddTaskOpen(false);
+					getNewTasks();
+				})
+				.catch((res) => {
+					if (res === 500) {
+						navigate('/server-error');
+					} else {
+						setErrorSpan(true);
+					}
+				});
+		}
+		setErrorSpan(true);
 	}
 
 	const handleClick = (name, id) => {
 		setSelectedUserId(id);
 		setExecutor(name);
 	};
-
-	function handleRemoveExecutor() {
-		setExecutor(null);
-	}
 
 	function setAreaStyle() {
 		setAreaBorder(true);
@@ -127,23 +149,27 @@ function PopupAddTask({
 					<label className="popup-addtask__label" htmlFor="title">
 						Название задачи
 						<input
-							className={
-								watch('title')
-									? 'popup-addtask__input-filled'
-									: 'popup-addtask__input '
-							}
+							className={`popup-addtask__input ${
+								errors.title && !isValid && isDirty
+									? 'popup-addtask__input_no-valid'
+									: ''
+							} ${watch('title') ? 'popup-addtask__input_filled' : ''}`}
 							type="text"
 							name="title"
 							id="title"
-							{...register('title', { required: false })}
+							{...register('title', { required: true })}
 						/>
 					</label>
 					<div
-						className={
-							isAreaBorder || watch('discription')
-								? 'popup-addtask__input-area-filled'
-								: 'popup-addtask__input-area'
-						}
+						className={`popup-addtask__input-area ${
+							errors.description && !isValid && isDirty
+								? 'popup-addtask__input-area_no-valid'
+								: ''
+						}  ${
+							watch('description') || isAreaBorder
+								? 'popup-addtask__input-area_filled'
+								: ''
+						}`}
 					>
 						<textarea
 							className="popup-addtask__input-text"
@@ -152,24 +178,14 @@ function PopupAddTask({
 							name="description"
 							id="description"
 							onFocus={setAreaStyle}
-							{...register('description', { required: false })}
+							{...register('description', { required: true })}
 						/>
 					</div>
 
 					<div className="popup-addtask__executors">
-						<p className="popup-addtask__executor">Исполнитель:&nbsp;</p>
-						<div className="popup-addtask__executor-block">
-							<p className="popup-addtask__executor-name">{executor}</p>
-							{executor ? (
-								<button
-									type="button"
-									className="popup-addtask__executor-delete"
-									onClick={() => handleRemoveExecutor(executor)}
-								>
-									{}
-								</button>
-							) : null}
-						</div>
+						<p className="popup-addtask__executor">
+							Исполнитель:&nbsp;{executor}
+						</p>
 					</div>
 
 					<div className="popup-addtask__executors-element">
@@ -196,35 +212,53 @@ function PopupAddTask({
 					<label className="popup-addtask__label-bottom" htmlFor="data">
 						Срок исполнения
 						<input
-							className={
-								watch('deadline')
-									? 'popup-addtask__input-bottom-filled'
-									: 'popup-addtask__input-bottom '
-							}
+							className={`popup-addtask__input-bottom ${
+								errors.deadline && !isValid && isDirty
+									? 'popup-addtask__input-bottom_no-valid'
+									: ''
+							} ${
+								watch('deadline') ? 'popup-addtask__input-bottom_filled' : ''
+							}`}
 							placeholder="дд.мм"
 							type="date"
 							name="dealine"
 							id="deadline"
-							{...register('deadline', { required: false })}
+							{...register('deadline', { required: true })}
 						/>
 					</label>
 
 					<label className="popup-addtask__label-bottom" htmlFor="balls">
 						Баллы за выполнение
 						<input
-							className={
+							className={`popup-addtask__input-bottom ${
+								errors.reward_points && !isValid && isDirty
+									? 'popup-addtask__input-bottom_no-valid'
+									: ''
+							} ${
 								watch('reward_points')
-									? 'popup-addtask__input-bottom-filled'
-									: 'popup-addtask__input-bottom '
-							}
+									? 'popup-addtask__input-bottom_filled'
+									: ''
+							}`}
 							type="number"
 							name="reward_points"
 							id="reward_points"
-							{...register('reward_points', { required: false })}
+							{...register('reward_points', { required: true })}
 						/>
 					</label>
 
-					<button className="popup-addtask__button" type="submit">
+					{errorSpan ? (
+						<span className="popup-addtask__error-span">
+							Ошибка ввода данных
+						</span>
+					) : (
+						<div className="popup-addtask__error-area" />
+					)}
+
+					<button
+						className="popup-addtask__button"
+						type="submit"
+						disabled={!isValid}
+					>
 						Добавить задачу
 					</button>
 				</form>

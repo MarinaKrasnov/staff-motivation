@@ -1,6 +1,5 @@
-// import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import { useNavigate, /* useLocation, */ useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { activateRegister } from '../../../utils/MainApi';
 
 function ActivateProfile() {
@@ -29,8 +28,3 @@ function ActivateProfile() {
 }
 
 export default ActivateProfile;
-
-ActivateProfile.propTypes = {
-	// uid: PropTypes.string.isRequired,
-	// token: PropTypes.string.isRequired
-};
