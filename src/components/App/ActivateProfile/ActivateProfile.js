@@ -13,7 +13,6 @@ function ActivateProfile() {
 		activateRegister(uid, token)
 			.then(() => {
 				navigate('/signin');
-				console.log('активация успешна');
 			})
 			.catch((res) => {
 				if (res === 500) {
@@ -24,7 +23,7 @@ function ActivateProfile() {
 			});
 	}, [navigate, uid, token]);
 
-	return <div>{}</div>;
+	return <div>Активация профиля. Перенаправляем на страницу входа.</div>;
 }
 
 export default ActivateProfile;
