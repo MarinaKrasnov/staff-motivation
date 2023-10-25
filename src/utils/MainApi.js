@@ -244,7 +244,7 @@ export function activateRegister(uid, token) {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({ uid, token }),
-	}).then(checkResponse);
+	});
 }
 
 // вход/авторизация
