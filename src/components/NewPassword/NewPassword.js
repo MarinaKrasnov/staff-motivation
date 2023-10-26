@@ -68,11 +68,12 @@ function NewPassword() {
 			setConfirmPasswordHidden(true);
 		}
 	}
-
 	const onSubmit = (data, evt) => {
 		evt.preventDefault();
 		if (watch('password') === watch('confirmPassword')) {
-			setPassword(uid, token, data)
+			console.log(uid, token, data);
+
+			setPassword(uid, token, data.password)
 				.then(() => {
 					setIsOpen(true);
 					// navigate('/signin')
